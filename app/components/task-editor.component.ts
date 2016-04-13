@@ -4,10 +4,7 @@ import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'task-editor',
-  template: `
-    <input [(ngModel)]="task.title">
-    <button (click)="addTask()">Add</button>
-  `,
+  templateUrl: 'components/task-editor.component.html',
   providers: [ TaskService ]
 })
 export class TaskEditorComponent {
