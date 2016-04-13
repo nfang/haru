@@ -1,4 +1,9 @@
 export class Task {
-  title: string;
-  dueDate: Date;
+  // private checklist: Task[];
+
+  constructor(
+    public title: string,
+    public notes?: string,
+    public dueDate?: Date
+  ) { }
 }
