@@ -9,9 +9,10 @@
     "build": "webpack --config config/webpack-dev.config.js --progress --profile --colors --display-error-details --display-cached",
     "build:dist": "webpack --config config/webpack-prod.config.js --progress --profile --colors --display-error-details --display-cached --bail",
     "launchserver": "webpack-dev-server --config config/webpack-dev.config.js",
-    "launchserver:dist": "webpack-dev-server --config config/webpack-prod.config.js",
+    "launchserver:dist": "http-server dist",
     "serve": "npm-run-all clean build launchserver",
     "serve:dist": "npm-run-all clean:dist build:dist launchserver:dist",
+    "start": "npm run serve",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "typings install"
   },
