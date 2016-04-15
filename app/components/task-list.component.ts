@@ -12,7 +12,7 @@ import { TaskService } from '../services/task.service';
 export class TaskListComponent {
   @Input()
   set query(query: string) {
-    var tasks = this._taskService.listTasks();
+    let tasks = this._taskService.listTasks();
     this._tasks = tasks.filter((task) => {
       return task.title.toLowerCase().includes(query);
     });

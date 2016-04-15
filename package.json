@@ -4,10 +4,14 @@
   "description": "Yet another todo app",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf .tmp",
+    "clean:dist": "rimraf dist",
     "build": "webpack --config config/webpack-dev.config.js --progress --profile --colors --display-error-details --display-cached",
     "build:dist": "webpack --config config/webpack-prod.config.js --progress --profile --colors --display-error-details --display-cached --bail",
-    "serve": "webpack-dev-server --config config/webpack-dev.config.js",
-    "serve:dist": "webpack-dev-server --config config/webpack-prod.config.js",
+    "launchserver": "webpack-dev-server --config config/webpack-dev.config.js",
+    "launchserver:dist": "webpack-dev-server --config config/webpack-prod.config.js",
+    "serve": "npm-run-all clean build launchserver",
+    "serve:dist": "npm-run-all clean:dist build:dist launchserver:dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "typings install"
   },
@@ -27,7 +31,9 @@
     "html-webpack-plugin": "^2.15.0",
     "json-loader": "^0.5.4",
     "merge": "^1.2.0",
+    "npm-run-all": "^1.7.0",
     "raw-loader": "^0.5.1",
+    "rimraf": "^2.5.2",
     "style-loader": "^0.13.1",
     "typescript": "^1.8.9",
     "webpack": "^1.12.15"
