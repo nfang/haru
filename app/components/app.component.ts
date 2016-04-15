@@ -3,7 +3,7 @@ import { TaskFinderComponent } from './task-finder.component';
 
 @Component({
   selector: 'todo-app',
-  templateUrl: 'components/app.component.html',
+  template: require('./app.component.html'),
   directives: [
     TaskFinderComponent
   ]

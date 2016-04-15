@@ -7,6 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "typings install"
   },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nfang/todo-ng2-mtl.git"
+  },
   "keywords": [
     "todo"
   ],
@@ -16,10 +20,12 @@
     "awesome-typescript-loader": "^0.16.2",
     "css-loader": "^0.23.1",
     "html-loader": "^0.4.3",
+    "html-webpack-plugin": "^2.15.0",
     "json-loader": "^0.5.4",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
-    "typescript": "^1.8.9"
+    "typescript": "^1.8.9",
+    "webpack": "^1.12.15"
   },
   "dependencies": {
     "angular2": "^2.0.0-beta.14",

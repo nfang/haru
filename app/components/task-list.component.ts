@@ -4,7 +4,7 @@ import { TaskService } from '../services/task.service';
 
 @Component({
   selector: 'task-list',
-  templateUrl: 'components/task-list.component.html',
+  template: require('./task-list.component.html'),
   providers: [
     TaskService
   ]

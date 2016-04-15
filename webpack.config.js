@@ -1,19 +1,31 @@
-var path = require('path');
+var path    = require('path');
+var webpack = require('webpack');
+var util    = require('./config/util');
+
+/**
+ * Plugins
+ */
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: [
-    './app/vendor.ts',
-    './app/bootstrapper.ts'
-  ],
+  entry: {
+    'app': './app/bootstrapper',
+    'vendor': ['reflect-metadata', 'zone.js/dist/zone']
+  },
+
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: '[name].bundle.js'
   },
+
   resolve: {
     extensions: ['', '.ts', '.js'],
     root: path.resolve(__dirname, 'app'),
     modulesDirectories: ['node_modules']
   },
+
+  devtool: 'source-map',
+
   module: {
     loaders: [
       {
@@ -34,5 +46,17 @@ module.exports = {
         loader: 'html'
       }
     ]
-  }
+  },
+  
+  plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      filename: 'vendor.bundle.js'
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './app/index.html',
+      chunksSortMode: util.sortBy(['vendor', 'app'])
+    })
+  ]
 };

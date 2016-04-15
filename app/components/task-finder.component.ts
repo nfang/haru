@@ -5,7 +5,7 @@ import { TaskListComponent } from './task-list.component';
 
 @Component({
   selector: 'task-finder',
-  templateUrl: 'components/task-finder.component.html',
+  template: require('./task-finder.component.html'),
   directives: [ TaskListComponent ],
   providers: [ TaskService ]
 })
