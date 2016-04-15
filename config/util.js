@@ -1,5 +1,7 @@
 'use strict';
 
+var path = require('path');
+
 var sortBy = (chunks) => {
   if (!chunks.length) {
     return 'none';
@@ -10,5 +12,6 @@ var sortBy = (chunks) => {
 };
 
 module.exports = {
-  sortBy: sortBy
+  sortBy: sortBy,
+  root: path.resolve(__dirname, '../')
 };
