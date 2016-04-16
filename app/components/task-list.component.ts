@@ -26,6 +26,7 @@ export class TaskListComponent {
 
   ngOnInit() {
     this._tasks = this._taskService.listTasks();
+    console.log('Task list initiated');
   }
 
   get tasks() { return this._tasks; }

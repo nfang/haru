@@ -1,31 +1,27 @@
 var path    = require('path');
-var webpack = require('webpack');
 var util    = require('./util');
 var root    = util.root;
 
-/**
- * Plugins
- */
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = {
-  entry: {
-    'app': './app/bootstrapper',
-    'vendor': ['reflect-metadata', 'zone.js/dist/zone']
-  },
-
   resolve: {
     extensions: ['', '.ts', '.js'],
     root: path.resolve(root, 'app'),
     modulesDirectories: ['node_modules']
   },
 
+  devtool: 'source-map',
+
   module: {
     loaders: [
       {
         test: /\.ts$/,
         loader: 'awesome-typescript',
-        exclude: ['/node_modules/', '\.spec\.ts$']
+        exclude: '/node_modules/',
+        query: {
+          'compilerOptions': {
+            'removeComments': true
+          }
+        },
       },
       {
         test: /\.css$/,
@@ -42,15 +38,14 @@ module.exports = {
     ]
   },
 
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.bundle.js'
-    }),
+  plugins: [ ],
 
-    new HtmlWebpackPlugin({
-      template: './app/index.html',
-      chunksSortMode: util.sortBy(['vendor', 'app'])
-    })
-  ]
+  node: {
+    global: 'window',
+    process: false,
+    crypto: 'empty',
+    module: false,
+    clearImmediate: false,
+    setImmediate: false
+  }
 };
