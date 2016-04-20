@@ -1,0 +1,53 @@
+import {
+  it,
+  inject,
+  injectAsync,
+  describe,
+  beforeEachProviders,
+  TestComponentBuilder
+} from 'angular2/testing';
+
+import { provide } from 'angular2/core';
+
+import { Task } from '../models/task';
+import { TaskProvider } from './mock-tasks';
+import { TaskService } from '../services/task.service';
+
+class MockTaskProvider {
+  public tasks: Task[] = [
+    { title: 'Task 1', notes: '', dueDate: new Date(2016, 5, 14) },
+    { title: 'Task 2', notes: '', dueDate: new Date(2016, 5, 30) }
+  ];
+}
+
+describe('TaskService', () => {
+  beforeEachProviders(() => [
+    provide(TaskProvider, { useClass: MockTaskProvider }),
+    TaskService
+  ]);
+
+  it('can list all tasks', inject([ TaskService ], (service) => {
+    let tasks = service.list();
+    expect(tasks.length).toBe(2);
+    expect(tasks[0].title).toBe('Task 1');
+    expect(tasks[1].title).toBe('Task 2');
+  }));
+
+  it('can add a task to the repository', inject([ TaskService ], (service) => {
+    let due = new Date(2016, 6, 14);
+    let len = service.add({ title: 'Task 3', notes: 'Task 3 notes', dueDate: due });
+    let tasks = service.list();
+    expect(len).toBe(3);
+    expect(tasks[2].title).toBe('Task 3');
+    expect(tasks[2].notes).toBe('Task 3 notes');
+    expect(tasks[2].dueDate).toBe(due);
+  }));
+
+  it('can remove the specified task from the repository', inject([ TaskService ], (service) => {
+    pending('Function not implemented');
+  }));
+
+  it('can update details of the specified task', inject([ TaskService], (service) => {
+    pending('Function not implemented');
+  }));
+});

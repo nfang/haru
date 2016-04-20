@@ -1,4 +1,5 @@
 import { Component } from 'angular2/core';
+
 import { TaskFinderComponent } from './task-finder.component';
 
 @Component({

@@ -1,4 +1,5 @@
 import { Component, Input } from 'angular2/core';
+
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
 
@@ -12,7 +13,7 @@ import { TaskService } from '../services/task.service';
 export class TaskListComponent {
   @Input()
   set query(query: string) {
-    let tasks = this._taskService.listTasks();
+    let tasks = this._taskService.list();
     this._tasks = tasks.filter((task) => {
       return task.title.toLowerCase().includes(query);
     });
@@ -25,7 +26,7 @@ export class TaskListComponent {
   ) { }
 
   ngOnInit() {
-    this._tasks = this._taskService.listTasks();
+    this._tasks = this._taskService.list();
     console.log('Task list initiated');
   }
 

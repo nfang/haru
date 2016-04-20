@@ -6,13 +6,22 @@ import {
   beforeEachProviders,
   TestComponentBuilder
 } from 'angular2/testing';
+import { provide } from 'angular2/core';
 
+import { Task } from '../models/task';
 import { TaskListComponent } from './task-list.component';
 import { TaskService } from '../services/task.service';
+import { TaskProvider } from '../services/mock-tasks';
+
+class MockTaskProvider {
+  public tasks: Task[] = []
+}
 
 describe('TaskListComponent', () => {
   beforeEachProviders(() => [
-    TaskService, TaskListComponent
+    provide(TaskProvider, { useClass: MockTaskProvider }),
+    TaskService,
+    TaskListComponent,
   ]);
 
   it('should log ngOnInit', inject([ TaskListComponent ], (component) => {

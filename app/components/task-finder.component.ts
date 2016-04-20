@@ -1,4 +1,5 @@
 import { Component } from 'angular2/core';
+
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
 import { TaskListComponent } from './task-list.component';
@@ -21,7 +22,7 @@ export class TaskFinderComponent {
       return;
     }
     this.task.dueDate = new Date();
-    this._taskService.addTask(this.task);
+    this._taskService.add(this.task);
     this.task = new Task('');
   }
 }
