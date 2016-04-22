@@ -29,7 +29,6 @@ describe('TaskService', () => {
   it('can list all tasks', inject([ TaskService ], (service) => {
     let tasks = service.list();
     expect(tasks.length).toBe(2);
-    console.log(tasks);
     expect(tasks[0].title).toBe('Task 1');
     expect(tasks[1].title).toBe('Task 2');
   }));

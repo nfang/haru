@@ -1,6 +1,3 @@
 <ul>
-  <li *ngFor="#task of tasks">
-    <p>{{task.title}}</p>
-    <span>{{task.dueDate}}</span>
-  </li>
+  <task [task]="task" *ngFor="#task of tasks"></task>
 </ul>

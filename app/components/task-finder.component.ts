@@ -3,12 +3,13 @@ import { Component } from 'angular2/core';
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
 import { TaskListComponent } from './task-list.component';
+import { TaskProvider } from '../services/mock-tasks';
 
 @Component({
   selector: 'task-finder',
   template: require('./task-finder.component.html'),
   directives: [ TaskListComponent ],
-  providers: [ TaskService ]
+  providers: [ TaskProvider, TaskService ]
 })
 export class TaskFinderComponent {
   task: Task;
