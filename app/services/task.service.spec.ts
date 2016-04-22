@@ -15,8 +15,8 @@ import { TaskService } from '../services/task.service';
 
 class MockTaskProvider {
   public tasks: Task[] = [
-    { title: 'Task 1', notes: '', dueDate: new Date(2016, 5, 14) },
-    { title: 'Task 2', notes: '', dueDate: new Date(2016, 5, 30) }
+    new Task('Task 1', 'Note 1', new Date(2016, 5, 14)),
+    new Task('Task 2', 'Note 2', new Date(2016, 5, 30))
   ];
 }
 
@@ -29,6 +29,7 @@ describe('TaskService', () => {
   it('can list all tasks', inject([ TaskService ], (service) => {
     let tasks = service.list();
     expect(tasks.length).toBe(2);
+    console.log(tasks);
     expect(tasks[0].title).toBe('Task 1');
     expect(tasks[1].title).toBe('Task 2');
   }));
@@ -48,6 +49,12 @@ describe('TaskService', () => {
   }));
 
   it('can update details of the specified task', inject([ TaskService], (service) => {
-    pending('Function not implemented');
+    const NEW_TITLE = 'Task 1 (edited)';
+    let tasks = service.list();
+    let taskToUpdate = tasks[0];
+    taskToUpdate.title = NEW_TITLE;
+    let updatedTask = service.update(taskToUpdate);
+    expect(tasks[0].title).toBe(NEW_TITLE);
+    expect(updatedTask.title).toBe(NEW_TITLE);
   }));
 });

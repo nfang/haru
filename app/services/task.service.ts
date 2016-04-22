@@ -27,4 +27,22 @@ export class TaskService {
     // }
     // return this._taskProvider.tasks.splice(index, 1);
   }
+
+  /**
+   * Update an existing task
+   * @param  {Task}   task The task with changes
+   * @return {Task}        The updated task
+   */
+  update(task: Task): Task {
+    if (!task) {
+      throw new Error('argument error: invalid task');
+    }
+
+    let index = this._taskProvider.tasks.indexOf(task);
+    if (index < 0) {
+      throw new Error('error: task not found');
+    }
+
+    return (this._taskProvider.tasks[index] = task);
+  }
 }
