@@ -15,28 +15,20 @@ import { TaskService } from '../services/task.service';
   ]
 })
 export class TaskListComponent {
-  @Input()
-  set query(query: string) {
-    let tasks = this._taskService.list();
-    this._tasks = tasks.filter((task) => {
-      return task.title.toLowerCase().includes(query);
-    });
-  }
-
-  _tasks: Task[];
+  @Input() query: string;
 
   constructor(
     private _taskService: TaskService
   ) { }
 
   ngOnInit() {
-    this._tasks = this._taskService.list();
     console.log('Task list initiated');
   }
-  
-  get tasks() { return this._tasks; }
-  
-  onRemoveClicked(tasks: Task[]) {
-    this._tasks = tasks;
+
+  get tasks() {
+    var tasks = this._taskService.list();
+    return tasks.filter(task => {
+      return task.title.toLowerCase().includes(this.query);
+    });
   }
 }
