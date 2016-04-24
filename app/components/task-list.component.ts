@@ -33,6 +33,10 @@ export class TaskListComponent {
     this._tasks = this._taskService.list();
     console.log('Task list initiated');
   }
-
+  
   get tasks() { return this._tasks; }
+  
+  onRemoveClicked(tasks: Task[]) {
+    this._tasks = tasks;
+  }
 }

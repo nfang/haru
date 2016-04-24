@@ -1,4 +1,4 @@
-import { Component, Input } from 'angular2/core';
+import { Component, Input, Output, EventEmitter } from 'angular2/core';
 import { Task } from '../models/task';
 import { TaskService } from '../services/task.service';
 
@@ -12,6 +12,7 @@ import { TaskService } from '../services/task.service';
 export class TaskComponent {
   @Input()
   task: Task;
+  @Output() removeClicked: EventEmitter<Task[]> = new EventEmitter<Task[]>();
 
   constructor(private _taskService: TaskService) {}
 
@@ -19,4 +20,10 @@ export class TaskComponent {
     this.task.isCompleted = !this.task.isCompleted;
     this._taskService.update(this.task);
   }
+  
+  removeTask(){
+    this.removeClicked.emit(this._taskService.remove(this.task));
+    console.log(this._taskService.list());
+  }
+  
 }

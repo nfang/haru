@@ -19,13 +19,14 @@ export class TaskService {
     return this._taskProvider.tasks.push(task);
   }
 
-  remove(task: Task) {
-    // To be implemented
-    // var index = this._taskProvider.tasks.indexOf(task);
-    // if (index < 0) {
-    //   throw new Error('Task not found');
-    // }
-    // return this._taskProvider.tasks.splice(index, 1);
+  remove(task: Task) {    
+     var index = this._taskProvider.tasks.indexOf(task);
+     console.log(index);
+     if (index < 0) {
+       throw new Error('Task not found');
+     }
+     this._taskProvider.tasks.splice(index, 1);
+     return this._taskProvider.tasks;
   }
 
   /**

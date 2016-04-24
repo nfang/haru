@@ -25,5 +25,6 @@ export class TaskFinderComponent {
     this.task.dueDate = new Date();
     this._taskService.add(this.task);
     this.task = new Task('');
+    console.log(this._taskService.list());
   }
 }
