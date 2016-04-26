@@ -19,7 +19,7 @@ export class TaskService {
     return this._taskProvider.tasks.push(task);
   }
 
-  remove(task: Task) {    
+  remove(task: Task): Task[] {    
      var index = this._taskProvider.tasks.indexOf(task);
      console.log(index);
      if (index < 0) {
