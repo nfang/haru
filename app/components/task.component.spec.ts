@@ -68,7 +68,7 @@ describe('TaskComponent', () => {
       })
       .catch(e => done.fail(e));;
   });
-  
+
   it('can remove a task', done => {
     tcb.createAsync(TaskComponent)
      .then(fixture => {
@@ -77,10 +77,10 @@ describe('TaskComponent', () => {
            task = taskService.list()[0];
        component.task = task;
        fixture.detectChanges();
-       expect(task).toBeDefined();
+       expect(component.task).not.toBeNull();
        component.removeTask();
        fixture.detectChanges();
-       expect(task).toBeUndefined();
+       expect(taskService.list().length).toBe(0);
        done();
      })
      .catch(e => done.fail(e));;
