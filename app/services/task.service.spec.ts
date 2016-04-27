@@ -48,7 +48,7 @@ describe('TaskService', () => {
     let taskToBeRemoved = tasks[0];
     let removedTasks = service.remove(taskToBeRemoved);
     expect(removedTasks.length).toBe(1);
-    expect(removedTasks[0].title).toBe('Task 2');
+    expect(removedTasks[0].title).toBe('Task 1');
   }));
 
   it('can update details of the specified task', inject([ TaskService], (service) => {
