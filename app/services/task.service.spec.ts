@@ -44,7 +44,11 @@ describe('TaskService', () => {
   }));
 
   it('can remove the specified task from the repository', inject([ TaskService ], (service) => {
-    pending('Function not implemented');
+    let tasks = service.list();
+    let taskToBeRemoved = tasks[0];
+    let removedTasks = service.remove(taskToBeRemoved);
+    expect(removedTasks.length).toBe(1);
+    expect(removedTasks[0].title).toBe('Task 2');
   }));
 
   it('can update details of the specified task', inject([ TaskService], (service) => {

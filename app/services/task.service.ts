@@ -19,18 +19,27 @@ export class TaskService {
     return this._taskProvider.tasks.push(task);
   }
 
-  remove(task: Task) {
-    // To be implemented
-    // var index = this._taskProvider.tasks.indexOf(task);
-    // if (index < 0) {
-    //   throw new Error('Task not found');
-    // }
-    // return this._taskProvider.tasks.splice(index, 1);
+  /**
+   * Remove the specified task
+   * @param  {Task}   task The task to remove
+   * @return {Task[]}      An array containing the removed tasks
+   */
+  remove(task: Task): Task[] {
+    if (!task) {
+      throw new Error('argument error: invalid task');
+    }
+
+    let index = this._taskProvider.tasks.indexOf(task);
+    if (index < 0) {
+      throw new Error('error: task not found');
+    }
+    
+    return this._taskProvider.tasks.splice(index, 1);
   }
 
   /**
    * Update an existing task
-   * @param  {Task}   task The task with changes
+   * @param  {Task}   task The task to update
    * @return {Task}        The updated task
    */
   update(task: Task): Task {

@@ -10,13 +10,16 @@ import { TaskService } from '../services/task.service';
   ]
 })
 export class TaskComponent {
-  @Input()
-  task: Task;
+  @Input() task: Task;
 
   constructor(private _taskService: TaskService) {}
 
   markComplete() {
     this.task.isCompleted = !this.task.isCompleted;
     this._taskService.update(this.task);
+  }
+
+  removeTask() {
+    this._taskService.remove(this.task);
   }
 }

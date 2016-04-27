@@ -68,4 +68,21 @@ describe('TaskComponent', () => {
       })
       .catch(e => done.fail(e));;
   });
+
+  it('can remove a task', done => {
+    tcb.createAsync(TaskComponent)
+     .then(fixture => {
+       let component = fixture.componentInstance,
+           element = fixture.nativeElement,
+           task = taskService.list()[0];
+       component.task = task;
+       fixture.detectChanges();
+       expect(component.task).not.toBeNull();
+       component.removeTask();
+       fixture.detectChanges();
+       expect(taskService.list().length).toBe(0);
+       done();
+     })
+     .catch(e => done.fail(e));;
+  });
 });
