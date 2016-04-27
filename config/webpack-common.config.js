@@ -15,7 +15,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['', '.ts', '.js'],
+    extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
     root: path.resolve(root, 'app'),
     modulesDirectories: ['node_modules']
   },
@@ -29,7 +29,11 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loader: 'style!css'
+        loader: 'raw'
+      },
+      {
+        test: /\.scss$/,
+        loader: 'raw!sass!source-map'
       },
       {
         test: /\.json$/,
@@ -37,7 +41,11 @@ module.exports = {
       },
       {
         test: /\.html$/,
-        loader: 'html'
+        loader: 'raw'
+      },
+      {
+        test: /\.(woff2?|ttf|eot|svg)$/,
+        loader: 'url?limit=10000'
       }
     ]
   },
