@@ -7,6 +7,9 @@ import { TaskService } from '../services/task.service';
 @Component({
   selector: 'task-list',
   template: require('./task-list.component.html'),
+  styles: [
+    require('./task-list.component.scss')
+  ],
   directives: [
     TaskComponent
   ],

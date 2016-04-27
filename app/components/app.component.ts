@@ -5,6 +5,10 @@ import { TaskFinderComponent } from './task-finder.component';
 @Component({
   selector: 'todo-app',
   template: require('./app.component.html'),
+  styles: [
+    require('normalize.css/normalize.css'),
+    require('./app.component.scss')
+  ],
   directives: [
     TaskFinderComponent
   ]
