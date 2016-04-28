@@ -1,8 +1,10 @@
 import { Component, Input } from 'angular2/core';
 
-import { Task } from '../models/task';
-import { TaskComponent } from './task.component';
-import { TaskService } from '../services/task.service';
+import { Task }             from '../models/task';
+import { TaskComponent }    from './task.component';
+import { TaskService }      from '../services/task.service';
+
+const _ = require('lodash');
 
 @Component({
   selector: 'task-list',
@@ -20,9 +22,7 @@ import { TaskService } from '../services/task.service';
 export class TaskListComponent {
   @Input() query: string;
 
-  constructor(
-    private _taskService: TaskService
-  ) { }
+  constructor(private _taskService: TaskService) { }
 
   ngOnInit() {
     console.log('Task list initiated');

@@ -1,10 +1,12 @@
 <li class="task">
   <div class="task-heading">
     <h1 class="task-title">{{task.title}}</h1>
-    <div class="btn" (click)='removeTask()'>
-      <i class="fa fa-trash-o" aria-hidden="true"></i>
+    <div class="task-controls">
+      <div class="btn" (click)='removeTask()'>
+        <i class="fa fa-trash-o" aria-hidden="true"></i>
+      </div>
+      <input type="checkbox" [checked]="task.isComplete" (change)="markComplete()">
     </div>
-    <input type="checkbox" [checked]="task.isComplete" (change)="markComplete()">
   </div>
   <div class="task-detail">
     <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate | date: 'shortTime'}}</time>

@@ -2,6 +2,7 @@ export class Task {
   // private checklist: Task[];
 
   isCompleted: boolean;
+  isPrioritised: boolean;
 
   constructor(
     public title: string,
