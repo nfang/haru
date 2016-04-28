@@ -29,7 +29,7 @@ export class TaskListComponent {
   }
 
   get tasks() {
-    var tasks = this._taskService.list();
+    let tasks = this._taskService.list();
     return tasks.filter(task => {
       return task.title.toLowerCase().includes(this.query);
     });

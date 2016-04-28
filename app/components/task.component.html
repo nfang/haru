@@ -1,14 +1,14 @@
-<li class="task">
+<li class="task-list-item">
   <div class="task-heading">
     <h1 class="task-title">{{task.title}}</h1>
-    <div class="task-controls">
+    <div class="task-action">
       <div class="btn" (click)='removeTask()'>
         <i class="fa fa-trash-o" aria-hidden="true"></i>
       </div>
-      <input type="checkbox" [checked]="task.isComplete" (change)="markComplete()">
+      <input type="checkbox" [checked]="task.isCompleted" (change)="markComplete()">
     </div>
   </div>
   <div class="task-detail">
-    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate | date: 'shortTime'}}</time>
+    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate}}</time>
   </div>
 </li>

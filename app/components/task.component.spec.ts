@@ -45,8 +45,8 @@ describe('TaskComponent', () => {
             task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('p').innerText).toBe(task.title);
-        expect(element.querySelector('span').innerText).toBe(task.dueDate.toString());
+        expect(element.querySelector('.task-title').innerText).toBe(task.title);
+        expect(element.querySelector('time').innerText).toBe(task.dueDate.toString());
         done();
       })
       .catch(e => done.fail(e));

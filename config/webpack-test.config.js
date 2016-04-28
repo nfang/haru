@@ -28,6 +28,10 @@ module.exports = {
         loader: 'style!css'
       },
       {
+        test: /\.scss$/,
+        loader: 'raw!sass!source-map'
+      },
+      {
         test: /\.json$/,
         loader: 'json'
       },
