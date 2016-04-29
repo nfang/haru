@@ -6,7 +6,8 @@ export class Task {
 
   constructor(
     public title: string,
+    public createdDate: Date,
     public notes?: string,
-    public dueDate?: Date
+    public dueDate?: Date    
   ) { }
 }

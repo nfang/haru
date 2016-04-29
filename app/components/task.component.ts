@@ -21,6 +21,11 @@ export class TaskComponent {
     this.task.isCompleted = !this.task.isCompleted;
     this._taskService.update(this.task);
   }
+  
+  prioritise() {
+    this.task.isPrioritised = !this.task.isPrioritised;
+    this._taskService.update(this.task);
+  }
 
   removeTask() {
     this._taskService.remove(this.task);

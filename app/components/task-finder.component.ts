@@ -15,7 +15,7 @@ export class TaskFinderComponent {
   task: Task;
 
   constructor(private _taskService: TaskService) {
-    this.task = new Task('');
+    this.task = new Task('',new Date());
   }
 
   addTask() {
@@ -24,6 +24,6 @@ export class TaskFinderComponent {
     }
     this.task.dueDate = new Date();
     this._taskService.add(this.task);
-    this.task = new Task('');
+    this.task = new Task('',new Date());
   }
 }
