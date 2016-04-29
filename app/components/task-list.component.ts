@@ -39,7 +39,8 @@ export class TaskListComponent {
 
   get tasks() {
     let tasks = this.taskService.list();
-    return this.queryCommand.execute(tasks);
+    let orderedTasks = this.queryCommand.order(tasks);
+    return this.queryCommand.execute(orderedTasks);
   }
 }
 
@@ -50,8 +51,12 @@ class QueryCommand {
   query: Function;
   // sort: Function;
   // order: Function;
+  order(targets): Task[]{
+    let beforeOrder = targets;
+     return _.orderBy(beforeOrder,['isPrioritised','createdDate','title'],['asc']);
+  }
 
-  execute(targets) {
+  execute(targets): Task[] {
     let subset = targets;
     if (this.query) {
       subset = targets.filter(this.query);

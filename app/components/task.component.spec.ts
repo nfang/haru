@@ -16,7 +16,8 @@ import { TaskProvider } from '../services/mock-tasks';
 
 class MockTaskProvider {
   public tasks: Task[] = [
-    new Task('Task', 'Note', new Date())
+    new Task('Task1', new Date(), 'Note1', new Date(2016, 5, 14)),
+    new Task('Task2', new Date(2016, 2, 14), 'Note2', new Date(2016, 5, 20))
   ]
 }
 
@@ -60,8 +61,8 @@ describe('TaskComponent', () => {
             task: Task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('input[type=checkbox]').checked).toBeFalsy();
-        component.markComplete();
+        expect(element.querySelector('#isCompleted').checked).toBeFalsy();
+        component.markCompleted();
         fixture.detectChanges();
         expect(task.isCompleted).toBeTruthy();
         done();
@@ -81,6 +82,23 @@ describe('TaskComponent', () => {
        component.removeTask();
        fixture.detectChanges();
        expect(taskService.list().length).toBe(0);
+       done();
+     })
+     .catch(e => done.fail(e));;
+  });
+  
+  it('can prioritise a task', done => {
+    tcb.createAsync(TaskComponent)
+     .then(fixture => {
+       let component = fixture.componentInstance,
+           element = fixture.nativeElement,
+           task = taskService.list()[1];
+       component.task = task;
+       fixture.detectChanges();
+       expect(element.querySelector('#isPrioritised').checked).toBeFalsy();
+       component.prioritised();
+       fixture.detectChanges();
+       expect(task.isPrioritised).toBeTruthy();
        done();
      })
      .catch(e => done.fail(e));;
