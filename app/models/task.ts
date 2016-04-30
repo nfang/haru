@@ -3,11 +3,14 @@ export class Task {
 
   isCompleted: boolean;
   isPrioritised: boolean;
+  private _createAt: Date;
+  get createAt(){
+    return this._createAt;
+  }
 
   constructor(
     public title: string,
-    public createdDate: Date,
     public notes?: string,
-    public dueDate?: Date    
-  ) { }
+    public dueDate?: Date 
+  ) { this._createAt = new Date(); }
 }
