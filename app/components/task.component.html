@@ -2,15 +2,15 @@
   <div class="task-heading">
     <h1 class="task-title">{{task.title}}</h1>
     <div class="task-controls">
-      <input type="checkbox" class="isPrioritised" [checked]="task.isPrioritised" (change)="prioritise()">
+      <input type="checkbox" class="isPrioritised" [checked]="task.isPrioritised" (change)="markPrioritised()">
       <div class="btn" (click)='removeTask()'>
         <i class="fa fa-trash-o" aria-hidden="true"></i>
       </div>
-      <input type="checkbox" class="isComplete" [checked]="task.isComplete" (change)="markComplete()">
+      <input type="checkbox" class="isCompleted" [checked]="task.isCompleted" (change)="markCompleted()">
     </div>
   </div>
   <div class="task-detail">
-    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate | date: 'shortTime'}}</time>
-    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.createAt | date: 'shortTime'}}</time>
+    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate}}</time>
+    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.createAt}}</time>
   </div>
 </li>
