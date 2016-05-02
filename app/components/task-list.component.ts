@@ -29,9 +29,9 @@ export class TaskListComponent {
   }
 
   get tasks(): Task[] {
-    let originTasks = this._taskService.list();
-    let tasks = _.orderBy(originTasks,['isPrioritised','createAt','title'],['asc']);
-    return tasks.filter(task => {
+    let tasks = this._taskService.list();
+    let orderedTasks = _.orderBy(tasks,['isPrioritised','createAt','title'],['asc']);
+    return orderedTasks.filter(task => {
       return task.title.toLowerCase().includes(this.query);
     });
   }

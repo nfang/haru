@@ -46,8 +46,8 @@ describe('TaskComponent', () => {
             task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('p').innerText).toBe(task.title);
-        expect(element.querySelector('span').innerText).toBe(task.dueDate.toString());
+        expect(element.querySelector('.task-title').innerText).toBe(task.title);
+        expect(element.querySelector('time').innerText).toBe(task.dueDate.toString());
         done();
       })
       .catch(e => done.fail(e));
@@ -61,7 +61,7 @@ describe('TaskComponent', () => {
             task: Task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('.isCompleted').checked).toBeFalsy();
+        expect(element.querySelector('.completed').checked).toBeFalsy();
         component.markCompleted();
         fixture.detectChanges();
         expect(task.isCompleted).toBeTruthy();
@@ -75,18 +75,19 @@ describe('TaskComponent', () => {
      .then(fixture => {
        let component = fixture.componentInstance,
            element = fixture.nativeElement,
-           task = taskService.list()[0];
+           task = taskService.list()[0],
+           len = taskService.list().length;
        component.task = task;
        fixture.detectChanges();
        expect(component.task).not.toBeNull();
        component.removeTask();
        fixture.detectChanges();
-       expect(taskService.list().length).toBe(0);
+       expect(taskService.list().length).toBe(len - 1);
        done();
      })
      .catch(e => done.fail(e));;
   });
-  
+
   it('can prioritise a task', done => {
     tcb.createAsync(TaskComponent)
      .then(fixture => {
@@ -95,7 +96,7 @@ describe('TaskComponent', () => {
            task = taskService.list()[1];
        component.task = task;
        fixture.detectChanges();
-       expect(element.querySelector('.isPrioritised').checked).toBeFalsy();
+       expect(element.querySelector('.prioritised').checked).toBeFalsy();
        component.markPrioritised();
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
