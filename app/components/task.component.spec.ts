@@ -16,8 +16,8 @@ import { TaskProvider } from '../services/mock-tasks';
 
 class MockTaskProvider {
   public tasks: Task[] = [
-    new Task('Task1', new Date(), 'Note1', new Date(2016, 5, 14)),
-    new Task('Task2', new Date(2016, 2, 14), 'Note2', new Date(2016, 5, 20))
+    new Task('Task1', 'Note1', new Date(2016, 5, 14)),
+    new Task('Task2', 'Note2', new Date(2016, 5, 20))
   ]
 }
 
