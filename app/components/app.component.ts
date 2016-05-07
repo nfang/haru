@@ -1,6 +1,8 @@
 import { Component } from 'angular2/core';
 
-import { TaskFinderComponent } from './task-finder.component';
+import { TaskListComponent } from './task-list.component';
+import { TaskService } from '../services/task.service';
+import { TaskProvider } from '../services/mock-tasks';
 
 @Component({
   selector: 'todo-app',
@@ -10,7 +12,10 @@ import { TaskFinderComponent } from './task-finder.component';
     require('./app.component.scss')
   ],
   directives: [
-    TaskFinderComponent
+    TaskListComponent
+  ],
+  providers: [
+    TaskProvider, TaskService
   ]
 })
 export class AppComponent {

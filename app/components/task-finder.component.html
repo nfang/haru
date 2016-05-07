@@ -1,2 +1,3 @@
-<input [(ngModel)]="task.title" #search (keyup.enter)="addTask()">
-<task-list [query]="search.value"></task-list>
+<form (submit)="onSubmit()">
+  <input [(ngModel)]="task.title" (keyup)="onQueryChanged()">
+</form>
