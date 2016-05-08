@@ -26,6 +26,8 @@ export class TaskListComponent {
 
   ngOnInit() {
     console.log('Task list initiated');
+    this.queryCommand.orderIteratees = ['isPrioritised','createdDate','title'];
+    this.queryCommand.orders = ['desc'];
   }
 
   updateQuery(args) {
@@ -39,27 +41,27 @@ export class TaskListComponent {
 
   get tasks() {
     let tasks = this.taskService.list();
-    let orderedTasks = this.queryCommand.order(tasks);
-    return this.queryCommand.execute(orderedTasks);
+    return this.queryCommand.execute(tasks);
   }
 }
 
 class QueryCommand {
   constructor() {
     this.query = (item) => item;
+    this.orderIteratees = []; 
+    this.orders = [];
   }
   query: Function;
-  // sort: Function;
-  // order: Function;
-  order(targets): Task[]{
-    let beforeOrder = targets;
-     return _.orderBy(beforeOrder,['isPrioritised','createdDate','title'],['desc']);
-  }
+  orders: string[];
+  orderIteratees: string[];
 
-  execute(targets): Task[] {
+  execute(targets){
     let subset = targets;
     if (this.query) {
-      subset = targets.filter(this.query);
+      subset = subset.filter(this.query);                
+      }    
+    if(typeof this.orderIteratees !== 'undefined' && this.orderIteratees.length > 0) {
+      subset = _.orderBy(subset,this.orderIteratees,this.orders);
     }
     return subset;
   }
