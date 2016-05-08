@@ -61,7 +61,7 @@ describe('TaskComponent', () => {
             task: Task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('#isCompleted').checked).toBeFalsy();
+        expect(element.querySelector('.isCompleted').checked).toBeFalsy();
         component.markCompleted();
         fixture.detectChanges();
         expect(task.isCompleted).toBeTruthy();
@@ -95,7 +95,7 @@ describe('TaskComponent', () => {
            task = taskService.list()[1];
        component.task = task;
        fixture.detectChanges();
-       expect(element.querySelector('#isPrioritised').checked).toBeFalsy();
+       expect(element.querySelector('.isPrioritised').checked).toBeFalsy();
        component.prioritised();
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
