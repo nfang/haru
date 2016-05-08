@@ -47,6 +47,14 @@ describe('TaskListComponent', () => {
       let tasks = component.tasks;
       expect(tasks.length).toBe(1);
       expect(tasks[0].title).toEqual('Task 3');
-    }
-  ))
+  }));
+  
+  it('should return a ordered list of tasks according to order', inject([ TaskListComponent ],
+    (component) => {
+      component.ngOnInit();
+      let beforeOrderTasks = component.tasks;
+      beforeOrderTasks[1].isPrioritised = true;
+      let afterOrderTasks = component.tasks;
+      expect(afterOrderTasks[0].title).toEqual('Task 2');
+    }));
 });
