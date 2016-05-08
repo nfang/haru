@@ -1,8 +1,8 @@
 export class Task {
   // private checklist: Task[];
 
-  isCompleted: boolean;
-  isPrioritised: boolean;
+  isCompleted: boolean = false;
+  isPrioritised: boolean = false;
   private _createAt: Date;
   get createAt(): Date{
     return this._createAt;

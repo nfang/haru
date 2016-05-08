@@ -53,7 +53,7 @@ class QueryCommand {
   // order: Function;
   order(targets): Task[]{
     let beforeOrder = targets;
-     return _.orderBy(beforeOrder,['isPrioritised','createdDate','title'],['asc']);
+     return _.orderBy(beforeOrder,['isPrioritised','createdDate','title'],['desc']);
   }
 
   execute(targets): Task[] {
