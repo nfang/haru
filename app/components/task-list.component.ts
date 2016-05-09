@@ -22,20 +22,22 @@ export class TaskListComponent {
 
   constructor(private taskService: TaskService) {
     this.queryCommand = new QueryCommand();
+    this.queryCommand.sortBy =
+      new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
   }
 
   ngOnInit() {
     console.log('Task list initiated');
-    this.queryCommand.orderBy = new SortSpec(['isPrioritised','createdDate','title'], [SORTORDER[1]]);
   }
 
   updateQuery(args) {
     if (!args.value) {
       return;
     }
-    this.queryCommand.query = (task) => {
+
+    this.queryCommand.filter = new FilterSpec((task) => {
       return task.title.toLowerCase().includes(args.value.title);
-    };
+    });
   }
 
   get tasks() {
@@ -44,36 +46,44 @@ export class TaskListComponent {
   }
 }
 
-enum SORTORDER {
-  'asc',
-  'desc'
+enum SortOrder {
+  ASC,
+  DESC
 }
 
 class SortSpec {
   iteratees: string[];
-  orders: string[];
-  constructor(orderIteratees, orders = [SORTORDER[0]]){
-    this.iteratees = orderIteratees;
+  orders: SortOrder[];
+
+  constructor(iteratees = [], orders = [SortOrder.ASC]) {
+    this.iteratees = iteratees;
     this.orders = orders;
-  }  
+  }
+}
+
+class FilterSpec {
+  predicate: (item: any) => boolean;
+
+  constructor(predicate = (item) => true) {
+    this.predicate = predicate;
+  }
 }
 
 class QueryCommand {
-  constructor() {
-    this.query = (item) => item;
-    this.orderBy = new SortSpec([]);
-  }
-  query: Function;
-  orderBy: SortSpec;
+  filter: FilterSpec;
+  sortBy: SortSpec;
 
-  execute(targets){
+  execute(targets) {
     let subset = targets;
-    if (this.query) {
-      subset = subset.filter(this.query);          
-      }
-    if (this.orderBy && this.orderBy.iteratees && this.orderBy.iteratees.length) {
-      subset = _.orderBy(subset,this.orderBy.iteratees,this.orderBy.orders);
+
+    if (this.filter) {
+      subset = subset.filter(this.filter.predicate);
     }
+
+    if (this.sortBy && this.sortBy.iteratees && this.sortBy.iteratees.length) {
+      subset = _.orderBy(subset, this.sortBy.iteratees, this.sortBy.orders);
+    }
+
     return subset;
   }
 }
