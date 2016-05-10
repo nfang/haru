@@ -1,8 +1,10 @@
 const _ = require('lodash');
 
+/*lodash only accept lowercase string value of asc or desc, so we use any to make it 
+complie, it reference from https://github.com/Microsoft/TypeScript/issues/3192 */
 export enum SortOrder {
-  ASC,
-  DESC
+  ASC = 'asc' as any,
+  DESC = 'desc' as any
 }
 
 export class SortSpec {

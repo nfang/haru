@@ -81,7 +81,7 @@ describe('TaskComponent', () => {
        expect(component.task).not.toBeNull();
        component.removeTask();
        fixture.detectChanges();
-       expect(taskService.list().length).toBe(0);
+       expect(taskService.list().length).toBe(1);
        done();
      })
      .catch(e => done.fail(e));;
@@ -96,7 +96,7 @@ describe('TaskComponent', () => {
        component.task = task;
        fixture.detectChanges();
        expect(element.querySelector('.isPrioritised').checked).toBeFalsy();
-       component.prioritised();
+       component.markPrioritised();
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
        done();
