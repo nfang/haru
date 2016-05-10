@@ -5,7 +5,7 @@ import { TaskComponent }    from './task.component';
 import { TaskFinderComponent } from './task-finder.component';
 import { TaskService }      from '../services/task.service';
 
-const _ = require('lodash');
+import { SortOrder, SortSpec, FilterSpec, QueryCommand } from '../utils/query-command';
 
 @Component({
   selector: 'task-list',
@@ -43,47 +43,5 @@ export class TaskListComponent {
   get tasks() {
     let tasks = this.taskService.list();
     return this.queryCommand.execute(tasks);
-  }
-}
-
-enum SortOrder {
-  ASC,
-  DESC
-}
-
-class SortSpec {
-  iteratees: string[];
-  orders: SortOrder[];
-
-  constructor(iteratees = [], orders = [SortOrder.ASC]) {
-    this.iteratees = iteratees;
-    this.orders = orders;
-  }
-}
-
-class FilterSpec {
-  predicate: (item: any) => boolean;
-
-  constructor(predicate = (item) => true) {
-    this.predicate = predicate;
-  }
-}
-
-class QueryCommand {
-  filter: FilterSpec;
-  sortBy: SortSpec;
-
-  execute(targets) {
-    let subset = targets;
-
-    if (this.filter) {
-      subset = subset.filter(this.filter.predicate);
-    }
-
-    if (this.sortBy && this.sortBy.iteratees && this.sortBy.iteratees.length) {
-      subset = _.orderBy(subset, this.sortBy.iteratees, this.sortBy.orders);
-    }
-
-    return subset;
   }
 }
