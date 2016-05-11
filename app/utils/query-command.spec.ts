@@ -38,6 +38,11 @@ describe('QueryCommand', () => {
     expect(sortSpec.orders.length).toBe(1);
     expect(sortSpec.orders).toEqual(jasmine.arrayContaining(['asc']));
   });
+  
+  it('can initalise filterSpec with empty constructor', () => {
+    const filterSpec = new FilterSpec();
+    expect(filterSpec.predicate).toBeTruthy;
+  });
 
   it('can filter based on filter spec', () => {
     const filterSpec = new FilterSpec((task) => {
