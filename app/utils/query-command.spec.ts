@@ -10,88 +10,111 @@ import {
 import { Task } from '../models/task';
 import { SortOrder, SortSpec, FilterSpec, QueryCommand } from './query-command';
 
+describe('SortSpec', () => {
+
+  it('can initialise with default values', () => {
+    const sortSpec = new SortSpec();
+    expect(sortSpec.iteratees).toEqual([]);
+    expect(sortSpec.orders).toEqual([SortOrder.ASC]);
+  });
+
+  it('can initialise with specific values', () => {
+    const sortSpec = new SortSpec(['id', 'name'], [SortOrder.DESC]);
+    expect(sortSpec.iteratees).toEqual(['id', 'name']);
+    expect(sortSpec.orders).toEqual([SortOrder.DESC]);
+  });
+
+});
+
+describe('FilterSpec', () => {
+
+  it('can initialise with default value', () => {
+    const filterSpec = new FilterSpec();
+    expect(filterSpec.predicate).not.toBeNull();
+    expect(filterSpec.predicate('item')).toBe(true);
+  });
+
+  it('can initialise with a specific predicate', () => {
+    const filterSpec = new FilterSpec((item) => {
+      return item.toString() === 'test';
+    });
+    expect(filterSpec.predicate).not.toBeNull();
+    expect(filterSpec.predicate('test')).toBe(true);
+    expect(filterSpec.predicate('TEST')).toBe(false);
+  });
+
+});
+
 describe('QueryCommand', () => {
 
   let tasks: Task[];
 
   beforeEach(() => {
     tasks = [
-      new Task('Task 1', 'Note 1', new Date(2016, 5, 14)),
-      new Task('Task 2', 'Note 2', new Date(2016, 5, 30)),
-      new Task('Task 1', 'Note 3', new Date(2016, 6, 30)),
+      new Task('Task 1', 'Note important', new Date(2016, 5, 14)),
+      new Task('Task 2', 'Note normal', new Date(2016, 5, 30)),
+      new Task('Task 3', 'Note important', new Date(2016, 6, 30))
     ];
+    tasks[1].isPrioritised = true;
   });
 
-  it('can initalise SortSpec', () => {
-    const sortSpec = new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
-    expect(sortSpec.iteratees).toEqual(jasmine.arrayContaining(['isPrioritised', 'createdDate', 'title']));
-    expect(sortSpec.orders).toEqual(jasmine.arrayContaining(['desc']));
-    expect(sortSpec.orders).not.toEqual(jasmine.arrayContaining(['asc']));
-  });
-
-  it('should return default value [] for sortSpec.iteratees and [asc] for sortSpec.orders', () => {
-    const sortSpec = new SortSpec();
-    expect(sortSpec.iteratees).not.toBeNull;
-    expect(sortSpec.iteratees.length).toBe(0);
-    expect(sortSpec.orders).not.toBeNull;
-    expect(sortSpec.orders.length).toBe(1);
-    expect(sortSpec.orders).toEqual(jasmine.arrayContaining(['asc']));
-  });
-  
-  it('should return ture for filterSpec.predicate', () => {
-    const filterSpec = new FilterSpec();
-    expect(filterSpec.predicate).toBeTruthy;
-  });
-
-  it('should return an filtered array when filterSpec is matching the search criteria', () => {
-    const filterSpec = new FilterSpec((task) => {
-      return task.title.toLowerCase().includes('Task 1');
-    });
-    const result = tasks.filter(filterSpec.predicate);
-    expect(result.length).toEqual(1);
-    expect(result[0].title).toEqual('Task 1');
+  it('can initialise with default specs', () => {
+    const command = new QueryCommand();
+    let results = command.execute(tasks);
+    expect(results.length).toEqual(tasks.length);
+    expect(results[0].title).toBe('Task 1');
+    expect(results[results.length - 1].title).toBe('Task 3');
   });
 
   it('should return empty array when no result is found', () => {
     const filterSpec = new FilterSpec((task) => {
       return task.title.toLowerCase().includes('test 1');
     });
-    const result = tasks.filter(filterSpec.predicate);
-    expect(result.length).toEqual(0);
+    const results = tasks.filter(filterSpec.predicate);
+    expect(results.length).toEqual(0);
   });
 
-  it('should return an ordered and filtered collection based on sortSpec and filterSpec', () => {
-    tasks[2].isPrioritised = true;
-    const sortSpec = new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
-    const filterSpec = new FilterSpec((task) => {
-      return task.title.toLowerCase().includes('Task 1');
+  it('can filter a collection according to a specific criteria', () => {
+    const command = new QueryCommand();
+    command.filter = new FilterSpec((task) => {
+      return task.title.toLowerCase().includes('task 1');
     });
-    let queryCommand = new QueryCommand();
-    queryCommand.sortBy = sortSpec;
-    queryCommand.filter = filterSpec;
-    const result = queryCommand.execute(tasks);
-    expect(result.length).toEqual(2);
-    expect(result[0].title).toEqual('Task 1');
-    expect(result[1].title).toEqual('Task 1');
-    expect(result[0].notes).toEqual('Note 3');
+    command.sortBy = null;
+    const results = command.execute(tasks);
+    expect(results.length).toEqual(1);
+    expect(results[0].title).toBe('Task 1');
   });
 
-  it('should return original collection', () => {
+  it('can sort a collection according to the sort spec', () => {
+    const command = new QueryCommand();
+    command.filter = null;
+    command.sortBy = new SortSpec(['isPrioritised', 'createdDate', 'title'],
+      [SortOrder.DESC, SortOrder.DESC, SortOrder.DESC]);
+    const results = command.execute(tasks);
+    expect(results[0].title).toEqual('Task 2');
+    expect(results[1].title).toEqual('Task 3');
+    expect(results[2].title).toEqual('Task 1');
+  });
+
+  it('can filter and sort a collection according to the specified spec', () => {
     const queryCommand = new QueryCommand();
-    const result = queryCommand.execute(tasks);
-    expect(result).toEqual(tasks);
+    queryCommand.sortBy = new SortSpec(['isPrioritised', 'createdDate', 'title'],
+      [SortOrder.DESC, SortOrder.DESC, SortOrder.DESC]);
+    queryCommand.filter = new FilterSpec((task) => {
+      return task.notes.toLowerCase().includes('note important');
+    });
+    const results = queryCommand.execute(tasks);
+    expect(results.length).toEqual(2);
+    expect(results[0].title).toEqual('Task 3');
+    expect(results[1].title).toEqual('Task 1');
   });
 
-  it('should return an ordered collection based on sortSpec when filterSpec is null', () => {
-    tasks[2].isPrioritised = true;
-    const sortSpec = new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
-    let queryCommand = new QueryCommand();
-    queryCommand.sortBy = sortSpec;
-    queryCommand.filter = null;
-    const result = queryCommand.execute(tasks);
-    expect(result.length).toEqual(3);
-    expect(result[0].title).toEqual('Task 1');
-    expect(result[1].title).toEqual('Task 1');
-    expect(result[0].notes).toEqual('Note 3');
+  it('should return the original collection when filter and sort spec is not provided', () => {
+    const command = new QueryCommand();
+    command.filter = null;
+    command.sortBy = null;
+    const results = command.execute(tasks);
+    expect(results).toEqual(tasks);
   });
+
 });
