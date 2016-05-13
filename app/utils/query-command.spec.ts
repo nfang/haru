@@ -21,7 +21,7 @@ describe('SortSpec', () => {
   it('can initialise with specific values', () => {
     const sortSpec = new SortSpec(['id', 'name'], [SortOrder.DESC]);
     expect(sortSpec.iteratees).toEqual(['id', 'name']);
-    expect(sortSpec.orders).toEqual([SortOrder.DESC]);
+    expect(sortSpec.orders).toEqual([SortOrder.DESC, SortOrder.DESC]);
   });
 
 });
@@ -88,8 +88,7 @@ describe('QueryCommand', () => {
   it('can sort a collection according to the sort spec', () => {
     const command = new QueryCommand();
     command.filter = null;
-    command.sortBy = new SortSpec(['isPrioritised', 'createdDate', 'title'],
-      [SortOrder.DESC, SortOrder.DESC, SortOrder.DESC]);
+    command.sortBy = new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
     const results = command.execute(tasks);
     expect(results[0].title).toEqual('Task 2');
     expect(results[1].title).toEqual('Task 3');
@@ -98,8 +97,7 @@ describe('QueryCommand', () => {
 
   it('can filter and sort a collection according to the specified spec', () => {
     const queryCommand = new QueryCommand();
-    queryCommand.sortBy = new SortSpec(['isPrioritised', 'createdDate', 'title'],
-      [SortOrder.DESC, SortOrder.DESC, SortOrder.DESC]);
+    queryCommand.sortBy = new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
     queryCommand.filter = new FilterSpec((task) => {
       return task.notes.toLowerCase().includes('note important');
     });

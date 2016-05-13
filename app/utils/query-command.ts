@@ -13,9 +13,15 @@ export class SortSpec {
   iteratees: string[];
   orders: SortOrder[];
 
-  constructor(iteratees = [], orders = [SortOrder.ASC]) {
+  constructor(iteratees = [], orders: SortOrder[] = [SortOrder.ASC]) {
     this.iteratees = iteratees;
     this.orders = orders;
+
+    if (this.iteratees.length > this.orders.length) {
+      let diff = this.iteratees.length - this.orders.length;
+      let pad = this.orders[this.orders.length - 1];
+      this.orders = _.concat(this.orders, _.fill(Array(diff), pad));
+    }
   }
 }
 
