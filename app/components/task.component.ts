@@ -17,8 +17,13 @@ export class TaskComponent {
 
   constructor(private _taskService: TaskService) {}
 
-  markComplete() {
+  markCompleted() {
     this.task.isCompleted = !this.task.isCompleted;
+    this._taskService.update(this.task);
+  }
+  
+  markPrioritised() {
+    this.task.isPrioritised = !this.task.isPrioritised;
     this._taskService.update(this.task);
   }
 

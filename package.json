@@ -13,7 +13,7 @@
     "serve": "npm-run-all clean build launchserver",
     "serve:dist": "npm-run-all clean:dist build:dist launchserver:dist",
     "start": "npm run serve",
-    "test": "node --max-old-space-size=4096 node_modules/karma/bin/karma start karma.config.js; exit 0",
+    "test": "node --max-old-space-size=4096 node_modules/karma/bin/karma start karma.config.js",
     "postinstall": "typings install"
   },
   "repository": {

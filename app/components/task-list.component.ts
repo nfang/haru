@@ -5,7 +5,7 @@ import { TaskComponent }    from './task.component';
 import { TaskFinderComponent } from './task-finder.component';
 import { TaskService }      from '../services/task.service';
 
-const _ = require('lodash');
+import { SortOrder, SortSpec, FilterSpec, QueryCommand } from '../utils/query-command';
 
 @Component({
   selector: 'task-list',
@@ -22,6 +22,8 @@ export class TaskListComponent {
 
   constructor(private taskService: TaskService) {
     this.queryCommand = new QueryCommand();
+    this.queryCommand.sortBy =
+      new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
   }
 
   ngOnInit() {
@@ -32,30 +34,14 @@ export class TaskListComponent {
     if (!args.value) {
       return;
     }
-    this.queryCommand.query = (task) => {
+
+    this.queryCommand.filter = new FilterSpec((task) => {
       return task.title.toLowerCase().includes(args.value.title);
-    };
+    });
   }
 
   get tasks() {
     let tasks = this.taskService.list();
     return this.queryCommand.execute(tasks);
-  }
-}
-
-class QueryCommand {
-  constructor() {
-    this.query = (item) => item;
-  }
-  query: Function;
-  // sort: Function;
-  // order: Function;
-
-  execute(targets) {
-    let subset = targets;
-    if (this.query) {
-      subset = targets.filter(this.query);
-    }
-    return subset;
   }
 }
