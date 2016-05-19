@@ -1,23 +1,20 @@
 'use strict';
 
-require('core-js');
-
+require('es6-shim');
 require('reflect-metadata');
-require('zone.js/dist/zone');
 
-var testing = require('angular2/testing');
-var browser = require('angular2/platform/testing/browser');
+require('zone.js/dist/zone');
+require('zone.js/dist/long-stack-trace-zone');
+require('zone.js/dist/jasmine-patch');
+require('zone.js/dist/async-test');
+
+var appContext = require.context('../app', true, /\.spec\.ts/);
+appContext.keys().forEach(appContext);
+
+var testing = require('@angular/core/testing');
+var browser = require('@angular/platform-browser-dynamic/testing');
 
 testing.setBaseTestProviders(
-  browser.TEST_BROWSER_PLATFORM_PROVIDERS,
-  browser.TEST_BROWSER_APPLICATION_PROVIDERS);
-
-Object.assign(global, testing);
-
-var testContext = require.context('../app', true, /\.spec\.ts$/);
-
-function requireAll(requireContext) {
-  return requireContext.keys().map(requireContext);
-}
-
-requireAll(testContext);
+  browser.TEST_BROWSER_DYNAMIC_PLATFORM_PROVIDERS,
+  browser.TEST_BROWSER_DYNAMIC_APPLICATION_PROVIDERS
+);

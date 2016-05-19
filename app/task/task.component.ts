@@ -1,6 +1,6 @@
-import { Component, Input } from 'angular2/core';
-import { Task }             from '../models/task';
-import { TaskService }      from '../services/task.service';
+import { Component, Input } from '@angular/core';
+import { Task }             from '../shared/task.model';
+import { TaskService }      from '../shared/task.service';
 
 @Component({
   selector: 'task',
@@ -21,7 +21,7 @@ export class TaskComponent {
     this.task.isCompleted = !this.task.isCompleted;
     this._taskService.update(this.task);
   }
-  
+
   markPrioritised() {
     this.task.isPrioritised = !this.task.isPrioritised;
     this._taskService.update(this.task);

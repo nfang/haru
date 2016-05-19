@@ -4,32 +4,24 @@ var root    = util.root;
 
 module.exports = {
   resolve: {
-    extensions: ['', '.ts', '.js'],
-    root: path.resolve(root, 'app'),
-    modulesDirectories: ['node_modules']
+    extensions: ['', '.ts', '.js']
   },
 
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
 
   module: {
     loaders: [
       {
         test: /\.ts$/,
-        loader: 'awesome-typescript',
-        exclude: '/node_modules/',
-        query: {
-          'compilerOptions': {
-            'removeComments': true
-          }
-        },
+        loader: 'ts',
       },
       {
         test: /\.css$/,
-        loader: 'style!css'
+        loader: 'null'
       },
       {
         test: /\.scss$/,
-        loader: 'raw!sass!source-map'
+        loader: 'raw!sass'
       },
       {
         test: /\.json$/,
@@ -40,16 +32,5 @@ module.exports = {
         loader: 'html'
       }
     ]
-  },
-
-  plugins: [ ],
-
-  node: {
-    global: 'window',
-    process: false,
-    crypto: 'empty',
-    module: false,
-    clearImmediate: false,
-    setImmediate: false
   }
 };

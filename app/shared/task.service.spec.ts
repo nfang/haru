@@ -3,15 +3,16 @@ import {
   inject,
   injectAsync,
   describe,
-  beforeEachProviders,
-  TestComponentBuilder
-} from 'angular2/testing';
+  beforeEachProviders
+} from '@angular/core/testing';
+import { provide } from '@angular/core';
+import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
+import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-import { provide } from 'angular2/core';
-
-import { Task } from '../models/task';
+import { Task } from './task.model';
 import { TaskProvider } from './mock-tasks';
-import { TaskService } from '../services/task.service';
+import { TaskService } from './task.service';
 
 class MockTaskProvider {
   public tasks: Task[] = [

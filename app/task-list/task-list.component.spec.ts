@@ -3,15 +3,18 @@ import {
   inject,
   injectAsync,
   describe,
-  beforeEachProviders,
-  TestComponentBuilder
-} from 'angular2/testing';
-import { provide } from 'angular2/core';
+  beforeEach,
+  beforeEachProviders
+} from '@angular/core/testing';
+import { provide } from '@angular/core';
+import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
+import { Component } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-import { Task } from '../models/task';
-import { TaskListComponent } from './task-list.component';
-import { TaskService } from '../services/task.service';
-import { TaskProvider } from '../services/mock-tasks';
+import { Task } from '../shared/task.model';
+import { TaskListComponent } from '../task-list/task-list.component';
+import { TaskService } from '../shared/task.service';
+import { TaskProvider } from '../shared/mock-tasks';
 
 class MockTaskProvider {
   public tasks: Task[] = [
@@ -22,11 +25,33 @@ class MockTaskProvider {
 }
 
 describe('TaskListComponent', () => {
+  let builder, taskService;
+
   beforeEachProviders(() => [
     provide(TaskProvider, { useClass: MockTaskProvider }),
-    TaskService,
     TaskListComponent,
+    TaskService,
+    TestComponentBuilder
   ]);
+
+  beforeEach(inject([TestComponentBuilder, TaskService], (tcb, service) => {
+    builder = tcb;
+    taskService = service;
+  }));
+
+  it('should inject the component', inject([TaskListComponent],
+    (component: TaskListComponent) => {
+    expect(component).toBeTruthy();
+  }));
+
+  it('should create the component', inject([], () => {
+    return builder.createAsync(TaskListComponentTestController)
+      .then((fixture: ComponentFixture<any>) => {
+        let query = fixture.debugElement.query(By.directive(TaskListComponent));
+        expect(query).toBeTruthy();
+        expect(query.componentInstance).toBeTruthy();
+      });
+  }));
 
   it('should log ngOnInit', inject([ TaskListComponent ], (component) => {
     spyOn(console, 'log');
@@ -48,7 +73,7 @@ describe('TaskListComponent', () => {
       expect(tasks.length).toBe(1);
       expect(tasks[0].title).toEqual('Task 3');
   }));
-  
+
   it('should return a ordered list of tasks according to order', inject([ TaskListComponent ],
     (component) => {
       component.ngOnInit();
@@ -58,3 +83,10 @@ describe('TaskListComponent', () => {
       expect(afterOrderTasks[0].title).toEqual('Task 2');
     }));
 });
+
+@Component({
+  selector: 'test',
+  template: `<task-list></task-list>`,
+  directives: [TaskListComponent]
+})
+class TaskListComponentTestController { }

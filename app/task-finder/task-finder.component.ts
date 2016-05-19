@@ -1,8 +1,8 @@
-import { Component, Output, EventEmitter } from 'angular2/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
-import { Task } from '../models/task';
-import { TaskService } from '../services/task.service';
-import { TaskProvider } from '../services/mock-tasks';
+import { Task } from '../shared/task.model';
+import { TaskService } from '../shared/task.service';
+import { TaskProvider } from '../shared/mock-tasks';
 
 @Component({
   selector: 'task-finder',

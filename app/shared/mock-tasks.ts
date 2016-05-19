@@ -1,5 +1,5 @@
-import { Injectable } from 'angular2/core';
-import { Task } from '../models/task';
+import { Injectable } from '@angular/core';
+import { Task } from './task.model';
 
 @Injectable()
 export class TaskProvider {

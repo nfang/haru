@@ -1,8 +1,8 @@
-import { Component } from 'angular2/core';
+import { Component } from '@angular/core';
 
-import { TaskListComponent } from './task-list.component';
-import { TaskService } from '../services/task.service';
-import { TaskProvider } from '../services/mock-tasks';
+import { TaskListComponent } from './task-list/task-list.component';
+import { TaskService } from './shared/task.service';
+import { TaskProvider } from './shared/mock-tasks';
 
 @Component({
   selector: 'todo-app',

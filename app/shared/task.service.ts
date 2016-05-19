@@ -1,6 +1,7 @@
+import { Injectable } from '@angular/core';
+
 import { TaskProvider } from './mock-tasks';
-import { Task } from '../models/task';
-import { Injectable } from 'angular2/core';
+import { Task } from './task.model';
 
 @Injectable()
 export class TaskService {
@@ -33,7 +34,7 @@ export class TaskService {
     if (index < 0) {
       throw new Error('error: task not found');
     }
-    
+
     return this._taskProvider.tasks.splice(index, 1);
   }
 

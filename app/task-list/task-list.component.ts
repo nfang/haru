@@ -1,11 +1,11 @@
-import { Component, Input } from 'angular2/core';
+import { Component, Input } from '@angular/core';
 
-import { Task }             from '../models/task';
-import { TaskComponent }    from './task.component';
-import { TaskFinderComponent } from './task-finder.component';
-import { TaskService }      from '../services/task.service';
+import { Task }             from '../shared/task.model';
+import { TaskComponent }    from '../task/task.component';
+import { TaskFinderComponent } from '../task-finder/task-finder.component';
+import { TaskService }      from '../shared/task.service';
 
-import { SortOrder, SortSpec, FilterSpec, QueryCommand } from '../utils/query-command';
+import { SortOrder, SortSpec, FilterSpec, QueryCommand } from '../shared/utils/query-command';
 
 @Component({
   selector: 'task-list',

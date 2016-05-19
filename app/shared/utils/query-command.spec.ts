@@ -3,11 +3,10 @@ import {
   inject,
   injectAsync,
   describe,
-  beforeEachProviders,
-  TestComponentBuilder
-} from 'angular2/testing';
+  beforeEachProviders
+} from '@angular/core/testing';
 
-import { Task } from '../models/task';
+import { Task } from '../task.model';
 import { SortOrder, SortSpec, FilterSpec, QueryCommand } from './query-command';
 
 describe('SortSpec', () => {

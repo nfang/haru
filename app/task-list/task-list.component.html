@@ -1,4 +1,4 @@
 <task-finder (queryUpdated)="updateQuery($event)"></task-finder>
 <ul>
-  <task [task]="task" *ngFor="#task of tasks"></task>
+  <task [task]="task" *ngFor="let task of tasks"></task>
 </ul>
