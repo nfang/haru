@@ -1,7 +1,7 @@
-var path    = require('path');
+var path = require('path');
 var webpack = require('webpack');
-var util    = require('./util');
-var root    = util.root;
+var util = require('./util');
+var root = util.root;
 
 /**
  * Plugins
@@ -22,38 +22,25 @@ module.exports = {
   },
 
   module: {
-    loaders: [
-      {
-        test: /\.ts$/,
-        loader: 'ts'
-      },
-      {
-        test: /\.css$/,
-        loader: 'raw'
-      },
-      {
-        test: /\.scss$/,
-        exclude: path.resolve(root, 'app'),
-        loader: ExtractTextPlugin.extract('style', 'sass!source-map')
-      },
-      {
-        test: /\.scss$/,
-        include: path.resolve(root, 'app'),
-        loader: 'raw!sass!source-map'
-      },
-      {
-        test: /\.json$/,
-        loader: 'json'
-      },
-      {
-        test: /\.html$/,
-        loader: 'raw'
-      },
-      {
-        test: /\.(woff2?|ttf|eot|svg)$/,
-        loader: 'url?limit=10000'
-      }
-    ]
+    loaders: [{
+      test: /\.ts$/,
+      loader: 'ts'
+    }, {
+      test: /\.css$/,
+      loader: 'raw'
+    }, {
+      test: /\.scss$/,
+      loader: 'raw!sass!source-map'
+    }, {
+      test: /\.json$/,
+      loader: 'json'
+    }, {
+      test: /\.html$/,
+      loader: 'raw'
+    }, {
+      test: /\.(woff2?|ttf|eot|svg)$/,
+      loader: 'url?limit=10000'
+    }]
   },
 
   plugins: [

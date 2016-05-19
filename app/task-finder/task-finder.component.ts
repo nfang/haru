@@ -1,4 +1,6 @@
 import { Component, Output, EventEmitter } from '@angular/core';
+import {MdInput} from '@angular2-material/input';
+
 
 import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
@@ -6,7 +8,11 @@ import { TaskProvider } from '../shared/mock-tasks';
 
 @Component({
   selector: 'task-finder',
-  template: require('./task-finder.component.html')
+  template: require('./task-finder.component.html'),
+  styles: [
+    require('./task-finder.component.scss')
+  ],
+  directives: [MdInput]
 })
 export class TaskFinderComponent {
   @Output() queryUpdated = new EventEmitter();

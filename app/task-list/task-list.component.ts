@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { MdList } from '@angular2-material/list';
 
 import { Task }             from '../shared/task.model';
 import { TaskComponent }    from '../task/task.component';
@@ -14,7 +15,7 @@ import { SortOrder, SortSpec, FilterSpec, QueryCommand } from '../shared/utils/q
     require('./task-list.component.scss')
   ],
   directives: [
-    TaskComponent, TaskFinderComponent
+    MdList, TaskComponent, TaskFinderComponent
   ]
 })
 export class TaskListComponent {
