@@ -7,25 +7,25 @@ var root    = util.root;
  * Plugins
  */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
-    'app': './app/bootstrapper',
-    'vendor': ['reflect-metadata', 'zone.js/dist/zone']
+    'polyfills': './app/polyfills.ts',
+    'vendor': './app/vendor.ts',
+    'app': './app/bootstrapper'
   },
 
   resolve: {
     extensions: ['', '.ts', '.js', '.json', '.css', '.scss', '.html'],
-    root: path.resolve(root, 'app'),
-    modulesDirectories: ['node_modules']
+    root: path.resolve(root, 'app')
   },
 
   module: {
     loaders: [
       {
         test: /\.ts$/,
-        loader: 'awesome-typescript',
-        exclude: ['/node_modules/', '\.spec\.ts$']
+        loader: 'ts'
       },
       {
         test: /\.css$/,
@@ -33,6 +33,12 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: path.resolve(root, 'app'),
+        loader: ExtractTextPlugin.extract('style', 'sass!source-map')
+      },
+      {
+        test: /\.scss$/,
+        include: path.resolve(root, 'app'),
         loader: 'raw!sass!source-map'
       },
       {
@@ -52,13 +58,12 @@ module.exports = {
 
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-      filename: 'vendor.bundle.js'
+      name: ['app', 'vendor', 'polyfills']
     }),
 
     new HtmlWebpackPlugin({
       template: './app/index.html',
-      chunksSortMode: util.sortBy(['vendor', 'app'])
+      chunksSortMode: util.sortBy(['polyfills', 'vendor', 'app'])
     })
   ]
 };

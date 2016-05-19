@@ -12,11 +12,12 @@ var devConfig = {
   devtool: 'cheap-module-eval-source-map',
 
   devServer: {
+    historyApiFallback: true,
     contentBase: './.tmp',
     inline: true,
     host: '0.0.0.0',
     port: '9010',
-    stats: { colors: true }
+    stats: 'minimal'
   }
 };
 

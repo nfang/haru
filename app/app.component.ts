@@ -8,7 +8,6 @@ import { TaskProvider } from './shared/mock-tasks';
   selector: 'todo-app',
   template: require('./app.component.html'),
   styles: [
-    require('normalize.css/normalize.css'),
     require('./app.component.scss')
   ],
   directives: [
