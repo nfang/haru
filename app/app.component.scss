@@ -2,3 +2,9 @@
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css);
 
 @import '~reset-css/reset';
+
+:host {
+  display: block;
+  max-width: 480px;
+  margin: 0 auto;
+}

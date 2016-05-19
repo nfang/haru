@@ -1,26 +1,24 @@
-.task-list-item {
+:host {
   font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  max-width: 480px;
-  list-style: none;
+}
 
-  .task-heading {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+.task-heading {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 
-    .task-title {
-      font-size: 24px;
-      font-weight: 100;
-      width: 70%;
-    }
-
-    .btn {
-      font-size: 24px;
-    }
+  .task-title {
+    font-size: 24px;
+    font-weight: 100;
+    width: 100%;
   }
 
-  .task-detail {
-    font-weight: 300;
+  .btn {
+    font-size: 24px;
   }
+}
+
+.task-detail {
+  font-weight: 300;
 }
