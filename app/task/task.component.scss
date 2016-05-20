@@ -1,7 +1,6 @@
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 :host {
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
   cursor: pointer;
 }
 
@@ -37,9 +36,9 @@
 .btn-prioritise {
   opacity: 0;
   width: 0;
-  transition: opacity .2s .1s,
-              color .2s .1s,
-              width .1s;
+  transition: opacity .2s,
+              color .2s,
+              width .4s;
 
   :host:hover & {
     opacity: .25;
