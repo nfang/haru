@@ -6,9 +6,9 @@ import {
   beforeEach,
   beforeEachProviders
 } from '@angular/core/testing';
-import { provide } from '@angular/core';
+import { Component, provide } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
-import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { Task } from '../shared/task.model';
@@ -30,6 +30,7 @@ describe('TaskComponent', () => {
     provide(
       TaskProvider, { useClass: MockTaskProvider }
     ),
+    HTTP_PROVIDERS,
     TaskComponent,
     TaskService,
     TestComponentBuilder
@@ -108,13 +109,15 @@ describe('TaskComponent', () => {
      .then((fixture: ComponentFixture<any>) => {
        let component = fixture.componentInstance,
            element = fixture.nativeElement,
-           task = taskService.list()[1];
+           task = taskService.list()[1],
+           elBtnPrioritise = element.querySelector('.btn-prioritise');
        component.task = task;
        fixture.detectChanges();
-       expect(element.querySelector('.isPrioritised').checked).toBeFalsy();
-       component.markPrioritised();
+       expect(elBtnPrioritise.classList.contains('show')).toBeFalsy();
+       component.togglePrioritised();
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
+       expect(elBtnPrioritise.classList.contains('show')).toBeTruthy();
        done();
      })
      .catch(e => done.fail(e));;

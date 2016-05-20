@@ -1,13 +1,18 @@
+<div class="wrapper">
+  <div class="btn-prioritise" [class.show]="task.isPrioritised"
+    (click)="togglePrioritised()">
+    <md-icon>priority_high</md-icon>
+  </div>
+  <h2 class="task-title">{{task.title}}</h2>
+</div>
 <div class="task-heading">
-  <h1 class="task-title">{{task.title}}</h1>
   <div class="task-action">
-    <input type="checkbox" class="isPrioritised" [checked]="task.isPrioritised" (change)="markPrioritised()">
-    <div class="btn" (click)='removeTask()'>
+    <!-- <div class="btn" (click)='removeTask()'>
       <i class="fa fa-trash-o" aria-hidden="true"></i>
-    </div>
+    </div> -->
     <input type="checkbox" class="isCompleted" [checked]="task.isCompleted" (change)="markCompleted()">
   </div>
 </div>
-<div class="task-detail">
+<div class="task-detail" style="display:none;">
   <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate}}</time>
 </div>

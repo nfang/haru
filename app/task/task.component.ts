@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
+
 import { Task }             from '../shared/task.model';
 import { TaskService }      from '../shared/task.service';
 
@@ -8,8 +10,11 @@ import { TaskService }      from '../shared/task.service';
   styles: [
     require('./task.component.scss')
   ],
+  directives: [
+    MdIcon
+  ],
   providers: [
-    TaskService
+    TaskService, MdIconRegistry
   ]
 })
 export class TaskComponent {
@@ -22,7 +27,7 @@ export class TaskComponent {
     this._taskService.update(this.task);
   }
 
-  markPrioritised() {
+  togglePrioritised() {
     this.task.isPrioritised = !this.task.isPrioritised;
     this._taskService.update(this.task);
   }

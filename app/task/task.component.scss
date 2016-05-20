@@ -1,24 +1,42 @@
+@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+
 :host {
   font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  cursor: pointer;
 }
 
-.task-heading {
+.wrapper {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-
-  .task-title {
-    font-size: 24px;
-    font-weight: 100;
-    width: 100%;
-  }
-
-  .btn {
-    font-size: 24px;
-  }
 }
 
-.task-detail {
-  font-weight: 300;
+.task-title {
+  background: #fff;
+  font-size: 1.2em;
+  font-weight: 400;
+  height: 24px;
+  margin: 0;
+  opacity: .8;
+  width: 100%;
+}
+
+.btn-prioritise {
+  opacity: 0;
+  width: 0;
+  transition: opacity .2s .1s,
+              color .2s .1s,
+              width .1s;
+
+  :host:hover & {
+    opacity: .25;
+    width: 24px;
+  }
+
+  &.show {
+    color: #e32300;
+    opacity: .8;
+    width: 24px;
+  }
 }
