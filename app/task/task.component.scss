@@ -10,16 +10,28 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+  font-size: 100%;
+  padding: 16px 0;
+  transition: font-size .2s, padding .2s, opacity .2s;
+
+  &.done {
+    font-size: 80%;
+    opacity: .5;
+    padding: 8px 0;
+  }
 }
 
-.task-title {
+.title {
   background: #fff;
   font-size: 1.2em;
   font-weight: 400;
-  height: 24px;
   margin: 0;
   opacity: .8;
   width: 100%;
+
+  .wrapper.done & {
+    text-decoration: line-through;
+  }
 }
 
 .btn-prioritise {
@@ -38,5 +50,25 @@
     color: #e32300;
     opacity: .8;
     width: 24px;
+  }
+}
+
+.btn-done {
+  md-icon {
+    display: none;
+    font-size: 1.2em;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    opacity: .5;
+
+    &.show {
+      display: inline-block;
+    }
+
+    .wrapper.done &.show {
+      color: #00b227;
+      opacity: 1;
+    }
   }
 }

@@ -1,16 +1,19 @@
-<div class="wrapper">
+<div class="wrapper" [class.done]="task.isCompleted">
   <div class="btn-prioritise" [class.show]="task.isPrioritised"
     (click)="togglePrioritised()">
     <md-icon>priority_high</md-icon>
   </div>
-  <h2 class="task-title">{{task.title}}</h2>
+  <h2 class="title">{{task.title}}</h2>
+  <div class="btn-done" (click)="markCompleted()">
+    <md-icon [class.show]="!task.isCompleted">radio_button_unchecked</md-icon>
+    <md-icon [class.show]="task.isCompleted">lens</md-icon>
+  </div>
 </div>
 <div class="task-heading">
   <div class="task-action">
     <!-- <div class="btn" (click)='removeTask()'>
       <i class="fa fa-trash-o" aria-hidden="true"></i>
     </div> -->
-    <input type="checkbox" class="isCompleted" [checked]="task.isCompleted" (change)="markCompleted()">
   </div>
 </div>
 <div class="task-detail" style="display:none;">
