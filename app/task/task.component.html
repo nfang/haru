@@ -4,7 +4,7 @@
     <md-icon>priority_high</md-icon>
   </div>
   <h2 class="title">{{task.title}}</h2>
-  <div class="btn-done" (click)="markCompleted()">
+  <div class="btn-done" (click)="toggleCompleted()">
     <md-icon [class.show]="!task.isCompleted">radio_button_unchecked</md-icon>
     <md-icon [class.show]="task.isCompleted">lens</md-icon>
   </div>

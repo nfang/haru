@@ -22,7 +22,7 @@ export class TaskComponent {
 
   constructor(private _taskService: TaskService) {}
 
-  markCompleted() {
+  toggleCompleted() {
     this.task.isCompleted = !this.task.isCompleted;
     this._taskService.update(this.task);
   }

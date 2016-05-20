@@ -63,7 +63,7 @@ describe('TaskComponent', () => {
             task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('.task-title').innerText).toBe(task.title);
+        expect(element.querySelector('.title').innerText).toBe(task.title);
         expect(element.querySelector('time').innerText).toBe(task.dueDate.toString());
         done();
       })
@@ -75,13 +75,16 @@ describe('TaskComponent', () => {
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement,
-            task: Task = taskService.list()[0];
+            task: Task = taskService.list()[0],
+            elBtnComplete = element.querySelector('.btn-done');
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('.isCompleted').checked).toBeFalsy();
-        component.markCompleted();
+        expect(elBtnComplete.querySelectorAll('md-icon')[0].classList.contains('show')).toBeTruthy();
+        expect(elBtnComplete.querySelectorAll('md-icon')[1].classList.contains('show')).toBeFalsy();
+        component.toggleCompleted();
         fixture.detectChanges();
-        expect(task.isCompleted).toBeTruthy();
+        expect(elBtnComplete.querySelectorAll('md-icon')[0].classList.contains('show')).toBeFalsy();
+        expect(elBtnComplete.querySelectorAll('md-icon')[1].classList.contains('show')).toBeTruthy();
         done();
       })
       .catch(e => done.fail(e));;
