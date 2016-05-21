@@ -4,16 +4,9 @@
     <md-icon>priority_high</md-icon>
   </div>
   <h2 class="title">{{task.title}}</h2>
-  <div class="btn-done" (click)="toggleCompleted()">
+  <div class="btn-mark-complete" (click)="toggleCompleted()">
     <md-icon [class.show]="!task.isCompleted">radio_button_unchecked</md-icon>
     <md-icon [class.show]="task.isCompleted">lens</md-icon>
-  </div>
-</div>
-<div class="task-heading">
-  <div class="task-action">
-    <!-- <div class="btn" (click)='removeTask()'>
-      <i class="fa fa-trash-o" aria-hidden="true"></i>
-    </div> -->
   </div>
 </div>
 <div class="task-detail" style="display:none;">
