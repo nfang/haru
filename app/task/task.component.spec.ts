@@ -76,7 +76,7 @@ describe('TaskComponent', () => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement,
             task: Task = taskService.list()[0],
-            elBtnComplete = element.querySelector('.btn-done');
+            elBtnComplete = element.querySelector('.btn-mark-complete');
         component.task = task;
         fixture.detectChanges();
         expect(elBtnComplete.querySelectorAll('md-icon')[0].classList.contains('show')).toBeTruthy();
