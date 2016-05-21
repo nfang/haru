@@ -1,5 +1,9 @@
 @import '~reset-css/reset';
 
-:host {
-  display: block;
+md-list-item /deep/ .md-list-item {
+  padding: 0;
+}
+
+md-list-item task {
+  flex: 1 100%;
 }

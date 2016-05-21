@@ -27,7 +27,7 @@
   font-weight: 400;
   margin: 0;
   opacity: .8;
-  width: 100%;
+  flex: 1 100%;
 
   .wrapper.done & {
     text-decoration: line-through;
