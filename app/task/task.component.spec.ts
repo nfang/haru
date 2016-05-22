@@ -79,12 +79,12 @@ describe('TaskComponent', () => {
             elBtnComplete = element.querySelector('.btn-mark-complete');
         component.task = task;
         fixture.detectChanges();
-        expect(elBtnComplete.querySelectorAll('md-icon')[0].classList.contains('show')).toBeTruthy();
-        expect(elBtnComplete.querySelectorAll('md-icon')[1].classList.contains('show')).toBeFalsy();
+        expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
+        expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('radio_button_unchecked');
         component.toggleCompleted();
         fixture.detectChanges();
-        expect(elBtnComplete.querySelectorAll('md-icon')[0].classList.contains('show')).toBeFalsy();
-        expect(elBtnComplete.querySelectorAll('md-icon')[1].classList.contains('show')).toBeTruthy();
+        expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
+        expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('lens');
         done();
       })
       .catch(e => done.fail(e));;
@@ -116,11 +116,11 @@ describe('TaskComponent', () => {
            elBtnPrioritise = element.querySelector('.btn-prioritise');
        component.task = task;
        fixture.detectChanges();
-       expect(elBtnPrioritise.classList.contains('show')).toBeFalsy();
+       expect(elBtnPrioritise.classList.contains('reveal')).toBeFalsy();
        component.togglePrioritised();
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
-       expect(elBtnPrioritise.classList.contains('show')).toBeTruthy();
+       expect(elBtnPrioritise.classList.contains('reveal')).toBeTruthy();
        done();
      })
      .catch(e => done.fail(e));;
