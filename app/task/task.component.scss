@@ -56,7 +56,7 @@
     width: $reveal-width;
   }
 
-  &.show {
+  &.reveal {
     color: #e32300;
     opacity: .8;
     width: $reveal-width;
@@ -68,14 +68,8 @@
   @include icon-btn($dimension);
 
   md-icon {
-    display: none;
     opacity: .5;
-
-    &.show {
-      display: block;
-    }
-
-    .wrapper.done &.show {
+    .wrapper.done & {
       color: #00b227;
       opacity: 1;
     }

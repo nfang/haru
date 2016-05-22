@@ -1,12 +1,12 @@
 <div class="wrapper" [class.done]="task.isCompleted">
-  <div class="btn-prioritise" [class.show]="task.isPrioritised"
+  <div class="btn-prioritise" [class.reveal]="task.isPrioritised"
     (click)="togglePrioritised()">
     <md-icon>priority_high</md-icon>
   </div>
   <h2 class="title">{{task.title}}</h2>
   <div class="btn-mark-complete" (click)="toggleCompleted()">
-    <md-icon [class.show]="!task.isCompleted">radio_button_unchecked</md-icon>
-    <md-icon [class.show]="task.isCompleted">lens</md-icon>
+    <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
+    <md-icon *ngIf="task.isCompleted">lens</md-icon>
   </div>
 </div>
 <div class="task-detail" style="display:none;">
