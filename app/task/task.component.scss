@@ -15,43 +15,61 @@
 :host {
   cursor: pointer;
   font-size: 100%;
+  opacity: .8;
+  transition: opacity .2s;
+
+  &.done {
+    opacity: .5;
+  }
 }
 
-.wrapper {
-  font-size: 1.2rem;
+.row {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+
+.details {
+  @include icon-btn(1.5rem);
+  height: 0;
+  opacity: 0;
+  transition: height .4s ease-out;
+
+  &.reveal {
+    opacity: 1;
+    height: 120px;
+  }
+}
+
+header {
+  background: #fff;
+  font-size: 1.2rem;
   padding: 1rem 0;
-  transition-property: font-size, padding, opacity;
+  transition-property: font-size, padding;
   transition-duration: .2s;
 
-  &.done {
+  :host.done & {
     font-size: 1rem;
-    opacity: .5;
     padding: .5rem 0;
   }
 }
 
 .title {
-  background: #fff;
-  opacity: .8;
-  flex: 1 100%;
-
-  .wrapper.done & {
+  flex: 1 auto;
+  :host.done & {
     text-decoration: line-through;
   }
 }
 
 .btn-prioritise {
-  $reveal-width: 1.2rem;
+  $reveal-width: 1.5rem;
   @include icon-btn($reveal-width);
   opacity: 0;
   width: 0;
-  transition: opacity .2s, color .2s, width .4s .25s ease-out;
+  transition: opacity .2s, color .2s, width .4s ease-out;
 
-  :host:hover & {
+  :host.expanded & {
     opacity: .25;
     width: $reveal-width;
   }
@@ -64,12 +82,10 @@
 }
 
 .btn-mark-complete {
-  $dimension: 1.2rem;
-  @include icon-btn($dimension);
-
+  @include icon-btn(1.5rem);
   md-icon {
     opacity: .5;
-    .wrapper.done & {
+    :host.done & {
       color: #00b227;
       opacity: 1;
     }

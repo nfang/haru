@@ -53,14 +53,6 @@ describe('TaskListComponent', () => {
       });
   }));
 
-  it('should log ngOnInit', inject([ TaskListComponent ], (component) => {
-    spyOn(console, 'log');
-    expect(console.log).not.toHaveBeenCalled();
-
-    component.ngOnInit();
-    expect(console.log).toHaveBeenCalled();
-  }));
-
   it('should return a list of tasks', inject([ TaskListComponent ], (component) => {
     let tasks = component.tasks;
     expect(tasks.length).toBe(3);
@@ -76,7 +68,6 @@ describe('TaskListComponent', () => {
 
   it('should return a ordered list of tasks according to order', inject([ TaskListComponent ],
     (component) => {
-      component.ngOnInit();
       let beforeOrderTasks = component.tasks;
       beforeOrderTasks[1].isPrioritised = true;
       let afterOrderTasks = component.tasks;

@@ -1,4 +1,4 @@
-<task-finder (queryUpdated)="updateQuery($event)"></task-finder>
+<task-finder (change)="updateQuery($event)"></task-finder>
 <md-list>
   <md-list-item *ngFor="let task of tasks">
     <task [task]="task"></task>

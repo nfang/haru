@@ -16,7 +16,7 @@ export class TaskService {
     return this._taskProvider.tasks;
   }
 
-  add(task: Task) {
+  add(task: Task): number {
     return this._taskProvider.tasks.push(task);
   }
 

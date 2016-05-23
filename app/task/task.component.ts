@@ -1,8 +1,14 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 
-import { Task }             from '../shared/task.model';
-import { TaskService }      from '../shared/task.service';
+import { Task } from '../shared/task.model';
+import { TaskService } from '../shared/task.service';
 
 @Component({
   selector: 'task',
@@ -11,16 +17,24 @@ import { TaskService }      from '../shared/task.service';
     require('./task.component.scss')
   ],
   directives: [
-    MdIcon
+    MdIcon, MD_INPUT_DIRECTIVES
   ],
   providers: [
     TaskService, MdIconRegistry
-  ]
+  ],
+  host: {
+    '[class.expanded]' : 'isExpanded',
+    '[class.done]'     : 'task.isCompleted'
+  }
 })
 export class TaskComponent {
   @Input() task: Task;
 
-  constructor(private _taskService: TaskService) {}
+  isExpanded: boolean;
+
+  constructor(private _taskService: TaskService) {
+    this.isExpanded = false;
+  }
 
   toggleCompleted() {
     this.task.isCompleted = !this.task.isCompleted;
@@ -32,7 +46,29 @@ export class TaskComponent {
     this._taskService.update(this.task);
   }
 
-  removeTask() {
+  toggleDetailPane() {
+    this.isExpanded = !this.isExpanded;
+  }
+
+  addSubtask(task: Task) {
+    if (this.task.checklist.includes(task)) {
+      throw new Error(`argument error: task with name ${task.title} already exists`);
+    }
+    this.task.checklist.push(task);
+    this._taskService.update(this.task);
+  }
+
+  removeSubtask(task: Task): Task[] {
+    let index = this.task.checklist.indexOf(task);
+    let removed: Task[];
+    if (index >= 0) {
+      removed = this.task.checklist.splice(index, 1);
+      this._taskService.update(this.task);
+    }
+    return removed;
+  }
+
+  remove() {
     this._taskService.remove(this.task);
   }
 }

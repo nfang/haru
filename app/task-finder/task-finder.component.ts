@@ -1,9 +1,14 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { MdInput } from '@angular2-material/input';
+import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
+import { Observable } from 'rxjs/Observable';
 
 import { Task } from '../shared/task.model';
 import { TaskService } from '../shared/task.service';
 import { TaskProvider } from '../shared/mock-tasks';
+
+export class ValueChangeEvent {
+  constructor(public value) {}
+}
 
 @Component({
   selector: 'task-finder',
@@ -11,10 +16,15 @@ import { TaskProvider } from '../shared/mock-tasks';
   styles: [
     require('./task-finder.component.scss')
   ],
-  directives: [ MdInput ]
+  directives: [ MD_INPUT_DIRECTIVES ]
 })
 export class TaskFinderComponent {
-  @Output() queryUpdated = new EventEmitter();
+  private _changeEmitter: EventEmitter<ValueChangeEvent> = new EventEmitter<ValueChangeEvent>();
+
+  @Output('change')
+  get onChange(): Observable<ValueChangeEvent> {
+    return this._changeEmitter.asObservable();
+  }
 
   task: Task;
 
@@ -22,11 +32,11 @@ export class TaskFinderComponent {
     this.task = new Task('');
   }
 
-  onQueryChanged() {
-    this.queryUpdated.emit({ value: this.task });
+  emitChange(event) {
+    this._changeEmitter.emit(new ValueChangeEvent(this.task));
   }
 
-  onSubmit() {
+  submit() {
     if (!this.task.title) {
       return;
     }

@@ -2,8 +2,9 @@
 
 md-list-item /deep/ .md-list-item {
   padding: 0;
+  height: auto;
 }
 
 md-list-item task {
-  flex: 1 100%;
+  flex: 1 auto;
 }

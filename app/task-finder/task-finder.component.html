@@ -1,5 +1,5 @@
-<form (submit)="onSubmit()">
+<form (submit)="submit()">
   <md-input placeholder="Search or add new task"
-    [(ngModel)]="task.title" (keyup)="onQueryChanged()">
+    [(ngModel)]="task.title" (keyup)="emitChange()">
   </md-input>
 </form>

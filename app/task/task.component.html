@@ -1,14 +1,23 @@
-<div class="wrapper" [class.done]="task.isCompleted">
+<header class="row">
   <div class="btn-prioritise" [class.reveal]="task.isPrioritised"
     (click)="togglePrioritised()">
     <md-icon>priority_high</md-icon>
   </div>
-  <h2 class="title">{{task.title}}</h2>
+  <h2 class="title" (click)="toggleDetailPane()">{{task.title}}</h2>
   <div class="btn-mark-complete" (click)="toggleCompleted()">
     <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
     <md-icon *ngIf="task.isCompleted">lens</md-icon>
   </div>
-</div>
-<div class="task-detail" style="display:none;">
-  <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate}}</time>
-</div>
+</header>
+<section class="details" [class.reveal]="isExpanded">
+  <div class="row">
+    <md-icon>alarm</md-icon>
+  </div>
+  <div class="row">
+    <md-icon>playlist_add</md-icon>
+    <!-- <md-input placeholder="Add a subtask" [floatingPlaceholder]="false"></md-input> -->
+  </div>
+  <div class="row">
+    <md-icon>content_paste</md-icon>
+  </div>
+</section>
