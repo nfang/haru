@@ -7,7 +7,7 @@ var root = util.root;
  * Plugins
  */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+// var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
