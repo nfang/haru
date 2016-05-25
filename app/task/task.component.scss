@@ -31,26 +31,60 @@
 
 .details {
   @include icon-btn(1.5rem);
+  font-size: .84rem;
   height: 0;
   opacity: 0;
-  transition: height .4s ease-out;
+  transition: height .4s ease-out, opacity .2s;
+
+  .row {
+    margin: .8rem 0;
+  }
 
   &.reveal {
     opacity: 1;
-    height: 120px;
+    height: auto;
+    min-height: 120px;
   }
+
+  md-icon {
+    font-size: 1.2rem;
+  }
+
+  md-input {
+    flex: 1 auto;
+  }
+
+  md-input /deep/ .md-input-wrapper {
+    margin: 0;
+  }
+}
+
+.checklist {
+  padding-top: 0;
+
+  md-checkbox {
+    font-size: .84rem;
+    margin-left: .2rem;
+  }
+
+  md-checkbox /deep/ .md-checkbox-inner-container {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  md-checkbox /deep/ .md-checkbox-background { }
 }
 
 header {
   background: #fff;
   font-size: 1.2rem;
-  padding: 1rem 0;
-  transition-property: font-size, padding;
+  margin: 1rem 0;
+  transition-property: font-size, margin;
   transition-duration: .2s;
 
   :host.done & {
     font-size: 1rem;
-    padding: .5rem 0;
+    margin: .5rem 0;
   }
 }
 
@@ -64,6 +98,7 @@ header {
 .btn-prioritise {
   $reveal-width: 1.5rem;
   @include icon-btn($reveal-width);
+  font-size: $reveal-width;
   opacity: 0;
   width: 0;
   transition: opacity .2s, color .2s, width .4s ease-out;

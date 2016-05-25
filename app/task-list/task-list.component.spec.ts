@@ -18,9 +18,9 @@ import { TaskProvider } from '../shared/mock-tasks';
 
 class MockTaskProvider {
   public tasks: Task[] = [
-    new Task('Task 1', 'Note 1', new Date()),
-    new Task('Task 2', 'Note 2', new Date()),
-    new Task('Task 3', 'Note 3', new Date())
+    new Task('Task 1', 'Note 1'),
+    new Task('Task 2', 'Note 2'),
+    new Task('Task 3', 'Note 3')
   ];
 }
 

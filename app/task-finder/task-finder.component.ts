@@ -40,7 +40,6 @@ export class TaskFinderComponent {
     if (!this.task.title) {
       return;
     }
-    this.task.dueDate = new Date();
     this._taskService.add(this.task);
     this.task = new Task('');
   }

@@ -3,8 +3,17 @@ import { Task } from './task.model';
 
 @Injectable()
 export class TaskProvider {
-  public tasks: Task[] = [
-    new Task('Read documentation', '', new Date(2016, 5, 14)),
-    new Task('Write demo todo app', '', new Date(2016, 5, 30))
-  ];
+  public tasks: Task[];
+
+  constructor() {
+    this.tasks = [
+      new Task('Read documentation'),
+      new Task('Write demo todo app')
+    ];
+
+    this.tasks[0].checklist = [
+      new Task('Read section 1'),
+      new Task('Read section 2')
+    ];
+  }
 }

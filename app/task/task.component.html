@@ -1,6 +1,5 @@
 <header class="row">
-  <div class="btn-prioritise" [class.reveal]="task.isPrioritised"
-    (click)="togglePrioritised()">
+  <div class="btn-prioritise" [class.reveal]="task.isPrioritised" (click)="togglePrioritised()">
     <md-icon>priority_high</md-icon>
   </div>
   <h2 class="title" (click)="toggleDetailPane()">{{task.title}}</h2>
@@ -13,10 +12,19 @@
   <div class="row">
     <md-icon>alarm</md-icon>
   </div>
-  <div class="row">
-    <md-icon>playlist_add</md-icon>
-    <!-- <md-input placeholder="Add a subtask" [floatingPlaceholder]="false"></md-input> -->
-  </div>
+  <md-list class="checklist">
+    <md-list-item class="row" *ngFor="let item of task.checklist">
+      <md-checkbox [(ngModel)]="item.isCompleted">
+        {{item.title}}
+      </md-checkbox>
+    </md-list-item>
+  </md-list>
+  <form class="row" (submit)="addSubtask(subtask)">
+    <md-icon>add</md-icon>
+    <md-input style="margin-left: .3rem" placeholder="Add a subtask"
+      [floatingPlaceholder]="false" [(ngModel)]="subtask.title"></md-input>
+    <md-icon></md-icon>
+  </form>
   <div class="row">
     <md-icon>content_paste</md-icon>
   </div>

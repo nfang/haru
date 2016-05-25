@@ -50,9 +50,9 @@ describe('QueryCommand', () => {
 
   beforeEach(() => {
     tasks = [
-      new Task('Task 1', 'Note important', new Date(2016, 5, 14)),
-      new Task('Task 2', 'Note normal', new Date(2016, 5, 30)),
-      new Task('Task 3', 'Note important', new Date(2016, 6, 30))
+      new Task('Task 1', 'Note important'),
+      new Task('Task 2', 'Note normal'),
+      new Task('Task 3', 'Note important')
     ];
     tasks[1].isPrioritised = true;
   });

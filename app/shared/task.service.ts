@@ -53,6 +53,6 @@ export class TaskService {
       throw new Error('error: task not found');
     }
 
-    return (this._taskProvider.tasks[index] = task);
+    return Object.assign(this._taskProvider.tasks[index], task);
   }
 }
