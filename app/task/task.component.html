@@ -13,17 +13,17 @@
     <md-icon>alarm</md-icon>
   </div>
   <md-list class="checklist">
-    <md-list-item class="row" *ngFor="let item of task.checklist">
+    <md-list-item class="row" *ngFor="let item of task.checklist" [class.done]="item.isCompleted">
       <md-checkbox [(ngModel)]="item.isCompleted">
-        {{item.title}}
+        <span class="checkbox-label">{{item.title}}</span>
       </md-checkbox>
+      <md-icon class="btn-delete-subtask" (click)="task.removeSubtask(item)">close</md-icon>
     </md-list-item>
   </md-list>
   <form class="row" (submit)="addSubtask(subtask)">
     <md-icon>add</md-icon>
     <md-input style="margin-left: .3rem" placeholder="Add a subtask"
       [floatingPlaceholder]="false" [(ngModel)]="subtask.title"></md-input>
-    <md-icon></md-icon>
   </form>
   <div class="row">
     <md-icon>content_paste</md-icon>

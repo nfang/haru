@@ -31,19 +31,20 @@
 
 .details {
   @include icon-btn(1.5rem);
+  display: none;
   font-size: .84rem;
-  height: 0;
   opacity: 0;
-  transition: height .4s ease-out, opacity .2s;
+  max-height: 0;
+  transition: max-height .4s ease-out, opacity .2s;
 
   .row {
     margin: .8rem 0;
   }
 
   &.reveal {
+    display: block;
     opacity: 1;
-    height: auto;
-    min-height: 120px;
+    max-height: 600px;
   }
 
   md-icon {
@@ -73,6 +74,31 @@
   }
 
   md-checkbox /deep/ .md-checkbox-background { }
+
+  md-list-item /deep/ .md-list-item {
+    flex: 1 auto;
+    justify-content: space-between;
+  }
+
+  .btn-delete-subtask {
+    color: #e32300;
+    opacity: 0;
+    transition: opacity .4s .2s;
+  }
+
+  md-list-item:hover .btn-delete-subtask {
+    opacity: 1;
+  }
+
+  .checkbox-label {
+    opacity: 1;
+    transition: opacity .2s;
+  }
+
+  md-list-item.done .checkbox-label {
+    opacity: .5;
+    text-decoration: line-through;
+  }
 }
 
 header {
