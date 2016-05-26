@@ -1,14 +1,30 @@
-import { Injectable } from '@angular/core';
-
-import { TaskProvider } from './mock-tasks';
-import { Task } from './task.model';
+import {Injectable, provide} from '@angular/core';
+import {Task} from '../task.model';
+import {ITaskService} from './interfaces';
 
 @Injectable()
-export class TaskService {
+export class InMemoryTaskProvider {
+  public tasks: Task[];
 
-  private _taskProvider: TaskProvider;
+  constructor() {
+    this.tasks = [
+      new Task('Read documentation'),
+      new Task('Write demo todo app')
+    ];
 
-  constructor(taskProvider: TaskProvider) {
+    this.tasks[0].checklist = [
+      new Task('Read section 1'),
+      new Task('Read section 2')
+    ];
+  }
+}
+
+@Injectable()
+export class InMemoryTaskService implements ITaskService {
+
+  private _taskProvider: InMemoryTaskProvider;
+
+  constructor(taskProvider: InMemoryTaskProvider) {
     this._taskProvider = taskProvider;
   }
 

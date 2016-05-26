@@ -10,7 +10,7 @@ import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
-import { TaskService } from '../shared/task.service';
+import { TaskService } from '../shared/services';
 
 @Component({
   selector: 'task',
@@ -21,9 +21,7 @@ import { TaskService } from '../shared/task.service';
   directives: [
     MdCheckbox, MdIcon, MD_INPUT_DIRECTIVES, MD_LIST_DIRECTIVES
   ],
-  providers: [
-    TaskService, MdIconRegistry
-  ],
+  providers: [MdIconRegistry],
   host: {
     '[class.expanded]' : 'isExpanded',
     '[class.done]'     : 'task.isCompleted'

@@ -6,17 +6,19 @@ import {
   beforeEach,
   beforeEachProviders
 } from '@angular/core/testing';
-import { provide } from '@angular/core';
+import { Component, provide } from '@angular/core';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
-import { Component } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { Task } from '../shared/task.model';
 import { TaskListComponent } from '../task-list/task-list.component';
-import { TaskService } from '../shared/task.service';
-import { TaskProvider } from '../shared/mock-tasks';
+import {
+  TaskService,
+  InMemoryTaskService,
+  InMemoryTaskProvider
+} from '../shared/services';
 
-class MockTaskProvider {
+class MockInMemoryTaskProvider {
   public tasks: Task[] = [
     new Task('Task 1', 'Note 1'),
     new Task('Task 2', 'Note 2'),
@@ -28,13 +30,14 @@ describe('TaskListComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
-    provide(TaskProvider, { useClass: MockTaskProvider }),
+    provide(InMemoryTaskProvider, { useClass: MockInMemoryTaskProvider }),
+    provide(TaskService, { useClass: InMemoryTaskService }),
+    InMemoryTaskService,
     TaskListComponent,
-    TaskService,
     TestComponentBuilder
   ]);
 
-  beforeEach(inject([TestComponentBuilder, TaskService], (tcb, service) => {
+  beforeEach(inject([TestComponentBuilder, InMemoryTaskService], (tcb, service) => {
     builder = tcb;
     taskService = service;
   }));

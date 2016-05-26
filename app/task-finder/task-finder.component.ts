@@ -1,10 +1,13 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter
+} from '@angular/core';
 import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { Observable } from 'rxjs/Observable';
 
 import { Task } from '../shared/task.model';
-import { TaskService } from '../shared/task.service';
-import { TaskProvider } from '../shared/mock-tasks';
+import { TaskService } from '../shared/services';
 
 export class ValueChangeEvent {
   constructor(public value) {}
