@@ -1,4 +1,7 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  Input
+} from '@angular/core';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
@@ -7,7 +10,7 @@ import {
   TaskFinderComponent,
   ValueChangeEvent
 } from '../task-finder/task-finder.component';
-import { TaskService } from '../shared/task.service';
+import { TaskService } from '../shared/services';
 import {
   SortOrder,
   SortSpec,
@@ -35,6 +38,9 @@ export class TaskListComponent {
   }
 
   updateQuery(event: ValueChangeEvent) {
+    if (!event.value) {
+      return;
+    }
     this.queryCommand.filter = new FilterSpec((task) => {
       return task.title.toLowerCase().includes(event.value.title);
     });

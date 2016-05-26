@@ -1,0 +1,76 @@
+import {Injectable} from '@angular/core';
+import {Task} from '../task.model';
+import {ITaskService} from './interfaces';
+
+class LocalStorageTaskCollection {
+  constructor(
+    public timestamp: string = (new Date()).toLocaleDateString(),
+    public tasks: Task[] = new Array<Task>()
+  ) { }
+}
+
+@Injectable()
+export class LocalStorageTaskService implements ITaskService {
+  private localStorageKey: string = 'HARU_TASKS';
+
+  taskCollection: LocalStorageTaskCollection;
+
+  constructor() {
+    this.taskCollection = JSON.parse(localStorage.getItem(this.localStorageKey));
+    if (!this.taskCollection) {
+      this.taskCollection = new LocalStorageTaskCollection();
+      this.save();
+    }
+  }
+
+  list(): Task[] {
+    let today = new Date();
+    if (today.toLocaleDateString() !== this.taskCollection.timestamp) {
+      this.taskCollection = new LocalStorageTaskCollection();
+      this.save();
+    }
+    return this.taskCollection.tasks;
+  }
+
+  add(task: Task): number {
+    let len = this.taskCollection.tasks.push(task);
+    this.save();
+    return len;
+  }
+
+  remove(task: Task): Task[] {
+    if (!task) {
+      throw new Error('argument error: invalid task');
+    }
+
+    let index = this.taskCollection.tasks.indexOf(task);
+    if (index < 0) {
+      throw new Error('error: task not found');
+    }
+
+    let removed = this.taskCollection.tasks.splice(index, 1);
+    this.save();
+
+    return removed;
+  }
+
+  update(task: Task): Task {
+    if (!task) {
+      throw new Error('argument error: invalid task');
+    }
+
+    let index = this.taskCollection.tasks.indexOf(task);
+    if (index < 0) {
+      throw new Error('error: task not found');
+    }
+
+    let updated = Object.assign(this.taskCollection.tasks[index], task);
+    this.save();
+
+    return updated;
+  }
+
+  private save() {
+    localStorage.setItem(this.localStorageKey, JSON.stringify(this.taskCollection));
+  }
+}

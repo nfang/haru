@@ -14,10 +14,13 @@ import { MdCheckbox } from '@angular2-material/checkbox';
 
 import { Task } from '../shared/task.model';
 import { TaskComponent } from '../task/task.component';
-import { TaskService } from '../shared/task.service';
-import { TaskProvider } from '../shared/mock-tasks';
+import {
+  TaskService,
+  InMemoryTaskService,
+  InMemoryTaskProvider
+} from '../shared/services';
 
-class MockTaskProvider {
+class MockInMemoryTaskProvider {
   public tasks: Task[] = [
     new Task('Task1', 'Note1'),
     new Task('Task2', 'Note2')
@@ -28,17 +31,17 @@ describe('TaskComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
-    provide(
-      TaskProvider, { useClass: MockTaskProvider }
-    ),
+    provide(InMemoryTaskProvider, { useClass: MockInMemoryTaskProvider }),
+    provide(TaskService, { useClass: InMemoryTaskService }),
+    InMemoryTaskService,
     HTTP_PROVIDERS,
     MdCheckbox,
     TaskComponent,
-    TaskService,
+    InMemoryTaskService,
     TestComponentBuilder
   ]);
 
-  beforeEach(inject([TestComponentBuilder, TaskService], (tcb, service) => {
+  beforeEach(inject([TestComponentBuilder, InMemoryTaskService], (tcb, service) => {
     builder = tcb;
     taskService = service;
   }));
