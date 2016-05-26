@@ -86,10 +86,10 @@ $details-font-size: .84rem;
 
 .btn-delete-subtask {
   color: #e32300;
-  opacity: 0;
-  transition: opacity .4s .2s;
+  transform: scale(0);
+  transition: transform .4s;
   .checklist-item:hover & {
-    opacity: 1;
+    transform: scale(1);
   }
 }
 
