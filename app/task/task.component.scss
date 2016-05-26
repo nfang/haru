@@ -11,6 +11,9 @@
   }
 }
 
+$icon-size: 1.5rem;
+$details-font-size: .84rem;
+
 :host {
   cursor: pointer;
   font-size: 100%;
@@ -30,19 +33,17 @@
 }
 
 .details {
-  @include icon-btn(1.5rem);
-  display: none;
-  font-size: .84rem;
+  @include icon-btn($icon-size);
+  font-size: $details-font-size;
   opacity: 0;
-  max-height: 0;
+  max-height: 0px;
   transition: max-height .4s ease-out, opacity .2s;
 
   .row {
-    margin: .8rem 0;
+    margin: .5rem 0;
   }
 
   &.reveal {
-    display: block;
     opacity: 1;
     max-height: 600px;
   }
@@ -51,53 +52,44 @@
     font-size: 1.2rem;
   }
 
-  md-input {
+  .input-subtask {
     flex: 1 auto;
-  }
-
-  md-input /deep/ .md-input-wrapper {
-    margin: 0;
+    margin: -1rem auto;
   }
 }
 
 .checklist {
   padding-top: 0;
+}
 
-  md-checkbox {
-    font-size: .84rem;
-    margin-left: .2rem;
-  }
+.checklist-item {
+  @extend .row;
+  flex: 1 auto;
+  justify-content: space-between;
+  font-size: $details-font-size;
 
-  md-checkbox /deep/ .md-checkbox-inner-container {
+  /deep/ .md-checkbox-inner-container {
     height: 1rem;
     width: 1rem;
+    margin: auto .25rem;
   }
+}
 
-  md-checkbox /deep/ .md-checkbox-background { }
-
-  md-list-item /deep/ .md-list-item {
-    flex: 1 auto;
-    justify-content: space-between;
-  }
-
-  .btn-delete-subtask {
-    color: #e32300;
-    opacity: 0;
-    transition: opacity .4s .2s;
-  }
-
-  md-list-item:hover .btn-delete-subtask {
-    opacity: 1;
-  }
-
-  .checkbox-label {
-    opacity: 1;
-    transition: opacity .2s;
-  }
-
-  md-list-item.done .checkbox-label {
+.checkbox-label {
+  opacity: 1;
+  transition: opacity .2s;
+  .checklist-item.done & {
     opacity: .5;
     text-decoration: line-through;
+  }
+}
+
+.btn-delete-subtask {
+  color: #e32300;
+  opacity: 0;
+  transition: opacity .4s .2s;
+  .checklist-item:hover & {
+    opacity: 1;
   }
 }
 
@@ -122,22 +114,21 @@ header {
 }
 
 .btn-prioritise {
-  $reveal-width: 1.5rem;
-  @include icon-btn($reveal-width);
-  font-size: $reveal-width;
+  @include icon-btn($icon-size);
+  font-size: $icon-size;
   opacity: 0;
   width: 0;
   transition: opacity .2s, color .2s, width .4s ease-out;
 
   :host.expanded & {
     opacity: .25;
-    width: $reveal-width;
+    width: $icon-size;
   }
 
   &.reveal {
     color: #e32300;
     opacity: .8;
-    width: $reveal-width;
+    width: $icon-size;
   }
 }
 
