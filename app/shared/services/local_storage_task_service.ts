@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Task} from '../task.model';
-import {ITaskService} from './interfaces';
+import {TaskService} from './interfaces';
 
 class LocalStorageTaskCollection {
   constructor(
@@ -10,7 +10,7 @@ class LocalStorageTaskCollection {
 }
 
 @Injectable()
-export class LocalStorageTaskService implements ITaskService {
+export class LocalStorageTaskService implements TaskService {
   private localStorageKey: string = 'HARU_TASKS';
 
   taskCollection: LocalStorageTaskCollection;

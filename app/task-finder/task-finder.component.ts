@@ -1,5 +1,6 @@
 import {
   Component,
+  Inject,
   Output,
   EventEmitter
 } from '@angular/core';
@@ -7,7 +8,7 @@ import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { Observable } from 'rxjs/Observable';
 
 import { Task } from '../shared/task.model';
-import { TaskService } from '../shared/services';
+import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
 
 export class ValueChangeEvent {
   constructor(public value) {}
@@ -31,7 +32,9 @@ export class TaskFinderComponent {
 
   task: Task;
 
-  constructor(private _taskService: TaskService) {
+  constructor(
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
+  ) {
     this.task = new Task('');
   }
 

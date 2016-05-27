@@ -1,6 +1,6 @@
 import {Injectable, provide} from '@angular/core';
 import {Task} from '../task.model';
-import {ITaskService} from './interfaces';
+import {TaskService} from './interfaces';
 
 @Injectable()
 export class InMemoryTaskProvider {
@@ -20,7 +20,7 @@ export class InMemoryTaskProvider {
 }
 
 @Injectable()
-export class InMemoryTaskService implements ITaskService {
+export class InMemoryTaskService implements TaskService {
 
   private _taskProvider: InMemoryTaskProvider;
 

@@ -1,6 +1,7 @@
 import {
   Component,
   Input,
+  Inject,
   Output,
   EventEmitter
 } from '@angular/core';
@@ -10,7 +11,7 @@ import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
-import { TaskService } from '../shared/services';
+import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
 
 @Component({
   selector: 'task',
@@ -33,7 +34,9 @@ export class TaskComponent {
   isExpanded: boolean;
   subtask: Task;
 
-  constructor(private _taskService: TaskService) {
+  constructor(
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
+  ) {
     this.isExpanded = false;
     this.subtask = new Task('');
   }

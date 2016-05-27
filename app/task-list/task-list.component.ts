@@ -1,5 +1,6 @@
 import {
   Component,
+  Inject,
   Input
 } from '@angular/core';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
@@ -10,7 +11,7 @@ import {
   TaskFinderComponent,
   ValueChangeEvent
 } from '../task-finder/task-finder.component';
-import { TaskService } from '../shared/services';
+import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
 import {
   SortOrder,
   SortSpec,
@@ -31,7 +32,9 @@ import {
 export class TaskListComponent {
   private queryCommand: QueryCommand;
 
-  constructor(private taskService: TaskService) {
+  constructor(
+    @Inject(TASK_SERVICE_TOKEN) private taskService: TaskService
+  ) {
     this.queryCommand = new QueryCommand();
     this.queryCommand.sortBy =
       new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
