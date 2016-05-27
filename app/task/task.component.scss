@@ -90,7 +90,9 @@ $details-font-size: 1rem;
   color: #e32300;
   transform: scale(0);
   transition: transform .4s;
-  header:hover & {
+
+  header:hover &,
+  :host.expanded & {
     transform: scale(1);
   }
 }
@@ -131,7 +133,8 @@ header {
   transform: scale(0);
   transition: transform .2s;
 
-  header:hover & {
+  header:hover &,
+  :host.expanded & {
     transform: scale(1);
   }
 
