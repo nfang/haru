@@ -5,6 +5,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { MdCheckbox } from '@angular2-material/checkbox';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
@@ -12,6 +13,10 @@ import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
 import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
+
+export class TaskExpandedEvent {
+  constructor(public taskComponent: TaskComponent) {}
+}
 
 @Component({
   selector: 'task',
@@ -29,7 +34,14 @@ import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
   }
 })
 export class TaskComponent {
+  private _expandEmitter: EventEmitter<TaskExpandedEvent> = new EventEmitter<TaskExpandedEvent>();
+
   @Input() task: Task;
+
+  @Output('expand')
+  get onExpand(): Observable<TaskExpandedEvent> {
+    return this._expandEmitter.asObservable();
+  }
 
   isExpanded: boolean;
   subtask: Task;
@@ -53,6 +65,9 @@ export class TaskComponent {
 
   toggleDetailPane() {
     this.isExpanded = !this.isExpanded;
+    if (this.isExpanded) {
+      this._expandEmitter.emit(new TaskExpandedEvent(this));  
+    }
   }
 
   addSubtask(task: Task) {

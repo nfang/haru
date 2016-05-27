@@ -1,6 +1,6 @@
 <task-finder (change)="updateQuery($event)"></task-finder>
 <md-list>
   <md-list-item *ngFor="let task of tasks">
-    <task [task]="task"></task>
+    <task [task]="task" (expand)="handleTaskExpand($event)"></task>
   </md-list-item>
 </md-list>

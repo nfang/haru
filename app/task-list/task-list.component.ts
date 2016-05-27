@@ -1,12 +1,14 @@
 import {
   Component,
   Inject,
-  Input
+  Input,
+  ViewChildren,
+  QueryList
 } from '@angular/core';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
-import { TaskComponent } from '../task/task.component';
+import { TaskComponent, TaskExpandedEvent } from '../task/task.component';
 import {
   TaskFinderComponent,
   ValueChangeEvent
@@ -32,6 +34,9 @@ import {
 export class TaskListComponent {
   private queryCommand: QueryCommand;
 
+  @ViewChildren(TaskComponent)
+  taskComponents: QueryList<TaskComponent>;
+
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private taskService: TaskService
   ) {
@@ -46,6 +51,14 @@ export class TaskListComponent {
     }
     this.queryCommand.filter = new FilterSpec((task) => {
       return task.title.toLowerCase().includes(event.value.title);
+    });
+  }
+
+  handleTaskExpand(event: TaskExpandedEvent) {
+    this.taskComponents.forEach(cmp => {
+      if (cmp !== event.taskComponent && cmp.isExpanded) {
+        cmp.toggleDetailPane();
+      }
     });
   }
 
