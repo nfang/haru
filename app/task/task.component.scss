@@ -12,7 +12,7 @@
 }
 
 $icon-size: 1.5rem;
-$details-font-size: .84rem;
+$details-font-size: 1rem;
 
 :host {
   cursor: pointer;
@@ -37,7 +37,8 @@ $details-font-size: .84rem;
   font-size: $details-font-size;
   opacity: 0;
   max-height: 0px;
-  transition: max-height .4s ease-out, opacity .2s;
+  overflow: hidden;
+  transition: max-height .4s, opacity .2s;
 
   .row {
     margin: .5rem 0;
@@ -84,11 +85,21 @@ $details-font-size: .84rem;
   }
 }
 
+.btn-delete {
+  @include icon-btn($icon-size);
+  color: #e32300;
+  transform: scale(0);
+  transition: transform .4s;
+  header:hover & {
+    transform: scale(1);
+  }
+}
+
 .btn-delete-subtask {
   color: #e32300;
   transform: scale(0);
   transition: transform .4s;
-  .checklist-item:hover & {
+  :hover & {
     transform: scale(1);
   }
 }
@@ -115,25 +126,24 @@ header {
 
 .btn-prioritise {
   @include icon-btn($icon-size);
-  font-size: $icon-size;
-  opacity: 0;
-  width: 0;
-  transition: opacity .2s, color .2s, width .4s ease-out;
+  font-size: 1.2rem;
+  opacity: .2;
+  transform: scale(0);
+  transition: transform .2s;
 
-  :host.expanded & {
-    opacity: .25;
-    width: $icon-size;
+  header:hover & {
+    transform: scale(1);
   }
 
   &.reveal {
     color: #e32300;
-    opacity: .8;
-    width: $icon-size;
+    opacity: .8 !important;
+    transform: scale(1);
   }
 }
 
 .btn-mark-complete {
-  @include icon-btn(1.5rem);
+  @include icon-btn($icon-size);
   md-icon {
     opacity: .5;
     :host.done & {

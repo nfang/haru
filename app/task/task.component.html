@@ -7,6 +7,9 @@
     <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
     <md-icon *ngIf="task.isCompleted">lens</md-icon>
   </div>
+  <div class="btn-delete" (click)="remove()">
+    <md-icon>close</md-icon>
+  </div>
 </header>
 <section class="details" [class.reveal]="isExpanded">
   <div class="row">
