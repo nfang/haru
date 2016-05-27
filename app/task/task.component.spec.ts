@@ -24,7 +24,7 @@ class MockInMemoryTaskProvider {
   public tasks: Task[] = [
     new Task('Task1', 'Note1'),
     new Task('Task2', 'Note2')
-  ]
+  ];
 }
 
 describe('TaskComponent', () => {
@@ -169,7 +169,7 @@ describe('TaskComponent', () => {
         component.task = task;
         fixture.detectChanges();
         expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
-        expect(element.querySelector('.checklist md-list-item label').innerText.trim())
+        expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent.trim())
           .toBe(subtaskTitle);
         done();
       })
@@ -208,7 +208,8 @@ describe('TaskComponent', () => {
         component.task.addSubtask(new Task('subtask'));
         fixture.detectChanges();
         expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
-        expect(element.querySelector('.checklist md-list-item label').innerText.trim()).toBe('subtask');
+        expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent.trim())
+          .toBe('subtask');
         done();
       })
       .catch(e => done.fail(e));
