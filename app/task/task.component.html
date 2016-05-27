@@ -1,3 +1,4 @@
+<div class="cue-selected"></div>
 <header class="row">
   <div class="btn-prioritise" [class.reveal]="task.isPrioritised" (click)="togglePrioritised()">
     <md-icon>priority_high</md-icon>
@@ -13,7 +14,7 @@
 </header>
 <section class="details" [class.reveal]="isExpanded">
   <div class="row">
-    <md-icon>alarm</md-icon>
+    <md-icon class="icon-label">alarm</md-icon>
   </div>
   <md-list class="checklist">
     <md-list-item *ngFor="let item of task.checklist">
@@ -26,11 +27,11 @@
     </md-list-item>
   </md-list>
   <form class="row" (submit)="addSubtask(subtask)">
-    <md-icon>add</md-icon>
+    <md-icon class="icon-label">add</md-icon>
     <md-input class="input-subtask" placeholder="Add a subtask"
       [floatingPlaceholder]="false" [(ngModel)]="subtask.title"></md-input>
   </form>
   <div class="row">
-    <md-icon>content_paste</md-icon>
+    <md-icon class="icon-label">content_paste</md-icon>
   </div>
 </section>

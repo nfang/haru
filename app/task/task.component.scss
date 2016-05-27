@@ -15,13 +15,31 @@ $icon-size: 1.5rem;
 $details-font-size: 1rem;
 
 :host {
+  box-sizing: border-box;
   cursor: pointer;
   font-size: 100%;
   opacity: .8;
+  position: relative;
   transition: opacity .2s;
 
   &.done {
     opacity: .5;
+  }
+}
+
+.cue-selected {
+  position: absolute;
+  top: 0;
+  left: -24px;
+  bottom: 0;
+  margin: auto;
+  max-height: 0;
+  width: 3px;
+  background: #b052c0;
+  transition: max-height .2s;
+
+  :host.expanded & {
+    max-height: 400px;
   }
 }
 
@@ -53,9 +71,13 @@ $details-font-size: 1rem;
     font-size: 1.2rem;
   }
 
+  .icon-label {
+    margin-right: .4rem;
+  }
+
   .input-subtask {
     flex: 1 auto;
-    margin: -1rem auto;
+    margin: -1rem $icon-size -1rem auto;
   }
 }
 
@@ -72,7 +94,7 @@ $details-font-size: 1rem;
   /deep/ .md-checkbox-inner-container {
     height: 1rem;
     width: 1rem;
-    margin: auto .25rem;
+    margin: auto .65rem auto .25rem;
   }
 }
 
@@ -107,9 +129,8 @@ $details-font-size: 1rem;
 }
 
 header {
-  background: #fff;
   font-size: 1.2rem;
-  margin: 1rem 0;
+  margin: 1.2rem 0;
   transition-property: font-size, margin;
   transition-duration: .2s;
 
