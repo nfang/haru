@@ -87,4 +87,12 @@ export class TaskComponent {
   remove() {
     this._taskService.remove(this.task);
   }
+  
+  addNotes(task: Task) {
+    if (task.notes) {
+      this.task.notes = task.notes.trim();
+      this._taskService.update(this.task);
+      console.log(this.task.notes);
+    }
+  }
 }

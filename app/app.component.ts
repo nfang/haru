@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Inject, Component } from '@angular/core';
 import { MdCard } from '@angular2-material/card';
 
 import { TaskListComponent } from './task-list/task-list.component';
+import { TaskService, TASK_SERVICE_TOKEN } from './shared/services';
 
 @Component({
   selector: 'todo-app',
@@ -16,10 +17,21 @@ import { TaskListComponent } from './task-list/task-list.component';
 export class AppComponent {
   today: Date;
 
-  constructor() { }
+  constructor(
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
+  ) { }
 
   ngOnInit() {
     console.log('Todo app is starting up...');
     this.today = new Date();
+  }
+  
+  get taskProgress(): string {
+    let tasks = this._taskService.list();
+    let total = tasks.length;
+    let completed = tasks.filter((task) => {
+      return task.isCompleted;
+    }).length;
+    return `${completed}/${total}`;
   }
 }
