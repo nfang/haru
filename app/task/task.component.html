@@ -31,14 +31,14 @@
   </md-list>
   <form class="row" (submit)="addSubtask(subtask)">
     <md-icon class="icon-label">add</md-icon>
-    <md-input class="input-subtask" placeholder="Add a subtask"
-      [floatingPlaceholder]="false" [(ngModel)]="subtask.title"></md-input>
+    <div class="mui-textfield input-subtask">
+      <input type="text" placeholder="Add a subtask" [(ngModel)]="subtask.title">
+    </div>
   </form>
-  <form class="row" (submit)="addNotes(task)">
+  <div class="row" style="align-items: baseline">
     <md-icon class="icon-label">content_paste</md-icon>
-    <md-input class="input-notes" placeholder="Add notes" maxLength="150"
-      [floatingPlaceholder]="false" [(ngModel)]="task.notes" #characterCountHint>
-      <md-hint align="end">{{characterCountHint.characterCount}}/150</md-hint>
-    </md-input>
-  </form>
+    <div class="mui-textfield input-notes">
+      <textarea placeholder="Add notes" rows="3" [(ngModel)]="task.notes"></textarea>
+    </div>
+  </div>
 </section>

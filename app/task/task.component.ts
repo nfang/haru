@@ -8,7 +8,6 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { MdCheckbox } from '@angular2-material/checkbox';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
-import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
@@ -25,7 +24,7 @@ export class TaskExpandedEvent {
     require('./task.component.scss')
   ],
   directives: [
-    MdCheckbox, MdIcon, MD_INPUT_DIRECTIVES, MD_LIST_DIRECTIVES
+    MdCheckbox, MdIcon, MD_LIST_DIRECTIVES
   ],
   providers: [MdIconRegistry],
   host: {

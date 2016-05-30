@@ -4,7 +4,6 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { Observable } from 'rxjs/Observable';
 
 import { Task } from '../shared/task.model';
@@ -19,8 +18,7 @@ export class ValueChangeEvent {
   template: require('./task-finder.component.html'),
   styles: [
     require('./task-finder.component.scss')
-  ],
-  directives: [ MD_INPUT_DIRECTIVES ]
+  ]
 })
 export class TaskFinderComponent {
   private _changeEmitter: EventEmitter<ValueChangeEvent> = new EventEmitter<ValueChangeEvent>();

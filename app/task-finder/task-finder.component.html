@@ -1,5 +1,6 @@
 <form (submit)="submit()">
-  <md-input placeholder="Search or add new task"
-    [(ngModel)]="task.title" (keyup)="emitChange()">
-  </md-input>
+  <div class="mui-textfield">
+    <input type="text" placeholder="Search or add new task"
+      [(ngModel)]="task.title" (keyup)="emitChange()">
+  </div>
 </form>

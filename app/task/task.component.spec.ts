@@ -247,15 +247,11 @@ describe('TaskComponent', () => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement,
             task: Task = taskService.list()[0],
-            elAddNotes = element.querySelector('.input-notes');
+            elNotes = element.querySelector('.input-notes > textarea');
 
         component.task = task;
         fixture.detectChanges();
-        expect(elAddNotes.innerText.trim()).toBe('5/150');
-
-        component.addNotes(new Task('nodeTest','some nodes'));
-        fixture.detectChanges();
-        expect(elAddNotes.innerText.trim()).toBe('10/150');
+        expect(elNotes.value).toBe('Note 1');
         done();
       })
       .catch(e => done.fail(e));
