@@ -43,20 +43,20 @@ describe('AppComponent', () => {
     builder = tcb;
     taskService = service;
   }));
-  
+
   it('should initialize', inject([AppComponent], (component) => {
     spyOn(console,'log');
     component.ngOnInit();
     expect(console.log).toHaveBeenCalled();
     expect(component.today).not.toBeNull();
   }));
-  
+
   it('should return task progress', inject([AppComponent], (component) => {
-    expect(component.taskProgress).toEqual('0/3');   
-    
+    expect(component.progress).toEqual('0 / 3');
+
     let tasks = taskService.list();
     tasks[0].isCompleted = !tasks[0].isCompleted;
-    expect(component.taskProgress).toEqual('1/3');
+    expect(component.progress).toEqual('1 / 3');
   }));
-  
+
 });

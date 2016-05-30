@@ -1,7 +1,10 @@
 <div class="cue-selected"></div>
 <header class="row">
-  <div class="btn-prioritise" [class.reveal]="task.isPrioritised" (click)="togglePrioritised()">
-    <md-icon *ngIf="!task.isCompleted">priority_high</md-icon>
+  <div class="btn-prioritise"
+    [class.reveal]="task.isPrioritised"
+    [class.disabled]="task.isCompleted"
+    (click)="!task.isCompleted && togglePrioritised()">
+    <md-icon>priority_high</md-icon>
   </div>
   <h2 class="title" (click)="toggleDetailPane()">{{task.title}}</h2>
   <div class="btn-mark-complete" (click)="toggleCompleted()">
@@ -33,8 +36,9 @@
   </form>
   <form class="row" (submit)="addNotes(task)">
     <md-icon class="icon-label">content_paste</md-icon>
-    <md-input class="input-notes" placeholder="Add notes" maxLength="150" [floatingPlaceholder]="false" [(ngModel)]="task.notes" #characterCountHint>
-      <md-hint align="end">{{characterCountHint.characterCount}}/150</md-hint>  
-    </md-input>    
+    <md-input class="input-notes" placeholder="Add notes" maxLength="150"
+      [floatingPlaceholder]="false" [(ngModel)]="task.notes" #characterCountHint>
+      <md-hint align="end">{{characterCountHint.characterCount}}/150</md-hint>
+    </md-input>
   </form>
 </section>

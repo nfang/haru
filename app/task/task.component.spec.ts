@@ -91,6 +91,7 @@ describe('TaskComponent', () => {
 
         component.toggleCompleted();
         fixture.detectChanges();
+        expect(component.task.isPrioritised).toBe(false);
         expect(element.classList.contains('done')).toBe(true);
         expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
         expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('lens');
@@ -129,15 +130,16 @@ describe('TaskComponent', () => {
        component.task = task;
        fixture.detectChanges();
        expect(elBtnPrioritise.classList.contains('reveal')).toBe(false);
+       expect(elBtnPrioritise.classList.contains('disabled')).toBe(false);
 
        component.togglePrioritised();
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
        expect(elBtnPrioritise.classList.contains('reveal')).toBe(true);
-       
+
        component.toggleCompleted();
        fixture.detectChanges();
-       expect(elBtnPrioritise).toBeNull();
+       expect(elBtnPrioritise.classList.contains('disabled')).toBe(true);
        done();
      })
      .catch(e => done.fail(e));
@@ -238,7 +240,7 @@ describe('TaskComponent', () => {
       })
       .catch(e => done.fail(e));
   });
-  
+
   it('can add notes', done => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {

@@ -25,13 +25,13 @@ export class AppComponent {
     console.log('Todo app is starting up...');
     this.today = new Date();
   }
-  
-  get taskProgress(): string {
+
+  get progress(): string {
     let tasks = this._taskService.list();
     let total = tasks.length;
     let completed = tasks.filter((task) => {
       return task.isCompleted;
     }).length;
-    return `${completed}/${total}`;
+    return `${completed} / ${total}`;
   }
 }

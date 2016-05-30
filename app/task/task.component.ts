@@ -55,6 +55,9 @@ export class TaskComponent {
 
   toggleCompleted() {
     this.task.isCompleted = !this.task.isCompleted;
+    if (this.task.isPrioritised) {
+      this.task.isPrioritised = false;
+    }
     this._taskService.update(this.task);
   }
 
@@ -66,7 +69,7 @@ export class TaskComponent {
   toggleDetailPane() {
     this.isExpanded = !this.isExpanded;
     if (this.isExpanded) {
-      this._expandEmitter.emit(new TaskExpandedEvent(this));  
+      this._expandEmitter.emit(new TaskExpandedEvent(this));
     }
   }
 
@@ -87,12 +90,12 @@ export class TaskComponent {
   remove() {
     this._taskService.remove(this.task);
   }
-  
+
   addNotes(task: Task) {
     if (task.notes) {
       this.task.notes = task.notes.trim();
       this._taskService.update(this.task);
-      console.log(this.task.notes);
+      // console.log(this.task.notes);
     }
   }
 }
