@@ -35,7 +35,6 @@ $details-font-size: 1rem;
 
 .mui-textfield > input::-webkit-input-placeholder,
 .mui-textfield > textarea::-webkit-input-placeholder {
-  font: normal 1rem Roboto, "Helvetica Neue", sans-serif;
   font-weight: 300;
 }
 
@@ -99,14 +98,11 @@ $details-font-size: 1rem;
 
 .checklist {
   padding-top: 0;
-
-  .row {
-    margin-bottom: .5rem;
-  }
 }
 
 .checklist-item {
   @extend .row;
+  margin: .5rem 0;
   flex: 1 auto;
   justify-content: space-between;
   font-size: $details-font-size;
