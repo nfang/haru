@@ -31,15 +31,15 @@ $details-font-size: 1rem;
   position: absolute;
   top: 0;
   left: -24px;
-  bottom: 0;
   margin: auto;
+  height: 100%;
   max-height: 0;
   width: 3px;
   background: #b052c0;
   transition: max-height .2s;
 
   :host.expanded & {
-    max-height: 400px;
+    max-height: 600px;
   }
 }
 
@@ -54,15 +54,16 @@ $details-font-size: 1rem;
   @include icon-btn($icon-size);
   font-size: $details-font-size;
   opacity: 0;
+  height: 100%;
   max-height: 0px;
   overflow: hidden;
-  transition: max-height .4s, opacity .2s;
+  transition: max-height .4s, opacity .2s .1s;
 
   .row {
     margin: .5rem 0;
   }
 
-  &.reveal {
+  :host.expanded & {
     opacity: 1;
     max-height: 600px;
   }
