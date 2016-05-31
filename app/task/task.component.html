@@ -38,7 +38,7 @@
   <div class="row" style="align-items: baseline">
     <md-icon class="icon-label">content_paste</md-icon>
     <div class="mui-textfield input-notes">
-      <textarea placeholder="Add notes" rows="3" [(ngModel)]="task.notes"></textarea>
+      <textarea placeholder="Add notes" rows="3" (blur)="updateNotes()" [(ngModel)]="task.notes"></textarea>
     </div>
   </div>
 </section>
