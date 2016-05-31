@@ -1,18 +1,18 @@
 <div class="cue-selected"></div>
-<header class="row">
-  <div class="btn-prioritise" [class.reveal]="task.isPrioritised" (click)="togglePrioritised()">
+<header class="row" (click)="toggleDetailPane()">
+  <div class="btn-prioritise" [class.reveal]="task.isPrioritised" (click)="togglePrioritised($event)">
     <md-icon>priority_high</md-icon>
   </div>
-  <h2 class="title" (click)="toggleDetailPane()">{{task.title}}</h2>
-  <div class="btn-mark-complete" (click)="toggleCompleted()">
+  <h2 class="title">{{task.title}}</h2>
+  <div class="btn-mark-complete" (click)="toggleCompleted($event)">
     <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
     <md-icon *ngIf="task.isCompleted">lens</md-icon>
   </div>
-  <div class="btn-delete" (click)="remove()">
+  <div class="btn-delete" (click)="remove($event)">
     <md-icon>close</md-icon>
   </div>
 </header>
-<section class="details" [class.reveal]="isExpanded">
+<section class="details">
   <div class="row">
     <md-icon class="icon-label">alarm</md-icon>
   </div>

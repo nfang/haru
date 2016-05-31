@@ -151,7 +151,7 @@ header {
 .btn-prioritise {
   @include icon-btn($icon-size);
   font-size: 1.2rem;
-  opacity: .2;
+  opacity: .3;
   transform: scale(0);
   transition: transform .2s;
 

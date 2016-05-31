@@ -53,20 +53,22 @@ export class TaskComponent {
     this.subtask = new Task('');
   }
 
-  toggleCompleted() {
+  toggleCompleted(event) {
     this.task.isCompleted = !this.task.isCompleted;
     this._taskService.update(this.task);
+    event.stopPropagation();
   }
 
-  togglePrioritised() {
+  togglePrioritised(event) {
     this.task.isPrioritised = !this.task.isPrioritised;
     this._taskService.update(this.task);
+    event.stopPropagation();
   }
 
   toggleDetailPane() {
     this.isExpanded = !this.isExpanded;
     if (this.isExpanded) {
-      this._expandEmitter.emit(new TaskExpandedEvent(this));  
+      this._expandEmitter.emit(new TaskExpandedEvent(this));
     }
   }
 
@@ -84,7 +86,8 @@ export class TaskComponent {
     this._taskService.update(this.task);
   }
 
-  remove() {
+  remove(event) {
     this._taskService.remove(this.task);
+    event.stopPropagation();
   }
 }

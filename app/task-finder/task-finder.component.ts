@@ -4,8 +4,11 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
+import { Control } from '@angular/common';
 import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/debounce';
+// import 'rxjs/add/operator/debounceTime';
 
 import { Task } from '../shared/task.model';
 import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
@@ -30,23 +33,29 @@ export class TaskFinderComponent {
     return this._changeEmitter.asObservable();
   }
 
-  task: Task;
+  query: Control;
 
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
   ) {
-    this.task = new Task('');
+    this.query = new Control('');
+    this.query.valueChanges
+      .debounce((value) => {
+        return value && value.trim().length ?
+          Observable.timer(400) : Observable.timer(0);
+      })
+      .subscribe(query => {
+        let task = new Task(this.query.value.trim());
+        this._changeEmitter.emit(new ValueChangeEvent(task))
+      });
   }
 
-  emitChange(event) {
-    this._changeEmitter.emit(new ValueChangeEvent(this.task));
-  }
-
-  submit() {
-    if (!this.task.title) {
-      return;
+  submit(event) {
+    if (this.query.value && this.query.value.trim().length) {
+      let task = new Task(this.query.value);
+      this._taskService.add(task);
+      this.query.updateValue('');
     }
-    this._taskService.add(this.task);
-    this.task = new Task('');
+    event.preventDefault();
   }
 }
