@@ -1,5 +1,5 @@
 <div class="cue-selected"></div>
-<header class="row">
+<header class="row" (click)="toggleDetailPane()">
   <div class="btn-prioritise"
     [class.reveal]="task.isPrioritised"
     [class.disabled]="task.isCompleted"
