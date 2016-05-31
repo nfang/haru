@@ -252,9 +252,9 @@ describe('TaskComponent', () => {
         component.task = task;
         fixture.detectChanges();
         expect(elNotes.value).toBe('Note1');
-        
-        task.notes = 'Note Updated';
-        component.task.updateNotes();        
+
+        component.task.notes = 'Note Updated';
+        component.updateNotes();
         fixture.detectChanges();
         expect(elNotes.value).toBe('Note Updated');
         done();
