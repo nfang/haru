@@ -46,7 +46,7 @@ $details-font-size: 1rem;
   height: 100%;
   max-height: 0;
   width: 3px;
-  background: #b052c0;
+  background: mui-color('purple');
   transition: max-height .2s;
 
   :host.expanded & {
