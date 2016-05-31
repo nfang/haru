@@ -39,6 +39,7 @@ describe('LocalStorageTaskService', () => {
 
   it('can list all tasks', inject([LocalStorageTaskService], (service) => {
     let tasks = service.list();
+    expect(tasks.every(task => task instanceof Task)).toBe(true);
     expect(tasks.length).toBe(2);
     expect(tasks[0].title).toBe('Task 1');
     expect(tasks[1].title).toBe('Task 2');

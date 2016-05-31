@@ -16,10 +16,15 @@ export class LocalStorageTaskService implements TaskService {
   taskCollection: LocalStorageTaskCollection;
 
   constructor() {
-    this.taskCollection = JSON.parse(localStorage.getItem(this.localStorageKey));
-    if (!this.taskCollection) {
+    let raw = JSON.parse(localStorage.getItem(this.localStorageKey));
+    if (!raw) {
       this.taskCollection = new LocalStorageTaskCollection();
       this.save();
+    } else {
+      this.taskCollection = new LocalStorageTaskCollection(
+        raw.timestamp,
+        raw.tasks.map(rawTask => Object.assign(new Task(''), rawTask))
+      );
     }
   }
 
