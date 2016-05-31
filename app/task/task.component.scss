@@ -67,7 +67,6 @@ $details-font-size: 1rem;
   opacity: 0;
   height: 100%;
   max-height: 0px;
-  overflow: hidden;
   transition: max-height .4s, opacity .2s .1s;
 
   .row {
