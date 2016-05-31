@@ -1,6 +1,9 @@
 <md-card>
   <md-card-subtitle>{{today | date:'yMMMd'}}</md-card-subtitle>
-  <md-card-title>{{today | date:'EEEE'}}</md-card-title>
+  <div class="row">
+    <md-card-title>{{today | date:'EEEE'}}</md-card-title>
+    <span class="progress">{{progress}}</span>
+  </div>
   <md-card-content>
     <task-list></task-list>
   </md-card-content>

@@ -1,6 +1,9 @@
 <div class="cue-selected"></div>
-<header class="row" (click)="toggleDetailPane()">
-  <div class="btn-prioritise" [class.reveal]="task.isPrioritised" (click)="togglePrioritised($event)">
+<header class="row">
+  <div class="btn-prioritise"
+    [class.reveal]="task.isPrioritised"
+    [class.disabled]="task.isCompleted"
+    (click)="!task.isCompleted && togglePrioritised($event)">
     <md-icon>priority_high</md-icon>
   </div>
   <h2 class="title">{{task.title}}</h2>
@@ -28,10 +31,14 @@
   </md-list>
   <form class="row" (submit)="addSubtask(subtask)">
     <md-icon class="icon-label">add</md-icon>
-    <md-input class="input-subtask" placeholder="Add a subtask"
-      [floatingPlaceholder]="false" [(ngModel)]="subtask.title"></md-input>
+    <div class="mui-textfield input-subtask">
+      <input type="text" placeholder="Add a subtask" [(ngModel)]="subtask.title">
+    </div>
   </form>
-  <div class="row">
+  <div class="row" style="align-items: baseline">
     <md-icon class="icon-label">content_paste</md-icon>
+    <div class="mui-textfield input-notes">
+      <textarea placeholder="Add notes" rows="3" (blur)="updateNotes()" [(ngModel)]="task.notes"></textarea>
+    </div>
   </div>
 </section>

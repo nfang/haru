@@ -8,7 +8,6 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { MdCheckbox } from '@angular2-material/checkbox';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
-import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
@@ -25,7 +24,7 @@ export class TaskExpandedEvent {
     require('./task.component.scss')
   ],
   directives: [
-    MdCheckbox, MdIcon, MD_INPUT_DIRECTIVES, MD_LIST_DIRECTIVES
+    MdCheckbox, MdIcon, MD_LIST_DIRECTIVES
   ],
   providers: [MdIconRegistry],
   host: {
@@ -55,6 +54,9 @@ export class TaskComponent {
 
   toggleCompleted(event) {
     this.task.isCompleted = !this.task.isCompleted;
+    if (this.task.isPrioritised) {
+      this.task.isPrioritised = false;
+    }
     this._taskService.update(this.task);
     event.stopPropagation();
   }
@@ -89,5 +91,12 @@ export class TaskComponent {
   remove(event) {
     this._taskService.remove(this.task);
     event.stopPropagation();
+  }
+
+  updateNotes() {
+    if (this.task.notes) {
+      this.task.notes = this.task.notes.trim();
+      this._taskService.update(this.task);
+    }
   }
 }

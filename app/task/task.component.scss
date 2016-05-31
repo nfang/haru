@@ -1,4 +1,5 @@
 @import '~reset-css/reset';
+@import '~muicss/lib/sass/mui';
 
 @mixin icon-btn($size) {
   md-icon {
@@ -25,6 +26,16 @@ $details-font-size: 1rem;
   &.done {
     opacity: .5;
   }
+}
+
+.mui-textfield > input:focus,
+.mui-textfield > textarea:focus {
+  border-color: mui-color('teal');
+}
+
+.mui-textfield > input::-webkit-input-placeholder,
+.mui-textfield > textarea::-webkit-input-placeholder {
+  font-weight: 300;
 }
 
 .cue-selected {
@@ -78,7 +89,15 @@ $details-font-size: 1rem;
 
   .input-subtask {
     flex: 1 auto;
-    margin: -1rem $icon-size -1rem auto;
+    margin-right: $icon-size;
+  }
+
+  .input-notes{
+    flex: 1 auto;
+    margin-right: $icon-size;
+    textarea {
+      resize: none;
+    }
   }
 }
 
@@ -88,6 +107,7 @@ $details-font-size: 1rem;
 
 .checklist-item {
   @extend .row;
+  margin: .5rem 0;
   flex: 1 auto;
   justify-content: space-between;
   font-size: $details-font-size;
@@ -143,6 +163,9 @@ header {
 
 .title {
   flex: 1 auto;
+  margin: 0;
+  line-height: 1;
+  font-size: inherit;
   :host.done & {
     text-decoration: line-through;
   }
@@ -164,6 +187,10 @@ header {
     color: #e32300;
     opacity: .8 !important;
     transform: scale(1);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
   }
 }
 

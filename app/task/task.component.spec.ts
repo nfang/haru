@@ -29,6 +29,10 @@ class MockInMemoryTaskProvider {
 
 describe('TaskComponent', () => {
   let builder, taskService;
+  let mockEvent = {
+    stopPropagation: () => {},
+    preventDefault: () => {},
+  }
 
   beforeEachProviders(() => [
     IN_MEMORY_TASK_SERVICE_PROVIDERS,
@@ -89,8 +93,9 @@ describe('TaskComponent', () => {
         expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
         expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('radio_button_unchecked');
 
-        component.toggleCompleted();
+        component.toggleCompleted(mockEvent);
         fixture.detectChanges();
+        expect(component.task.isPrioritised).toBe(false);
         expect(element.classList.contains('done')).toBe(true);
         expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
         expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('lens');
@@ -109,7 +114,7 @@ describe('TaskComponent', () => {
        component.task = task;
        fixture.detectChanges();
        expect(component.task).not.toBeNull();
-       component.remove();
+       component.remove(mockEvent);
 
        fixture.detectChanges();
        expect(taskService.list().length).toBe(1);
@@ -129,11 +134,16 @@ describe('TaskComponent', () => {
        component.task = task;
        fixture.detectChanges();
        expect(elBtnPrioritise.classList.contains('reveal')).toBe(false);
+       expect(elBtnPrioritise.classList.contains('disabled')).toBe(false);
 
-       component.togglePrioritised();
+       component.togglePrioritised(mockEvent);
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
        expect(elBtnPrioritise.classList.contains('reveal')).toBe(true);
+
+       component.toggleCompleted(mockEvent);
+       fixture.detectChanges();
+       expect(elBtnPrioritise.classList.contains('disabled')).toBe(true);
        done();
      })
      .catch(e => done.fail(e));
@@ -230,6 +240,27 @@ describe('TaskComponent', () => {
         component.task.removeSubtask(subtask);
         fixture.detectChanges();
         expect(element.querySelectorAll('.checklist md-list-item').length).toBe(0);
+        done();
+      })
+      .catch(e => done.fail(e));
+  });
+
+  it('can add notes', done => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+            element = fixture.nativeElement,
+            task: Task = taskService.list()[0],
+            elNotes = element.querySelector('.input-notes > textarea');
+
+        component.task = task;
+        fixture.detectChanges();
+        expect(elNotes.value).toBe('Note1');
+
+        component.task.notes = 'Note Updated';
+        component.updateNotes();
+        fixture.detectChanges();
+        expect(elNotes.value).toBe('Note Updated');
         done();
       })
       .catch(e => done.fail(e));
