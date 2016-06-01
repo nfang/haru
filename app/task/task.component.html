@@ -1,16 +1,16 @@
 <div class="cue-selected"></div>
-<header class="row" (click)="toggleDetailPane()">
+<header class="row" (click)="toggleDetailPane()" [class.editing]="isEditing">
   <div class="btn-prioritise"
     [class.marked]="task.isPrioritised"
     [class.disabled]="task.isCompleted"
     (click)="!task.isCompleted && togglePrioritised($event)">
     <md-icon>priority_high</md-icon>
   </div>
-  <h2 class="in-place-label title">{{task.title}}</h2>
-  <div class="in-place-editor mui-textfield" (click)="noop($event)">
-    <input [(ngModel)]="task.title">
-  </div>
+  <h2 class="in-place-label title" (click)="startEditing($event)">{{task.title}}</h2>
   <div class="spacer"></div>
+  <div class="in-place-editor mui-textfield">
+    <input [(ngModel)]="task.title" (blur)="endEditing($event)">
+  </div>
   <div class="btn-mark-complete" (click)="toggleCompleted($event)">
     <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
     <md-icon *ngIf="task.isCompleted">lens</md-icon>

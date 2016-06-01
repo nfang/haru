@@ -53,6 +53,7 @@ export class TaskComponent {
   }
 
   noop(event) {
+    console.log('noop:', event);
     event.stopPropagation();
   }
 
@@ -72,6 +73,9 @@ export class TaskComponent {
   }
 
   toggleDetailPane() {
+    if (this.isEditing) {
+      return;
+    }
     this.isExpanded = !this.isExpanded;
     if (this.isExpanded) {
       this._expandEmitter.emit(new TaskExpandedEvent(this));
@@ -98,5 +102,18 @@ export class TaskComponent {
 
   save() {
     this._taskService.update(this.task);
+  }
+
+  isEditing: boolean;
+  startEditing(event) {
+    if (this.isExpanded) {
+      this.isEditing = true;
+    }
+  }
+
+  endEditing(event) {
+    if (this.isEditing) {
+      this.isEditing = false;
+    }
   }
 }

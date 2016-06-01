@@ -39,10 +39,6 @@ $fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
   align-items: center;
 }
 
-.spacer {
-  flex: 1 10 auto;
-}
-
 // Host styles
 // -------------------------------
 
@@ -212,7 +208,15 @@ header {
 }
 
 .in-place-label {
-  :host.expanded & {
+  flex-basis: auto;
+  .editing & {
+    display: none;
+  }
+}
+
+.spacer {
+  flex-grow: 1;
+  .editing & {
     display: none;
   }
 }
@@ -220,18 +224,21 @@ header {
 .in-place-editor {
   @extend .title;
   display: none;
-  flex: 10 1 auto;
+  flex: 1 auto;
   padding: 0;
 
   &.mui-textfield > input {
     font-size: inherit;
-    color: inherit;
     border-bottom: none;
     height: auto;
     margin-bottom: 0 !important;
+
+    color: $mui-primary-color;
+    text-shadow: 0px 0px 0px #000;
+    -webkit-text-fill-color: transparent;
   }
 
-  :host.expanded & {
+  .editing & {
     display: inline-block;
   }
 }
