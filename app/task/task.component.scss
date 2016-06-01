@@ -39,6 +39,10 @@ $fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
   align-items: center;
 }
 
+.spacer {
+  flex: 1 10 auto;
+}
+
 // Host styles
 // -------------------------------
 
@@ -82,7 +86,6 @@ header {
 }
 
 .title {
-  flex: 1 auto;
   margin: 0;
   line-height: 1;
   font-size: inherit;
@@ -205,5 +208,30 @@ header {
 
   .checklist-item:hover & {
     transform: scale(1);
+  }
+}
+
+.in-place-label {
+  :host.expanded & {
+    display: none;
+  }
+}
+
+.in-place-editor {
+  @extend .title;
+  display: none;
+  flex: 10 1 auto;
+  padding: 0;
+
+  &.mui-textfield > input {
+    font-size: inherit;
+    color: inherit;
+    border-bottom: none;
+    height: auto;
+    margin-bottom: 0 !important;
+  }
+
+  :host.expanded & {
+    display: inline-block;
   }
 }

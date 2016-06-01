@@ -52,6 +52,10 @@ export class TaskComponent {
     this.subtask = new Task('');
   }
 
+  noop(event) {
+    event.stopPropagation();
+  }
+
   toggleCompleted(event) {
     this.task.isCompleted = !this.task.isCompleted;
     if (this.task.isPrioritised) {
