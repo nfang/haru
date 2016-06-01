@@ -1,10 +1,9 @@
-@import '~reset-css/reset';
-@import '~muicss/lib/sass/mui';
+@import '../shared/global.scss';
 
-@mixin icon-btn($size) {
+@mixin icon-btn($size, $font-size: inherit) {
   md-icon {
     display: block;
-    font-size: inherit;
+    font-size: $font-size;
     text-align: center;
     width: $size;
     height: $size;
@@ -12,12 +11,39 @@
   }
 }
 
+@mixin expand-when($context, $max-height: 600px) {
+  height: 100%;
+  max-height: 0;
+
+  #{$context} & {
+    max-height: $max-height;
+  }
+}
+
+// Variables
+// -------------------------------
+
 $icon-size: 1.5rem;
 $details-font-size: 1rem;
+$scarlet: #e32300;
+$green-haze: #00b227;
+$fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+// Common
+// -------------------------------
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+// Host styles
+// -------------------------------
 
 :host {
   box-sizing: border-box;
-  cursor: pointer;
   font-size: 100%;
   opacity: .8;
   position: relative;
@@ -28,129 +54,24 @@ $details-font-size: 1rem;
   }
 }
 
-.mui-textfield > input:focus,
-.mui-textfield > textarea:focus {
-  border-color: mui-color('teal');
-}
-
-.mui-textfield > input::-webkit-input-placeholder,
-.mui-textfield > textarea::-webkit-input-placeholder {
-  font-weight: 300;
-}
-
 .cue-selected {
+  @include expand-when(':host.expanded');
   position: absolute;
   top: 0;
   left: -24px;
   margin: auto;
-  height: 100%;
-  max-height: 0;
   width: 3px;
-  background: mui-color('purple');
-  transition: max-height .2s;
-
-  :host.expanded & {
-    max-height: 600px;
-  }
+  background: $mui-accent-color;
+  transition: max-height .4s $fast-out-slow-in;
 }
 
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.details {
-  @include icon-btn($icon-size);
-  font-size: $details-font-size;
-  opacity: 0;
-  height: 100%;
-  max-height: 0px;
-  transition: max-height .4s, opacity .2s .1s;
-
-  .row {
-    margin: .5rem 0;
-  }
-
-  :host.expanded & {
-    opacity: 1;
-    max-height: 600px;
-  }
-
-  md-icon {
-    font-size: 1.2rem;
-  }
-
-  .icon-label {
-    margin-right: .4rem;
-  }
-
-  .input-subtask {
-    flex: 1 auto;
-    margin-right: $icon-size;
-  }
-
-  .input-notes{
-    flex: 1 auto;
-    margin-right: $icon-size;
-    textarea {
-      resize: none;
-    }
-  }
-}
-
-.checklist {
-  padding-top: 0;
-}
-
-.checklist-item {
-  @extend .row;
-  margin: .5rem 0;
-  flex: 1 auto;
-  justify-content: space-between;
-  font-size: $details-font-size;
-
-  /deep/ .md-checkbox-inner-container {
-    height: 1rem;
-    width: 1rem;
-    margin: auto .65rem auto .25rem;
-  }
-}
-
-.checkbox-label {
-  opacity: 1;
-  transition: opacity .2s;
-  .checklist-item.done & {
-    opacity: .5;
-    text-decoration: line-through;
-  }
-}
-
-.btn-delete {
-  @include icon-btn($icon-size);
-  color: #e32300;
-  transform: scale(0);
-  transition: transform .4s;
-
-  header:hover &,
-  :host.expanded & {
-    transform: scale(1);
-  }
-}
-
-.btn-delete-subtask {
-  color: #e32300;
-  transform: scale(0);
-  transition: transform .4s;
-  .checklist-item:hover & {
-    transform: scale(1);
-  }
-}
+// Header styles
+// -------------------------------
 
 header {
-  font-size: 1.2rem;
-  margin: 1.2rem 0;
+  cursor: pointer;
+  font-size: 1.125rem;
+  margin: 1.125rem 0;
   transition-property: font-size, margin;
   transition-duration: .2s;
 
@@ -165,6 +86,7 @@ header {
   margin: 0;
   line-height: 1;
   font-size: inherit;
+
   :host.done & {
     text-decoration: line-through;
   }
@@ -172,7 +94,6 @@ header {
 
 .btn-prioritise {
   @include icon-btn($icon-size);
-  font-size: 1.2rem;
   opacity: .3;
   transform: scale(0);
   transition: transform .2s;
@@ -182,8 +103,8 @@ header {
     transform: scale(1);
   }
 
-  &.reveal {
-    color: #e32300;
+  &.marked {
+    color: $scarlet;
     opacity: .8 !important;
     transform: scale(1);
   }
@@ -195,11 +116,94 @@ header {
 
 .btn-mark-complete {
   @include icon-btn($icon-size);
-  md-icon {
+  opacity: .5;
+
+  :host.done & {
+    color: $green-haze;
+    opacity: 1;
+  }
+}
+
+.btn-delete {
+  @include icon-btn($icon-size);
+  color: $scarlet;
+  transform: scale(0);
+  transition: transform .4s;
+
+  header:hover &,
+  :host.expanded & {
+    transform: scale(1);
+  }
+}
+
+// Detail pane styles
+// -------------------------------
+
+.details {
+  @include icon-btn($icon-size, 1.2rem);
+  @include expand-when(':host.expanded');
+  font-size: $details-font-size;
+  opacity: 0;
+  transition: max-height .4s $fast-out-slow-in, opacity .2s .1s;
+
+  :host.expanded & {
+    opacity: 1;
+  }
+
+  .icon-label {
+    margin-right: .4rem;
+  }
+}
+
+.textfield-subtask {
+  @extend .mui-textfield;
+  flex: 1 auto;
+  margin-right: $icon-size;
+}
+
+.textfield-notes {
+  @extend .mui-textfield;
+  flex: 1 auto;
+  margin-right: $icon-size;
+  textarea {
+    resize: none;
+  }
+}
+
+.checklist {
+  padding-top: 0;
+}
+
+.checklist-item {
+  @extend .row;
+  margin: .5rem 0;
+  flex: 1 auto;
+  justify-content: space-between;
+
+  /deep/ .md-checkbox-inner-container {
+    height: 1rem;
+    width: 1rem;
+    margin: auto .65rem auto .25rem;
+  }
+}
+
+.checkbox-label {
+  opacity: 1;
+  transition: opacity .2s;
+
+  .checklist-item.done & {
     opacity: .5;
-    :host.done & {
-      color: #00b227;
-      opacity: 1;
-    }
+    text-decoration: line-through;
+  }
+}
+
+.btn-delete-subtask {
+  color: $scarlet;
+  cursor: pointer;
+  transform: scale(0);
+  transition: transform .4s;
+
+  .checklist-item:hover & {
+    transform: scale(1);
   }
 }

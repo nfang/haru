@@ -133,13 +133,13 @@ describe('TaskComponent', () => {
 
        component.task = task;
        fixture.detectChanges();
-       expect(elBtnPrioritise.classList.contains('reveal')).toBe(false);
+       expect(elBtnPrioritise.classList.contains('marked')).toBe(false);
        expect(elBtnPrioritise.classList.contains('disabled')).toBe(false);
 
        component.togglePrioritised(mockEvent);
        fixture.detectChanges();
        expect(task.isPrioritised).toBeTruthy();
-       expect(elBtnPrioritise.classList.contains('reveal')).toBe(true);
+       expect(elBtnPrioritise.classList.contains('marked')).toBe(true);
 
        component.toggleCompleted(mockEvent);
        fixture.detectChanges();
@@ -245,13 +245,13 @@ describe('TaskComponent', () => {
       .catch(e => done.fail(e));
   });
 
-  it('can add notes', done => {
+  it('can add task notes', done => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement,
             task: Task = taskService.list()[0],
-            elNotes = element.querySelector('.input-notes > textarea');
+            elNotes = element.querySelector('.textfield-notes > textarea');
 
         component.task = task;
         fixture.detectChanges();
