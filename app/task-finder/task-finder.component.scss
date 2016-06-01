@@ -1,12 +1,1 @@
-@import '~muicss/lib/sass/mui';
-
-.mui-textfield > input:focus,
-.mui-textfield > textarea:focus {
-  border-color: mui-color('teal');
-}
-
-.mui-textfield > input::-webkit-input-placeholder,
-.mui-textfield > textarea::-webkit-input-placeholder {
-  font: normal 1rem Roboto, "Helvetica Neue", sans-serif;
-  font-weight: 300;
-}
+@import '../shared/global.scss';
