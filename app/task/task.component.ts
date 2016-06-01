@@ -57,13 +57,13 @@ export class TaskComponent {
     if (this.task.isPrioritised) {
       this.task.isPrioritised = false;
     }
-    this._taskService.update(this.task);
+    this.save();
     event.stopPropagation();
   }
 
   togglePrioritised(event) {
     this.task.isPrioritised = !this.task.isPrioritised;
-    this._taskService.update(this.task);
+    this.save();
     event.stopPropagation();
   }
 
@@ -74,18 +74,17 @@ export class TaskComponent {
     }
   }
 
-  addSubtask(task: Task) {
-    if (task.title) {
-      task.title = task.title.trim();
-      this.task.addSubtask(task);
-      this._taskService.update(this.task);
+  addSubtask(subtask: Task) {
+    if (subtask.title) {
+      this.task.addSubtask(subtask);
+      this.save();
       this.subtask = new Task('');
     }
   }
 
-  removeSubtask(task: Task) {
-    this.task.removeSubtask(task);
-    this._taskService.update(this.task);
+  removeSubtask(subtask: Task) {
+    this.task.removeSubtask(subtask);
+    this.save();
   }
 
   remove(event) {
@@ -93,10 +92,7 @@ export class TaskComponent {
     event.stopPropagation();
   }
 
-  updateNotes() {
-    if (this.task.notes) {
-      this.task.notes = this.task.notes.trim();
-      this._taskService.update(this.task);
-    }
+  save() {
+    this._taskService.update(this.task);
   }
 }

@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+
 import {Task} from '../task.model';
 import {TaskService} from './interfaces';
 
@@ -15,6 +16,12 @@ export class LocalStorageTaskService implements TaskService {
 
   taskCollection: LocalStorageTaskCollection;
 
+  private deserialize(value: string): Task {
+    let task = Object.assign(new Task(''), value);
+    task.checklist = task.checklist.map(item => Object.assign(new Task(''), item));
+    return task;
+  }
+
   constructor() {
     let raw = JSON.parse(localStorage.getItem(this.localStorageKey));
     if (!raw) {
@@ -23,7 +30,7 @@ export class LocalStorageTaskService implements TaskService {
     } else {
       this.taskCollection = new LocalStorageTaskCollection(
         raw.timestamp,
-        raw.tasks.map(rawTask => Object.assign(new Task(''), rawTask))
+        raw.tasks.map(rawTask => this.deserialize(rawTask))
       );
     }
   }

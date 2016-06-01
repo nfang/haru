@@ -25,7 +25,7 @@
         <md-checkbox class="checklist-checkbox" [(ngModel)]="item.isCompleted">
           <span class="checkbox-label">{{item.title}}</span>
         </md-checkbox>
-        <md-icon class="btn-delete-subtask" (click)="task.removeSubtask(item)">close</md-icon>
+        <md-icon class="btn-delete-subtask" (click)="removeSubtask(item)">close</md-icon>
       </div>
     </md-list-item>
   </md-list>
@@ -38,7 +38,7 @@
   <div class="row" style="align-items: baseline">
     <md-icon class="icon-label">content_paste</md-icon>
     <div class="textfield-notes">
-      <textarea placeholder="Add notes" rows="3" (blur)="updateNotes()" [(ngModel)]="task.notes"></textarea>
+      <textarea placeholder="Add notes" rows="3" (blur)="save()" [(ngModel)]="task.notes"></textarea>
     </div>
   </div>
 </section>

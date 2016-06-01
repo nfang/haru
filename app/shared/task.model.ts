@@ -8,9 +8,25 @@ export class Task {
     return this._createAt;
   }
 
+  get title(): string {
+    return this._title;
+  }
+
+  set title(value: string) {
+    this._title = value.trim();
+  }
+
+  get notes(): string {
+    return this._notes;
+  }
+
+  set notes(value: string) {
+    this._notes = value.trim();
+  }
+
   constructor(
-    public title: string,
-    public notes: string = ''
+    private _title: string,
+    private _notes: string = ''
   ) {
     this._createAt = new Date();
     this.checklist = new Array<Task>();
