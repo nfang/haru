@@ -7,6 +7,7 @@ import {
   beforeEachProviders
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
 
@@ -42,7 +43,8 @@ describe('TaskListComponent', () => {
       useClass: MockInMemoryTaskProvider
     },
     TaskListComponent,
-    TestComponentBuilder
+    TestComponentBuilder,
+    HTTP_PROVIDERS
   ]);
 
   beforeEach(inject([TestComponentBuilder, TASK_SERVICE_TOKEN], (tcb, service) => {
@@ -84,20 +86,22 @@ describe('TaskListComponent', () => {
       let afterOrderTasks = component.tasks;
       expect(afterOrderTasks[0].title).toEqual('Task 2');
     }));
-    
-  it('should return a ordered list of tasks according to order by created at date', inject([TaskListComponent],
-    (component) => {
-      let beforeOrderTasks = component.tasks;
-      expect(beforeOrderTasks[0].title).toEqual('Task 1');
-      taskService.queryCommand = new QueryCommand();
-      taskService.queryCommand.sortBy = new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC, SortOrder.DESC]);
-      setTimeout(addTask,1000);
-      function addTask() {
-        taskService.add(new Task('Task 4', 'Note 4'));  
-        let afterOrderTasks = component.tasks;
-        expect(afterOrderTasks[0].title).toEqual('Task 4');
-      }      
-    }));
+
+  it('should return a ordered list of tasks according to order by created at date', inject([], () => {
+    return builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance;
+
+        let beforeOrderTasks = component.tasks;
+        expect(beforeOrderTasks[0].title).toEqual('Task 1');
+        component.queryCommand = new QueryCommand();
+        component.queryCommand.sortBy = new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC, SortOrder.DESC]);
+
+        taskService.add(new Task('Task 4', 'Note 4'));
+        fixture.detectChanges();
+        expect(component.tasks[0].title).toEqual('Task 4');
+      });
+  }));
 });
 
 @Component({
