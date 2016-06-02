@@ -42,7 +42,7 @@ export class TaskListComponent {
   ) {
     this.queryCommand = new QueryCommand();
     this.queryCommand.sortBy =
-      new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
+      new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC, SortOrder.ASC]);
   }
 
   updateQuery(event: ValueChangeEvent) {
