@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "5"
 after_success:
-  - npm build:dist
+  - npm run build:dist
 deploy:
   provider: surge
   project: ./dist/
