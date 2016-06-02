@@ -5,7 +5,6 @@ import {
   EventEmitter
 } from '@angular/core';
 import { Control } from '@angular/common';
-import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/debounce';
 
