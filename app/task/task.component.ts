@@ -12,6 +12,7 @@ import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
 import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
+import { SubtaskComponent } from '../subtask/subtask.component';
 
 export class TaskExpandedEvent {
   constructor(public taskComponent: TaskComponent) {}
@@ -24,7 +25,7 @@ export class TaskExpandedEvent {
     require('./task.component.scss')
   ],
   directives: [
-    MdCheckbox, MdIcon, MD_LIST_DIRECTIVES
+    MdCheckbox, MdIcon, MD_LIST_DIRECTIVES, SubtaskComponent
   ],
   providers: [MdIconRegistry],
   host: {

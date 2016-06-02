@@ -1,0 +1,4 @@
+<md-checkbox [(ngModel)]="task.isCompleted">
+  <span class="checkbox-label">{{task.title}}</span>
+</md-checkbox>
+<md-icon class="btn-delete-subtask" (click)="remove()">close</md-icon>

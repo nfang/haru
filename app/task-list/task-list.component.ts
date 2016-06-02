@@ -38,11 +38,11 @@ export class TaskListComponent {
   taskComponents: QueryList<TaskComponent>;
 
   constructor(
-    @Inject(TASK_SERVICE_TOKEN) private taskService: TaskService
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
   ) {
     this.queryCommand = new QueryCommand();
     this.queryCommand.sortBy =
-      new SortSpec(['isPrioritised', 'createdDate', 'title'], [SortOrder.DESC]);
+      new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC, SortOrder.ASC]);
   }
 
   updateQuery(event: ValueChangeEvent) {
@@ -63,7 +63,7 @@ export class TaskListComponent {
   }
 
   get tasks() {
-    let tasks = this.taskService.list();
+    let tasks = this._taskService.list();
     return this.queryCommand.execute(tasks);
   }
 }

@@ -11,6 +11,9 @@ $mui-accent-color-light:  mui-color('purple', 'A400');
 
 @import '~muicss/lib/sass/mui';
 
+$scarlet: #e32300;
+$green-haze: #00b227;
+
 // Easing functions
 // -------------------------------
 
@@ -19,4 +22,11 @@ $fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   font-weight: 300;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
