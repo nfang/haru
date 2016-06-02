@@ -1,0 +1,42 @@
+@import '../shared/global.scss';
+
+:host {
+  @extend .row;
+  margin: .5rem 0;
+  flex: 1 auto;
+  justify-content: space-between;
+}
+
+:host /deep/ .md-checkbox-inner-container {
+  height: 1rem;
+  width: 1rem;
+  margin: auto .65rem auto .25rem;
+}
+
+.checkbox-label {
+  opacity: 1;
+  transition: opacity .2s;
+
+  :host.done & {
+    opacity: .5;
+    text-decoration: line-through;
+  }
+}
+
+.btn-delete-subtask {
+  display: block;
+  font-size: 1.2rem;
+  text-align: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  line-height: 1.5rem;
+
+  color: $scarlet;
+  cursor: pointer;
+  transform: scale(0);
+  transition: transform .4s;
+
+  :host:hover & {
+    transform: scale(1);
+  }
+}

@@ -21,12 +21,7 @@
   </div>
   <md-list class="checklist">
     <md-list-item *ngFor="let item of task.checklist">
-      <div class="checklist-item" [class.done]="item.isCompleted">
-        <md-checkbox class="checklist-checkbox" [(ngModel)]="item.isCompleted">
-          <span class="checkbox-label">{{item.title}}</span>
-        </md-checkbox>
-        <md-icon class="btn-delete-subtask" (click)="removeSubtask(item)">close</md-icon>
-      </div>
+      <subtask [task]="item" (change)="save()" (remove)="removeSubtask(item)"></subtask>
     </md-list-item>
   </md-list>
   <form class="row" (submit)="addSubtask(subtask)">

@@ -25,19 +25,6 @@
 
 $icon-size: 1.5rem;
 $details-font-size: 1rem;
-$scarlet: #e32300;
-$green-haze: #00b227;
-$fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
-
-// Common
-// -------------------------------
-
-.row {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
 
 // Host styles
 // -------------------------------
@@ -172,38 +159,4 @@ header {
 
 .checklist {
   padding-top: 0;
-}
-
-.checklist-item {
-  @extend .row;
-  margin: .5rem 0;
-  flex: 1 auto;
-  justify-content: space-between;
-
-  /deep/ .md-checkbox-inner-container {
-    height: 1rem;
-    width: 1rem;
-    margin: auto .65rem auto .25rem;
-  }
-}
-
-.checkbox-label {
-  opacity: 1;
-  transition: opacity .2s;
-
-  .checklist-item.done & {
-    opacity: .5;
-    text-decoration: line-through;
-  }
-}
-
-.btn-delete-subtask {
-  color: $scarlet;
-  cursor: pointer;
-  transform: scale(0);
-  transition: transform .4s;
-
-  .checklist-item:hover & {
-    transform: scale(1);
-  }
 }
