@@ -17,6 +17,12 @@ import {
   InMemoryTaskProvider,
   IN_MEMORY_TASK_SERVICE_PROVIDERS
 } from '../shared/services';
+import {
+  SortOrder,
+  SortSpec,
+  FilterSpec,
+  QueryCommand
+} from '../shared/utils/query-command';
 
 class MockInMemoryTaskProvider {
   public tasks: Task[] = [
@@ -77,6 +83,20 @@ describe('TaskListComponent', () => {
       beforeOrderTasks[1].isPrioritised = true;
       let afterOrderTasks = component.tasks;
       expect(afterOrderTasks[0].title).toEqual('Task 2');
+    }));
+    
+  it('should return a ordered list of tasks according to order by created at date', inject([TaskListComponent],
+    (component) => {
+      let beforeOrderTasks = component.tasks;
+      expect(beforeOrderTasks[0].title).toEqual('Task 1');
+      taskService.queryCommand = new QueryCommand();
+      taskService.queryCommand.sortBy = new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC, SortOrder.DESC]);
+      setTimeout(addTask,1000);
+      function addTask() {
+        taskService.add(new Task('Task 4', 'Note 4'));  
+        let afterOrderTasks = component.tasks;
+        expect(afterOrderTasks[0].title).toEqual('Task 4');
+      }      
     }));
 });
 
