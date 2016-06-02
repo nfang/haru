@@ -18,6 +18,16 @@
       font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
       padding: 1em auto;
     }
+    .loader {
+      position: absolute;
+      top: 0; left: 0; bottom: 85px; right: 0;
+      margin: auto;
+      width: 40px;
+      height: 40px;
+    }
+    .sk-cube:before {
+      background-color: #fff !important;
+    }
     </style>
   </head>
   <body>
@@ -25,7 +35,16 @@
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
-    <todo-app>Loading...</todo-app>
+    <todo-app>
+      <div class="loader">
+        <div class="sk-folding-cube">
+          <div class="sk-cube1 sk-cube"></div>
+          <div class="sk-cube2 sk-cube"></div>
+          <div class="sk-cube4 sk-cube"></div>
+          <div class="sk-cube3 sk-cube"></div>
+        </div>
+      </div>
+    </todo-app>
 
     <!-- Google Analytics -->
     <!-- <script>

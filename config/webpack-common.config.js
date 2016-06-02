@@ -27,7 +27,7 @@ module.exports = {
       loader: 'ts'
     }, {
       test: /\.css$/,
-      loader: 'raw'
+      loader: 'style!css'
     }, {
       test: /\.scss$/,
       loader: 'raw!sass!source-map'
