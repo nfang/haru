@@ -50,7 +50,9 @@ export class TaskListComponent {
       return;
     }
     this.queryCommand.filter = new FilterSpec((task) => {
-      return task.title.toLowerCase().includes(event.value.title);
+      let lowerCasedTaskTitle = task.title.toLowerCase();
+      let lowerCasedTarget = event.value.title.toLowerCase();
+      return lowerCasedTaskTitle.includes(lowerCasedTarget);
     });
   }
 

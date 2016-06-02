@@ -73,7 +73,7 @@ describe('TaskListComponent', () => {
 
   it('should return a filtered list of tasks according to query', inject([ TaskListComponent ],
     (component) => {
-      component.updateQuery({ value: new Task('3') });
+      component.updateQuery({ value: new Task('Task 3') });
       let tasks = component.tasks;
       expect(tasks.length).toBe(1);
       expect(tasks[0].title).toEqual('Task 3');
