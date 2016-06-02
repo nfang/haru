@@ -6,21 +6,23 @@ import {
   beforeEach,
   beforeEachProviders
 } from '@angular/core/testing';
-import { provide } from '@angular/core';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { Component } from '@angular/core';
+import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
 
 import { Task } from '../shared/task.model';
 import { TaskListComponent } from '../task-list/task-list.component';
-import { TaskService } from '../shared/task.service';
-import { TaskProvider } from '../shared/mock-tasks';
+import {
+  TASK_SERVICE_TOKEN,
+  InMemoryTaskProvider,
+  IN_MEMORY_TASK_SERVICE_PROVIDERS
+} from '../shared/services';
 
-class MockTaskProvider {
+class MockInMemoryTaskProvider {
   public tasks: Task[] = [
-    new Task('Task 1', 'Note 1', new Date()),
-    new Task('Task 2', 'Note 2', new Date()),
-    new Task('Task 3', 'Note 3', new Date())
+    new Task('Task 1', 'Note 1'),
+    new Task('Task 2', 'Note 2'),
+    new Task('Task 3', 'Note 3')
   ];
 }
 
@@ -28,13 +30,16 @@ describe('TaskListComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
-    provide(TaskProvider, { useClass: MockTaskProvider }),
+    IN_MEMORY_TASK_SERVICE_PROVIDERS,
+    {
+      provide: InMemoryTaskProvider,
+      useClass: MockInMemoryTaskProvider
+    },
     TaskListComponent,
-    TaskService,
     TestComponentBuilder
   ]);
 
-  beforeEach(inject([TestComponentBuilder, TaskService], (tcb, service) => {
+  beforeEach(inject([TestComponentBuilder, TASK_SERVICE_TOKEN], (tcb, service) => {
     builder = tcb;
     taskService = service;
   }));
@@ -53,14 +58,6 @@ describe('TaskListComponent', () => {
       });
   }));
 
-  it('should log ngOnInit', inject([ TaskListComponent ], (component) => {
-    spyOn(console, 'log');
-    expect(console.log).not.toHaveBeenCalled();
-
-    component.ngOnInit();
-    expect(console.log).toHaveBeenCalled();
-  }));
-
   it('should return a list of tasks', inject([ TaskListComponent ], (component) => {
     let tasks = component.tasks;
     expect(tasks.length).toBe(3);
@@ -76,7 +73,6 @@ describe('TaskListComponent', () => {
 
   it('should return a ordered list of tasks according to order', inject([ TaskListComponent ],
     (component) => {
-      component.ngOnInit();
       let beforeOrderTasks = component.tasks;
       beforeOrderTasks[1].isPrioritised = true;
       let afterOrderTasks = component.tasks;

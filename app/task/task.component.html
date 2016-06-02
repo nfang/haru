@@ -1,16 +1,44 @@
-<li class="task-list-item">
-  <div class="task-heading">
-    <h1 class="task-title">{{task.title}}</h1>
-    <div class="task-action">
-      <input type="checkbox" class="isPrioritised" [checked]="task.isPrioritised" (change)="markPrioritised()">
-      <div class="btn" (click)='removeTask()'>
-        <i class="fa fa-trash-o" aria-hidden="true"></i>
+<div class="cue-selected"></div>
+<header class="row" (click)="toggleDetailPane()">
+  <div class="btn-prioritise"
+    [class.marked]="task.isPrioritised"
+    [class.disabled]="task.isCompleted"
+    (click)="!task.isCompleted && togglePrioritised($event)">
+    <md-icon>priority_high</md-icon>
+  </div>
+  <h2 class="title">{{task.title}}</h2>
+  <div class="btn-mark-complete" (click)="toggleCompleted($event)">
+    <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
+    <md-icon *ngIf="task.isCompleted">lens</md-icon>
+  </div>
+  <div class="btn-delete" (click)="remove($event)">
+    <md-icon>close</md-icon>
+  </div>
+</header>
+<section class="details">
+  <div class="row" style="display:none">
+    <md-icon class="icon-label">alarm</md-icon>
+  </div>
+  <md-list class="checklist">
+    <md-list-item *ngFor="let item of task.checklist">
+      <div class="checklist-item" [class.done]="item.isCompleted">
+        <md-checkbox class="checklist-checkbox" [(ngModel)]="item.isCompleted">
+          <span class="checkbox-label">{{item.title}}</span>
+        </md-checkbox>
+        <md-icon class="btn-delete-subtask" (click)="removeSubtask(item)">close</md-icon>
       </div>
-      <input type="checkbox" class="isCompleted" [checked]="task.isCompleted" (change)="markCompleted()">
+    </md-list-item>
+  </md-list>
+  <form class="row" (submit)="addSubtask(subtask)">
+    <md-icon class="icon-label">add</md-icon>
+    <div class="textfield-subtask">
+      <input type="text" placeholder="Add a subtask" [(ngModel)]="subtask.title">
+    </div>
+  </form>
+  <div class="row" style="align-items: baseline">
+    <md-icon class="icon-label">content_paste</md-icon>
+    <div class="textfield-notes">
+      <textarea placeholder="Add notes" rows="3" (blur)="save()" [(ngModel)]="task.notes"></textarea>
     </div>
   </div>
-  <div class="task-detail">
-    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.dueDate}}</time>
-    <i class="fa fa-clock-o" aria-hidden="true"></i> <time>{{task.createAt}}</time>
-  </div>
-</li>
+</section>

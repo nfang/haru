@@ -1,26 +1,209 @@
-.task-list-item {
-  font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-  max-width: 480px;
-  list-style: none;
+@import '../shared/global.scss';
 
-  .task-heading {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+@mixin icon-btn($size, $font-size: inherit) {
+  md-icon {
+    display: block;
+    font-size: $font-size;
+    text-align: center;
+    width: $size;
+    height: $size;
+    line-height: $size;
+  }
+}
 
-    .task-title {
-      font-size: 24px;
-      font-weight: 100;
-      width: 70%;
-    }
+@mixin expand-when($context, $max-height: 600px) {
+  height: 100%;
+  max-height: 0;
 
-    .btn {
-      font-size: 24px;
-    }
+  #{$context} & {
+    max-height: $max-height;
+  }
+}
+
+// Variables
+// -------------------------------
+
+$icon-size: 1.5rem;
+$details-font-size: 1rem;
+$scarlet: #e32300;
+$green-haze: #00b227;
+$fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+// Common
+// -------------------------------
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+// Host styles
+// -------------------------------
+
+:host {
+  box-sizing: border-box;
+  font-size: 100%;
+  opacity: .8;
+  position: relative;
+  transition: opacity .2s;
+
+  &.done {
+    opacity: .5;
+  }
+}
+
+.cue-selected {
+  @include expand-when(':host.expanded');
+  position: absolute;
+  top: 0;
+  left: -24px;
+  margin: auto;
+  width: 3px;
+  background: $mui-accent-color;
+  transition: max-height .4s $fast-out-slow-in;
+}
+
+// Header styles
+// -------------------------------
+
+header {
+  cursor: pointer;
+  font-size: 1.125rem;
+  margin: 1.125rem 0;
+  transition-property: font-size, margin;
+  transition-duration: .2s;
+
+  :host.done & {
+    font-size: 1rem;
+    margin: .5rem 0;
+  }
+}
+
+.title {
+  flex: 1 auto;
+  margin: 0;
+  line-height: 1;
+  font-size: inherit;
+
+  :host.done & {
+    text-decoration: line-through;
+  }
+}
+
+.btn-prioritise {
+  @include icon-btn($icon-size);
+  opacity: .3;
+  transform: scale(0);
+  transition: transform .2s;
+
+  header:hover &,
+  :host.expanded & {
+    transform: scale(1);
   }
 
-  .task-detail {
-    font-weight: 300;
+  &.marked {
+    color: $scarlet;
+    opacity: .8 !important;
+    transform: scale(1);
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}
+
+.btn-mark-complete {
+  @include icon-btn($icon-size);
+  opacity: .5;
+
+  :host.done & {
+    color: $green-haze;
+    opacity: 1;
+  }
+}
+
+.btn-delete {
+  @include icon-btn($icon-size);
+  color: $scarlet;
+  transform: scale(0);
+  transition: transform .4s;
+
+  header:hover &,
+  :host.expanded & {
+    transform: scale(1);
+  }
+}
+
+// Detail pane styles
+// -------------------------------
+
+.details {
+  @include icon-btn($icon-size, 1.2rem);
+  @include expand-when(':host.expanded');
+  font-size: $details-font-size;
+  opacity: 0;
+  transition: max-height .4s $fast-out-slow-in, opacity .2s .1s;
+
+  :host.expanded & {
+    opacity: 1;
+  }
+
+  .icon-label {
+    margin-right: .4rem;
+  }
+}
+
+.textfield-subtask {
+  @extend .mui-textfield;
+  flex: 1 auto;
+  margin-right: $icon-size;
+}
+
+.textfield-notes {
+  @extend .mui-textfield;
+  flex: 1 auto;
+  margin-right: $icon-size;
+  textarea {
+    resize: none;
+  }
+}
+
+.checklist {
+  padding-top: 0;
+}
+
+.checklist-item {
+  @extend .row;
+  margin: .5rem 0;
+  flex: 1 auto;
+  justify-content: space-between;
+
+  /deep/ .md-checkbox-inner-container {
+    height: 1rem;
+    width: 1rem;
+    margin: auto .65rem auto .25rem;
+  }
+}
+
+.checkbox-label {
+  opacity: 1;
+  transition: opacity .2s;
+
+  .checklist-item.done & {
+    opacity: .5;
+    text-decoration: line-through;
+  }
+}
+
+.btn-delete-subtask {
+  color: $scarlet;
+  cursor: pointer;
+  transform: scale(0);
+  transition: transform .4s;
+
+  .checklist-item:hover & {
+    transform: scale(1);
   }
 }

@@ -1,32 +1,59 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Inject,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { Control } from '@angular/common';
+import { MD_INPUT_DIRECTIVES } from '@angular2-material/input';
+import { Observable } from 'rxjs/Rx';
+import 'rxjs/add/operator/debounce';
 
 import { Task } from '../shared/task.model';
-import { TaskService } from '../shared/task.service';
-import { TaskProvider } from '../shared/mock-tasks';
+import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
+
+export class ValueChangeEvent {
+  constructor(public value) {}
+}
 
 @Component({
   selector: 'task-finder',
-  template: require('./task-finder.component.html')
+  template: require('./task-finder.component.html'),
+  styles: [
+    require('./task-finder.component.scss')
+  ]
 })
 export class TaskFinderComponent {
-  @Output() queryUpdated = new EventEmitter();
+  private _changeEmitter: EventEmitter<ValueChangeEvent> = new EventEmitter<ValueChangeEvent>();
 
-  task: Task;
-
-  constructor(private _taskService: TaskService) {
-    this.task = new Task('');
+  @Output('change')
+  get onChange(): Observable<ValueChangeEvent> {
+    return this._changeEmitter.asObservable();
   }
 
-  onQueryChanged() {
-    this.queryUpdated.emit({ value: this.task });
+  query: Control;
+
+  constructor(
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
+  ) {
+    this.query = new Control('');
+    this.query.valueChanges
+      .debounce((value) => {
+        return value && value.trim().length ?
+          Observable.timer(400) : Observable.timer(0);
+      })
+      .subscribe(query => {
+        let task = new Task(this.query.value.trim());
+        this._changeEmitter.emit(new ValueChangeEvent(task))
+      });
   }
 
-  onSubmit() {
-    if (!this.task.title) {
-      return;
+  submit(event) {
+    if (this.query.value && this.query.value.trim().length) {
+      let task = new Task(this.query.value);
+      this._taskService.add(task);
+      this.query.updateValue('');
     }
-    this.task.dueDate = new Date();
-    this._taskService.add(this.task);
-    this.task = new Task('');
+    event.preventDefault();
   }
 }

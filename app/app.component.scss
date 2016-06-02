@@ -1,2 +1,19 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700);
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css);
+:host {
+  display: block;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.row {
+  display: flex;
+  align-items: baseline;
+}
+
+md-card-title {
+  flex: 1 auto;
+}
+
+.progress {
+  font-size: .8rem;
+  color: rgba(0, 0, 0, 0.54);
+}

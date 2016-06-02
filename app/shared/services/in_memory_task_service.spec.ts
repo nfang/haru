@@ -6,35 +6,34 @@ import {
   beforeEachProviders
 } from '@angular/core/testing';
 import { provide } from '@angular/core';
-import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
-import { Component } from '@angular/core';
-import { By } from '@angular/platform-browser';
 
-import { Task } from './task.model';
-import { TaskProvider } from './mock-tasks';
-import { TaskService } from './task.service';
+import { Task } from '../task.model';
+import {
+  InMemoryTaskProvider,
+  InMemoryTaskService
+} from './in_memory_task_service';
 
-class MockTaskProvider {
+class MockInMemoryTaskProvider {
   public tasks: Task[] = [
-    new Task('Task 1', 'Note 1', new Date(2016, 5, 14)),
-    new Task('Task 2', 'Note 2', new Date(2016, 5, 30))
+    new Task('Task 1', 'Note 1'),
+    new Task('Task 2', 'Note 2')
   ];
 }
 
-describe('TaskService', () => {
+describe('InMemoryTaskService', () => {
   beforeEachProviders(() => [
-    provide(TaskProvider, { useClass: MockTaskProvider }),
-    TaskService
+    provide(InMemoryTaskProvider, { useClass: MockInMemoryTaskProvider }),
+    InMemoryTaskService
   ]);
 
-  it('can list all tasks', inject([ TaskService ], (service) => {
+  it('can list all tasks', inject([ InMemoryTaskService ], (service) => {
     let tasks = service.list();
     expect(tasks.length).toBe(2);
     expect(tasks[0].title).toBe('Task 1');
     expect(tasks[1].title).toBe('Task 2');
   }));
 
-  it('can add a task to the repository', inject([ TaskService ], (service) => {
+  it('can add a task to the repository', inject([ InMemoryTaskService ], (service) => {
     let due = new Date(2016, 6, 14);
     let len = service.add({ title: 'Task 3', notes: 'Task 3 notes', dueDate: due });
     let tasks = service.list();
@@ -44,7 +43,7 @@ describe('TaskService', () => {
     expect(tasks[2].dueDate).toBe(due);
   }));
 
-  it('can remove the specified task from the repository', inject([ TaskService ], (service) => {
+  it('can remove the specified task from the repository', inject([ InMemoryTaskService ], (service) => {
     let tasks = service.list();
     let taskToBeRemoved = tasks[0];
     let removedTasks = service.remove(taskToBeRemoved);
@@ -52,7 +51,7 @@ describe('TaskService', () => {
     expect(removedTasks[0].title).toBe('Task 1');
   }));
 
-  it('can update details of the specified task', inject([ TaskService], (service) => {
+  it('can update details of the specified task', inject([ InMemoryTaskService], (service) => {
     const NEW_TITLE = 'Task 1 (edited)';
     let tasks = service.list();
     let taskToUpdate = tasks[0];

@@ -1,0 +1,22 @@
+@import '~reset-css/reset';
+@import '~muicss/lib/sass/mui/colors';
+
+$mui-primary-color:       mui-color('teal', '500');
+$mui-primary-color-dark:  mui-color('teal', '700');
+$mui-primary-color-light: mui-color('teal', '100');
+
+$mui-accent-color:        mui-color('purple', 'A200');
+$mui-accent-color-dark:   mui-color('purple', 'A100');
+$mui-accent-color-light:  mui-color('purple', 'A400');
+
+@import '~muicss/lib/sass/mui';
+
+// Easing functions
+// -------------------------------
+
+$fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  font-weight: 300;
+}

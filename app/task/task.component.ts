@@ -1,6 +1,21 @@
-import { Component, Input } from '@angular/core';
-import { Task }             from '../shared/task.model';
-import { TaskService }      from '../shared/task.service';
+import {
+  Component,
+  Input,
+  Inject,
+  Output,
+  EventEmitter
+} from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { MdCheckbox } from '@angular2-material/checkbox';
+import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
+import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
+
+import { Task } from '../shared/task.model';
+import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
+
+export class TaskExpandedEvent {
+  constructor(public taskComponent: TaskComponent) {}
+}
 
 @Component({
   selector: 'task',
@@ -8,26 +23,76 @@ import { TaskService }      from '../shared/task.service';
   styles: [
     require('./task.component.scss')
   ],
-  providers: [
-    TaskService
-  ]
+  directives: [
+    MdCheckbox, MdIcon, MD_LIST_DIRECTIVES
+  ],
+  providers: [MdIconRegistry],
+  host: {
+    '[class.expanded]' : 'isExpanded',
+    '[class.done]'     : 'task.isCompleted'
+  }
 })
 export class TaskComponent {
+  private _expandEmitter: EventEmitter<TaskExpandedEvent> = new EventEmitter<TaskExpandedEvent>();
+
   @Input() task: Task;
 
-  constructor(private _taskService: TaskService) {}
+  @Output('expand')
+  get onExpand(): Observable<TaskExpandedEvent> {
+    return this._expandEmitter.asObservable();
+  }
 
-  markCompleted() {
+  isExpanded: boolean;
+  subtask: Task;
+
+  constructor(
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
+  ) {
+    this.isExpanded = false;
+    this.subtask = new Task('');
+  }
+
+  toggleCompleted(event) {
     this.task.isCompleted = !this.task.isCompleted;
-    this._taskService.update(this.task);
+    if (this.task.isPrioritised) {
+      this.task.isPrioritised = false;
+    }
+    this.save();
+    event.stopPropagation();
   }
 
-  markPrioritised() {
+  togglePrioritised(event) {
     this.task.isPrioritised = !this.task.isPrioritised;
-    this._taskService.update(this.task);
+    this.save();
+    event.stopPropagation();
   }
 
-  removeTask() {
+  toggleDetailPane() {
+    this.isExpanded = !this.isExpanded;
+    if (this.isExpanded) {
+      this._expandEmitter.emit(new TaskExpandedEvent(this));
+    }
+  }
+
+  addSubtask(subtask: Task) {
+    if (subtask.title) {
+      this.task.addSubtask(subtask);
+      this.save();
+      this.subtask = new Task('');
+    }
+  }
+
+  removeSubtask(subtask: Task) {
+    this.task.removeSubtask(subtask);
+    this.save();
+  }
+
+  remove(event) {
     this._taskService.remove(this.task);
+    event.stopPropagation();
+  }
+
+  save() {
+    this._taskService.update(this.task);
   }
 }

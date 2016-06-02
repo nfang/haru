@@ -3,16 +3,48 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title></title>
+    <title>Haru</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"></script>
+    <style>
+    html {
+      background: #2f3240;
+      height: 100%;
+    }
+    body {
+      font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
+      padding: 1em auto;
+    }
+    .loader {
+      position: absolute;
+      top: 0; left: 0; bottom: 85px; right: 0;
+      margin: auto;
+      width: 40px;
+      height: 40px;
+    }
+    .sk-cube:before {
+      background-color: #fff !important;
+    }
+    </style>
   </head>
   <body>
     <!--[if lt IE 8]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    
-    <todo-app></todo-app>
+
+    <todo-app>
+      <div class="loader">
+        <div class="sk-folding-cube">
+          <div class="sk-cube1 sk-cube"></div>
+          <div class="sk-cube2 sk-cube"></div>
+          <div class="sk-cube4 sk-cube"></div>
+          <div class="sk-cube3 sk-cube"></div>
+        </div>
+      </div>
+    </todo-app>
 
     <!-- Google Analytics -->
     <!-- <script>

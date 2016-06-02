@@ -1,3 +1,9 @@
 language: node_js
 node_js:
   - "5"
+after_success:
+  - npm build:dist
+deploy:
+  provider: surge
+  project: ./dist/
+  domain: haruapp.surge.sh

@@ -1,3 +1,5 @@
-<form (submit)="onSubmit()">
-  <input [(ngModel)]="task.title" (keyup)="onQueryChanged()">
+<form (submit)="submit($event)">
+  <div class="mui-textfield">
+    <input placeholder="Search or add new task" [ngFormControl]="query">
+  </div>
 </form>
