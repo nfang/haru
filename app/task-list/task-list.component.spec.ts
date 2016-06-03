@@ -89,10 +89,8 @@ describe('TaskListComponent', () => {
         let incompletedTasks = component.incompletedTasks;
         incompletedTasks[0].isCompleted = true;
         fixture.detectChanges();
-        incompletedTasks = component.incompletedTasks;
-        expect(incompletedTasks.length).toBe(2);
-        let completedTasks = component.completedTasks;
-        expect(completedTasks.length).toBe(1);
+        expect(component.incompletedTasks.length).toBe(2);
+        expect(component.completedTasks.length).toBe(1);
       });
   }));
 });
