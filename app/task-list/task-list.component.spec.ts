@@ -7,6 +7,7 @@ import {
   beforeEachProviders
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
 
@@ -36,7 +37,8 @@ describe('TaskListComponent', () => {
       useClass: MockInMemoryTaskProvider
     },
     TaskListComponent,
-    TestComponentBuilder
+    TestComponentBuilder,
+    HTTP_PROVIDERS
   ]);
 
   beforeEach(inject([TestComponentBuilder, TASK_SERVICE_TOKEN], (tcb, service) => {
@@ -78,6 +80,21 @@ describe('TaskListComponent', () => {
       let afterOrderTasks = component.incompletedTasks;
       expect(afterOrderTasks[0].title).toEqual('Task 2');
     }));
+    
+  it('should group tasks into correct task list based on isCompleted field', inject([], () => {
+    return builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance;
+        
+        let incompletedTasks = component.incompletedTasks;
+        incompletedTasks[0].isCompleted = true;
+        fixture.detectChanges();
+        incompletedTasks = component.incompletedTasks;
+        expect(incompletedTasks.length).toBe(2);
+        let completedTasks = component.completedTasks;
+        expect(completedTasks.length).toBe(1);
+      });
+  }));
 });
 
 @Component({

@@ -9,7 +9,7 @@
     Show completed tasks
   </button>
 </div>
-<md-list class="list-completed-tasks" [class.reveal]="!showCompletedTasks">
+<md-list class="list-completed-tasks" [class.reveal]="showCompletedTasks">
   <md-list-item *ngFor="let task of completedTasks">
     <task [task]="task" (expand)="handleTaskExpand($event)"></task>
   </md-list-item>
