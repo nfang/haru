@@ -1,4 +1,4 @@
-@import '~reset-css/reset';
+@import '../shared/global.scss';
 
 md-list-item /deep/ .md-list-item {
   padding: 0;
@@ -9,6 +9,14 @@ md-list-item task {
   flex: 1 auto;
 }
 
-.CompletedTaskDisplay {
+.list-completed-tasks {
   display: none;
+
+  &.reveal {
+    display: block;
+  }
+}
+
+.btn-show {
+  font-size: .8rem;
 }

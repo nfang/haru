@@ -1,12 +1,16 @@
 <task-finder (change)="updateQuery($event)"></task-finder>
 <md-list>
-  <md-list-item *ngFor="let task of tasks">
+  <md-list-item *ngFor="let task of incompletedTasks">
     <task [task]="task" (expand)="handleTaskExpand($event)"></task>
   </md-list-item>
 </md-list>
-<md-list [class.CompletedTaskDisplay]="!isCompletedTaskDisplayed">
+<div style="width: 100%; text-align: center">
+  <button (click)="toggleCompletedTasks()" class="btn-show mui-btn mui-btn--primary">
+    Show completed tasks
+  </button>
+</div>
+<md-list class="list-completed-tasks" [class.reveal]="!showCompletedTasks">
   <md-list-item *ngFor="let task of completedTasks">
     <task [task]="task" (expand)="handleTaskExpand($event)"></task>
   </md-list-item>
 </md-list>
-<md-button (click)="toggleCompletedTaskDisplay()" class="md-raised">Display Completed Tasks</md-button>

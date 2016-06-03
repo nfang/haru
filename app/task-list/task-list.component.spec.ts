@@ -58,24 +58,24 @@ describe('TaskListComponent', () => {
       });
   }));
 
-  it('should return a list of tasks', inject([ TaskListComponent ], (component) => {
-    let tasks = component.tasks;
+  it('should show a list of incompleted tasks', inject([ TaskListComponent ], (component) => {
+    let tasks = component.incompletedTasks;
     expect(tasks.length).toBe(3);
   }));
 
   it('should return a filtered list of tasks according to query', inject([ TaskListComponent ],
     (component) => {
       component.updateQuery({ value: new Task('3') });
-      let tasks = component.tasks;
+      let tasks = component.incompletedTasks;
       expect(tasks.length).toBe(1);
       expect(tasks[0].title).toEqual('Task 3');
   }));
 
   it('should return a ordered list of tasks according to order', inject([ TaskListComponent ],
     (component) => {
-      let beforeOrderTasks = component.tasks;
+      let beforeOrderTasks = component.incompletedTasks;
       beforeOrderTasks[1].isPrioritised = true;
-      let afterOrderTasks = component.tasks;
+      let afterOrderTasks = component.incompletedTasks;
       expect(afterOrderTasks[0].title).toEqual('Task 2');
     }));
 });
