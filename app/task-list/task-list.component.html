@@ -4,3 +4,9 @@
     <task [task]="task" (expand)="handleTaskExpand($event)"></task>
   </md-list-item>
 </md-list>
+<md-list [class.CompletedTaskDisplay]="!isCompletedTaskDisplayed">
+  <md-list-item *ngFor="let task of completedTasks">
+    <task [task]="task" (expand)="handleTaskExpand($event)"></task>
+  </md-list-item>
+</md-list>
+<md-button (click)="toggleCompletedTaskDisplay()" class="md-raised">Display Completed Tasks</md-button>

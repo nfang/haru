@@ -8,3 +8,7 @@ md-list-item /deep/ .md-list-item {
 md-list-item task {
   flex: 1 auto;
 }
+
+.CompletedTaskDisplay {
+  display: none;
+}
