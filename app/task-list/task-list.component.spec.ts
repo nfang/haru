@@ -93,6 +93,48 @@ describe('TaskListComponent', () => {
         expect(component.completedTasks.length).toBe(1);
       });
   }));
+  
+  it('should show or hide button based on there is completed task or is not', inject([], () => {
+    return builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+            element = fixture.nativeElement,
+            elBtnShowComplete = element.querySelector('.btn-show');
+                            
+        let incompletedTasks = component.incompletedTasks;
+        fixture.detectChanges();
+        expect(elBtnShowComplete).toBeUndefined;
+        
+        incompletedTasks[0].isCompleted = true;
+        fixture.detectChanges();        
+        expect(component.completedTasks.length).toBe(1);
+        elBtnShowComplete = element.querySelector('.btn-show');
+        expect(elBtnShowComplete).not.toBeUndefined;
+      });
+  }));
+  
+  it('should show correct button text based on showCompletedTasks field', inject([], () => {
+    return builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+            element = fixture.nativeElement;
+                    
+        let incompletedTasks = component.incompletedTasks;
+        incompletedTasks[0].isCompleted = true;
+        fixture.detectChanges();
+        let elBtnComplete = element.querySelector('.btn-show');
+        
+        expect(component.completedTasks.length).toBe(1);
+        expect(component.showCompletedTasks).toBeTruthy;
+        //expect(elBtnComplete.innerText.toLowerCase().inculdes('show')).toBeTruthy();
+        
+        component.showCompletedTasks = false;
+        fixture.detectChanges();
+        expect(component.completedTasks.length).toBe(1);
+        expect(component.showCompletedTasks).not.toBeTruthy;
+        //expect(elBtnComplete.innerText.toLowerCase().inculdes('hide')).toBeTruthy();
+      });
+  }));  
 });
 
 @Component({
