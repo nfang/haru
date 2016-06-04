@@ -4,9 +4,9 @@
     <task [task]="task" (expand)="handleTaskExpand($event)"></task>
   </md-list-item>
 </md-list>
-<div style="width: 100%; text-align: center">
+<div style="width: 100%; text-align: center" *ngIf="completedTasks.length">
   <button (click)="toggleCompletedTasks()" class="btn-show mui-btn mui-btn--primary">
-    Show completed tasks
+    {{showOrHide}} Completed Tasks
   </button>
 </div>
 <md-list class="list-completed-tasks" [class.reveal]="showCompletedTasks">
