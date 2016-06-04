@@ -6,7 +6,7 @@ import {
   beforeEach,
   beforeEachProviders
 } from '@angular/core/testing';
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
@@ -40,6 +40,10 @@ describe('TaskComponent', () => {
     {
       provide: InMemoryTaskProvider,
       useClass: MockInMemoryTaskProvider
+    },
+    {
+      provide: ElementRef,
+      useValue: { nativeElement: {} }
     },
     HTTP_PROVIDERS,
     MdCheckbox,
@@ -98,7 +102,7 @@ describe('TaskComponent', () => {
         component.toggleCompleted(mockEvent);
         fixture.detectChanges();
         expect(component.task.isPrioritised).toBe(false);
-        expect(element.classList.contains('done')).toBe(true);
+        expect(element.classList.contains('completing')).toBe(true);
         expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
         expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('lens');
         done();

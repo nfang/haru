@@ -66,40 +66,86 @@ describe('TaskListComponent', () => {
       });
   }));
 
-  it('should return a list of tasks', inject([ TaskListComponent ], (component) => {
-    let tasks = component.tasks;
+  it('should show a list of incompleted tasks', inject([ TaskListComponent ], (component) => {
+    let tasks = component.incompletedTasks;
     expect(tasks.length).toBe(3);
   }));
 
   it('should return a filtered list of tasks according to query', inject([ TaskListComponent ],
     (component) => {
       component.updateQuery({ value: new Task('Task 3') });
-      let tasks = component.tasks;
+      let tasks = component.incompletedTasks;
       expect(tasks.length).toBe(1);
       expect(tasks[0].title).toEqual('Task 3');
   }));
 
-  it('should return a ordered list of tasks according to order', inject([ TaskListComponent ],
-    (component) => {
-      let beforeOrderTasks = component.tasks;
-      beforeOrderTasks[1].isPrioritised = true;
-      let afterOrderTasks = component.tasks;
-      expect(afterOrderTasks[0].title).toEqual('Task 2');
-    }));
-
-  it('should return a ordered list of tasks according to order by created at date', inject([], () => {
+  it('should return a ordered list of tasks according to order', inject([], () => {
     return builder.createAsync(TaskListComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance;
+        let beforeOrderTasks = component.incompletedTasks;
 
-        let beforeOrderTasks = component.tasks;
         expect(beforeOrderTasks[0].title).toEqual('Task 1');
+
         component.queryCommand = new QueryCommand();
         component.queryCommand.sortBy = new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC, SortOrder.DESC]);
-
         taskService.add(new Task('Task 4', 'Note 4'));
         fixture.detectChanges();
-        expect(component.tasks[0].title).toEqual('Task 4');
+
+        expect(component.incompletedTasks[0].title).toEqual('Task 4');
+      });
+  }));
+
+  it('should group tasks into correct task list based on isCompleted field', inject([], () => {
+    return builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance;
+        let incompletedTasks = component.incompletedTasks;
+        incompletedTasks[0].isCompleted = true;
+        fixture.detectChanges();
+
+        expect(component.incompletedTasks.length).toBe(2);
+        expect(component.completedTasks.length).toBe(1);
+      });
+  }));
+
+  it('should show or hide button based on there is completed task or is not', inject([], () => {
+    return builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+            element = fixture.nativeElement,
+            button = element.querySelector('.mui-btn');
+
+        let incompletedTasks = component.incompletedTasks;
+        fixture.detectChanges();
+        expect(button).toBeUndefined;
+
+        incompletedTasks[0].isCompleted = true;
+        fixture.detectChanges();
+        expect(component.completedTasks.length).toBe(1);
+        button = element.querySelector('.mui-btn');
+        expect(button).not.toBeUndefined;
+      });
+  }));
+
+  it('should show correct button text based on showCompletedTasks field', inject([], () => {
+    return builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+            element = fixture.nativeElement;
+
+        let incompletedTasks = component.incompletedTasks;
+        incompletedTasks[0].isCompleted = true;
+        fixture.detectChanges();
+
+        let button = element.querySelector('.mui-btn');
+        expect(component.completedTasks.length).toBe(1);
+        expect(component.showCompletedTasks).toBe(false);
+        expect(button.innerText.toLowerCase().includes('show')).toBe(true);
+
+        component.showCompletedTasks = true;
+        fixture.detectChanges();
+        expect(button.innerText.toLowerCase().includes('hide')).toBe(true);
       });
   }));
 });
