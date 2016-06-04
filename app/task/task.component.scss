@@ -48,9 +48,24 @@ $fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
   opacity: .8;
   position: relative;
   transition: opacity .2s;
+}
 
-  &.done {
-    opacity: .5;
+:host.completing,
+:host.done {
+  opacity: .5;
+
+  header {
+    font-size: 1rem;
+    margin: .5rem 0;
+  }
+
+  .title {
+    text-decoration: line-through;
+  }
+
+  .btn-mark-complete {
+    color: $green-haze;
+    opacity: 1;
   }
 }
 
@@ -74,11 +89,6 @@ header {
   margin: 1.125rem 0;
   transition-property: font-size, margin;
   transition-duration: .2s;
-
-  :host.done & {
-    font-size: 1rem;
-    margin: .5rem 0;
-  }
 }
 
 .title {
@@ -86,10 +96,6 @@ header {
   margin: 0;
   line-height: 1;
   font-size: inherit;
-
-  :host.done & {
-    text-decoration: line-through;
-  }
 }
 
 .btn-prioritise {
@@ -117,11 +123,6 @@ header {
 .btn-mark-complete {
   @include icon-btn($icon-size);
   opacity: .5;
-
-  :host.done & {
-    color: $green-haze;
-    opacity: 1;
-  }
 }
 
 .btn-delete {

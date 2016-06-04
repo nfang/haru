@@ -2,14 +2,14 @@
 <header class="row" (click)="toggleDetailPane()">
   <div class="btn-prioritise"
     [class.marked]="task.isPrioritised"
-    [class.disabled]="task.isCompleted"
+    [class.disabled]="task.isCompleted || isCompleting"
     (click)="!task.isCompleted && togglePrioritised($event)">
     <md-icon>priority_high</md-icon>
   </div>
   <h2 class="title">{{task.title}}</h2>
   <div class="btn-mark-complete" (click)="toggleCompleted($event)">
-    <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
-    <md-icon *ngIf="task.isCompleted">lens</md-icon>
+    <md-icon *ngIf="!task.isCompleted && !isCompleting">radio_button_unchecked</md-icon>
+    <md-icon *ngIf="task.isCompleted || isCompleting">lens</md-icon>
   </div>
   <div class="btn-delete" (click)="remove($event)">
     <md-icon>close</md-icon>

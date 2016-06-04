@@ -3,9 +3,10 @@ import {
   Input,
   Inject,
   Output,
-  EventEmitter
+  EventEmitter,
+  ElementRef
 } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs/Rx';
 import { MdCheckbox } from '@angular2-material/checkbox';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
@@ -14,7 +15,7 @@ import { Task } from '../shared/task.model';
 import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
 
 export class TaskExpandedEvent {
-  constructor(public taskComponent: TaskComponent) {}
+  constructor(public taskComponent: TaskComponent) { }
 }
 
 @Component({
@@ -28,8 +29,9 @@ export class TaskExpandedEvent {
   ],
   providers: [MdIconRegistry],
   host: {
-    '[class.expanded]' : 'isExpanded',
-    '[class.done]'     : 'task.isCompleted'
+    '[class.expanded]': 'isExpanded',
+    '[class.done]': 'task.isCompleted',
+    '[class.completing]': 'isCompleting'
   }
 })
 export class TaskComponent {
@@ -43,21 +45,42 @@ export class TaskComponent {
   }
 
   isExpanded: boolean;
+  isCompleting: boolean;
   subtask: Task;
 
   constructor(
-    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService,
+    private _elementRef: ElementRef
   ) {
     this.isExpanded = false;
+    this.isCompleting = false;
     this.subtask = new Task('');
   }
 
+  ngAfterViewInit() {
+    let el = this._elementRef.nativeElement;
+    Observable.fromEvent(el, 'transitionend')
+      .filter(e => el.classList.contains('completing'))
+      .delay(1000)
+      .subscribe((e) => {
+        this.isCompleting = false;
+        if (!this.task.isCompleted) {
+          this.task.isCompleted = true;
+          this.save();
+        }
+      });
+  }
+
   toggleCompleted(event) {
-    this.task.isCompleted = !this.task.isCompleted;
-    if (this.task.isPrioritised) {
-      this.task.isPrioritised = false;
+    if (!this.task.isCompleted) {
+      this.isCompleting = true;
+      if (this.task.isPrioritised) {
+        this.task.isPrioritised = false;
+      }
+    } else {
+      this.task.isCompleted = false;
+      this.save();
     }
-    this.save();
     event.stopPropagation();
   }
 
