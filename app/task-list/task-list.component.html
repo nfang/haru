@@ -5,8 +5,9 @@
   </md-list-item>
 </md-list>
 <div style="width: 100%; text-align: center" *ngIf="completedTasks.length">
-  <button (click)="toggleCompletedTasks()" class="btn-show mui-btn mui-btn--primary">
-    {{showOrHide}} Completed Tasks
+  <button (click)="toggleCompletedTasks()"
+    class="btn-show mui-btn mui-btn--small mui-btn--primary">
+    {{!showCompletedTasks ? 'Show' : 'Hide'}} completed tasks
   </button>
 </div>
 <md-list class="list-completed-tasks" [class.reveal]="showCompletedTasks">

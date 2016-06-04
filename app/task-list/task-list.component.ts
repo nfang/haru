@@ -34,7 +34,6 @@ import {
 export class TaskListComponent {
   private queryCommand: QueryCommand;
   public showCompletedTasks: boolean = false;
-  public showOrHide: string = 'Show';
 
   @ViewChildren(TaskComponent)
   taskComponents: QueryList<TaskComponent>;
@@ -73,15 +72,13 @@ export class TaskListComponent {
   get completedTasks() {
     let tasks = this.taskService.list();
     let completedTasks = tasks.filter(task => task.isCompleted);
+    if (!completedTasks.length) {
+      this.showCompletedTasks = false;
+    }
     return this.queryCommand.execute(completedTasks);
   }
 
-  toggleCompletedTasks() {   
-    if(this.showCompletedTasks) {
-      this.showOrHide = 'Show';
-    }else{
-      this.showOrHide = 'Hide';
-    }
+  toggleCompletedTasks() {
     this.showCompletedTasks = !this.showCompletedTasks;
   }
 }
