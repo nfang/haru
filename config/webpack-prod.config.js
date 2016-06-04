@@ -1,7 +1,7 @@
-var merge         = require('merge');
-var path          = require('path');
-var root          = require('./util').root;
-var commonConfig  = require('./webpack-common.config');
+var merge = require('merge');
+var path = require('path');
+var root = require('./util').root;
+var commonConfig = require('./webpack-common.config');
 
 var prodConfig = {
   output: {
@@ -20,7 +20,9 @@ var prodConfig = {
     quite: true,
     host: '0.0.0.0',
     port: '9020',
-    stats: { colors: true }
+    stats: {
+      colors: true
+    }
   }
 };
 

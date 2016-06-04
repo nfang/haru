@@ -26,6 +26,7 @@
   "author": "Nathan Fang <nathan.fang@icloud.com>",
   "license": "ISC",
   "devDependencies": {
+    "autoprefixer": "^6.3.6",
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "html-loader": "^0.4.3",
@@ -43,6 +44,7 @@
     "npm-run-all": "^1.7.0",
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.7",
+    "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",

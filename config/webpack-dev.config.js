@@ -1,7 +1,7 @@
-var merge         = require('merge');
-var path          = require('path');
-var root          = require('./util').root;
-var commonConfig  = require('./webpack-common.config');
+var merge = require('merge');
+var path = require('path');
+var root = require('./util').root;
+var commonConfig = require('./webpack-common.config');
 
 var devConfig = {
   output: {
