@@ -99,7 +99,7 @@ describe('TaskListComponent', () => {
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement,
-            elBtnShowComplete = element.querySelector('.btn-show');
+            elBtnShowComplete = element.querySelector('.mui-btn');
                             
         let incompletedTasks = component.incompletedTasks;
         fixture.detectChanges();
@@ -108,7 +108,7 @@ describe('TaskListComponent', () => {
         incompletedTasks[0].isCompleted = true;
         fixture.detectChanges();        
         expect(component.completedTasks.length).toBe(1);
-        elBtnShowComplete = element.querySelector('.btn-show');
+        elBtnShowComplete = element.querySelector('.mui-btn');
         expect(elBtnShowComplete).not.toBeUndefined;
       });
   }));
@@ -122,7 +122,7 @@ describe('TaskListComponent', () => {
         let incompletedTasks = component.incompletedTasks;
         incompletedTasks[0].isCompleted = true;
         fixture.detectChanges();
-        let elBtnComplete = element.querySelector('.btn-show');
+        let elBtnComplete = element.querySelector('.mui-btn');
         
         expect(component.completedTasks.length).toBe(1);
         expect(component.showCompletedTasks).toBeTruthy;
