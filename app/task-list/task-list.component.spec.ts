@@ -99,17 +99,17 @@ describe('TaskListComponent', () => {
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement,
-            elBtnShowComplete = element.querySelector('.mui-btn');
+            button = element.querySelector('.mui-btn');
 
         let incompletedTasks = component.incompletedTasks;
         fixture.detectChanges();
-        expect(elBtnShowComplete).toBeUndefined;
+        expect(button).toBeUndefined;
 
         incompletedTasks[0].isCompleted = true;
         fixture.detectChanges();
         expect(component.completedTasks.length).toBe(1);
-        elBtnShowComplete = element.querySelector('.mui-btn');
-        expect(elBtnShowComplete).not.toBeUndefined;
+        button = element.querySelector('.mui-btn');
+        expect(button).not.toBeUndefined;
       });
   }));
 
@@ -126,11 +126,11 @@ describe('TaskListComponent', () => {
         let button = element.querySelector('.mui-btn');
         expect(component.completedTasks.length).toBe(1);
         expect(component.showCompletedTasks).toBe(false);
-        expect(button.innerText.toLowerCase().includes('show')).toBeTruthy();
+        expect(button.innerText.toLowerCase().includes('show')).toBe(true);
 
         component.showCompletedTasks = true;
         fixture.detectChanges();
-        expect(button.innerText.toLowerCase().includes('hide')).toBeTruthy();
+        expect(button.innerText.toLowerCase().includes('hide')).toBe(true);
       });
   }));
 });
