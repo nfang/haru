@@ -33,6 +33,7 @@ import {
 })
 export class TaskListComponent {
   private queryCommand: QueryCommand;
+  public showCompletedTasks: boolean = false;
 
   @ViewChildren(TaskComponent)
   taskComponents: QueryList<TaskComponent>;
@@ -50,7 +51,9 @@ export class TaskListComponent {
       return;
     }
     this.queryCommand.filter = new FilterSpec((task) => {
-      return task.title.toLowerCase().includes(event.value.title);
+      let lowerCasedTaskTitle = task.title.toLowerCase();
+      let lowerCasedTarget = event.value.title.toLowerCase();
+      return lowerCasedTaskTitle.includes(lowerCasedTarget);
     });
   }
 
@@ -62,8 +65,22 @@ export class TaskListComponent {
     });
   }
 
-  get tasks() {
+  get incompletedTasks() {
     let tasks = this._taskService.list();
-    return this.queryCommand.execute(tasks);
+    let incompletedTasks = tasks.filter(task => !task.isCompleted);
+    return this.queryCommand.execute(incompletedTasks);
+  }
+
+  get completedTasks() {
+    let tasks = this._taskService.list();
+    let completedTasks = tasks.filter(task => task.isCompleted);
+    if (!completedTasks.length) {
+      this.showCompletedTasks = false;
+    }
+    return this.queryCommand.execute(completedTasks);
+  }
+
+  toggleCompletedTasks() {
+    this.showCompletedTasks = !this.showCompletedTasks;
   }
 }

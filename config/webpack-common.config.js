@@ -2,12 +2,12 @@ var path = require('path');
 var webpack = require('webpack');
 var util = require('./util');
 var root = util.root;
+var autoprefixer = require('autoprefixer');
 
 /**
  * Plugins
  */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
-// var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -27,10 +27,10 @@ module.exports = {
       loader: 'ts'
     }, {
       test: /\.css$/,
-      loader: 'style!css'
+      loader: 'style!css!postcss'
     }, {
       test: /\.scss$/,
-      loader: 'raw!sass!source-map'
+      loader: 'raw!postcss!sass!source-map'
     }, {
       test: /\.json$/,
       loader: 'json'
@@ -52,5 +52,10 @@ module.exports = {
       template: './app/index.html',
       chunksSortMode: util.sortBy(['polyfills', 'vendor', 'app'])
     })
-  ]
+  ],
+
+  postcss: function() {
+    'use strict';
+    return [autoprefixer];
+  }
 };

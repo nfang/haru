@@ -1,9 +1,9 @@
-var merge         = require('merge');
-var path          = require('path');
-var root          = require('./util').root;
-var commonConfig  = require('./webpack-common.config');
+var webpackMerge = require('webpack-merge');
+var path = require('path');
+var root = require('./util').root;
+var commonConfig = require('./webpack-common.config');
 
-var devConfig = {
+module.exports = webpackMerge(commonConfig, {
   output: {
     path: path.resolve(root, '.tmp'),
     filename: '[name].bundle.js'
@@ -19,6 +19,4 @@ var devConfig = {
     port: '9010',
     stats: 'minimal'
   }
-};
-
-module.exports = merge(commonConfig, devConfig);
+});
