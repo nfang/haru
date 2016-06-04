@@ -1,29 +1,30 @@
-var merge = require('merge');
+var webpackMerge = require('webpack-merge');
 var path = require('path');
+var webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var root = require('./util').root;
 var commonConfig = require('./webpack-common.config');
 
-var prodConfig = {
+module.exports = webpackMerge(commonConfig, {
   output: {
     path: path.resolve(root, 'dist'),
-    filename: '[name].bundle.js'
+    filename: '[name].[hash].js',
+    publicPath: '/',
+    chunkFilename: '[id].[hash].chunk.js'
   },
 
   debug: false,
 
   devtool: 'source-map',
 
-  devServer: {
-    contentBase: './dist',
-    inline: true,
-    noInfo: true,
-    quite: true,
-    host: '0.0.0.0',
-    port: '9020',
-    stats: {
-      colors: true
-    }
-  }
-};
+  htmlLoader: {
+    minimize: false // workaround for ng2
+  },
 
-module.exports = merge(commonConfig, prodConfig);
+  plugins: [
+    new webpack.NoErrorsPlugin(),
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin(),
+    new ExtractTextPlugin('[name].[hash].css')
+  ]
+});

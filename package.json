@@ -39,7 +39,6 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^1.7.0",
-    "merge": "^1.2.0",
     "node-sass": "^3.6.0",
     "npm-run-all": "^1.7.0",
     "null-loader": "^0.1.1",
@@ -54,7 +53,8 @@
     "typescript": "^1.8.9",
     "typings": "^0.7.12",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-merge": "^0.13.0"
   },
   "dependencies": {
     "@angular/common": "2.0.0-rc.1",
