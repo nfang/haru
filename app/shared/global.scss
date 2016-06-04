@@ -16,6 +16,21 @@ $mui-accent-color-light:  mui-color('purple', 'A400');
 
 $fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
 
+// Mixin
+// -------------------------------
+
+@mixin reveal($max-height: 600px) {
+  height: 100%;
+  max-height: 0;
+  opacity: 0;
+  transition: opacity .2s .1s, max-height .4s $fast-out-slow-in;
+
+  &.reveal {
+    opacity: 1;
+    max-height: $max-height;
+  }
+}
+
 input::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
   font-weight: 300;

@@ -9,14 +9,11 @@ md-list-item task {
   flex: 1 auto;
 }
 
-.list-completed-tasks {
-  display: none;
-
-  &.reveal {
-    display: block;
-  }
+.tasks-list {
+  @include reveal(999px);
 }
 
-.btn-show {
-  font-size: .8rem;
+.btn-container {
+  @include reveal();
+  text-align: center;
 }
