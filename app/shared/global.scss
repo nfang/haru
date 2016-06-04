@@ -26,6 +26,7 @@ $fast-out-slow-in: cubic-bezier(0.4, 0.0, 0.2, 1);
   height: 100%;
   max-height: 0;
   opacity: 0;
+  overflow: hidden;
   transition: opacity .2s .1s, max-height .4s $fast-out-slow-in;
 
   &.reveal {
