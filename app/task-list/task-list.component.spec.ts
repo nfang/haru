@@ -80,12 +80,12 @@ describe('TaskListComponent', () => {
       let afterOrderTasks = component.incompletedTasks;
       expect(afterOrderTasks[0].title).toEqual('Task 2');
     }));
-    
+
   it('should group tasks into correct task list based on isCompleted field', inject([], () => {
     return builder.createAsync(TaskListComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance;
-        
+
         let incompletedTasks = component.incompletedTasks;
         incompletedTasks[0].isCompleted = true;
         fixture.detectChanges();
@@ -93,48 +93,46 @@ describe('TaskListComponent', () => {
         expect(component.completedTasks.length).toBe(1);
       });
   }));
-  
+
   it('should show or hide button based on there is completed task or is not', inject([], () => {
     return builder.createAsync(TaskListComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement,
             elBtnShowComplete = element.querySelector('.mui-btn');
-                            
+
         let incompletedTasks = component.incompletedTasks;
         fixture.detectChanges();
         expect(elBtnShowComplete).toBeUndefined;
-        
+
         incompletedTasks[0].isCompleted = true;
-        fixture.detectChanges();        
+        fixture.detectChanges();
         expect(component.completedTasks.length).toBe(1);
         elBtnShowComplete = element.querySelector('.mui-btn');
         expect(elBtnShowComplete).not.toBeUndefined;
       });
   }));
-  
+
   it('should show correct button text based on showCompletedTasks field', inject([], () => {
     return builder.createAsync(TaskListComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
             element = fixture.nativeElement;
-                    
+
         let incompletedTasks = component.incompletedTasks;
         incompletedTasks[0].isCompleted = true;
         fixture.detectChanges();
-        let elBtnComplete = element.querySelector('.mui-btn');
-        
+
+        let button = element.querySelector('.mui-btn');
         expect(component.completedTasks.length).toBe(1);
-        expect(component.showCompletedTasks).toBeTruthy;
-        //expect(elBtnComplete.innerText.toLowerCase().inculdes('show')).toBeTruthy();
-        
-        component.showCompletedTasks = false;
+        expect(component.showCompletedTasks).toBe(false);
+        expect(button.innerText.toLowerCase().includes('show')).toBeTruthy();
+
+        component.showCompletedTasks = true;
         fixture.detectChanges();
-        expect(component.completedTasks.length).toBe(1);
-        expect(component.showCompletedTasks).not.toBeTruthy;
-        //expect(elBtnComplete.innerText.toLowerCase().inculdes('hide')).toBeTruthy();
+        expect(button.innerText.toLowerCase().includes('hide')).toBeTruthy();
       });
-  }));  
+  }));
 });
 
 @Component({
