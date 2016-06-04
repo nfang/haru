@@ -141,11 +141,11 @@ describe('TaskListComponent', () => {
         let button = element.querySelector('.mui-btn');
         expect(component.completedTasks.length).toBe(1);
         expect(component.showCompletedTasks).toBe(false);
-        expect(button.innerText.toLowerCase().includes('show')).toBe(true);
+        expect(button.textContent.trim().toLowerCase().includes('show')).toBe(true);
 
         component.showCompletedTasks = true;
         fixture.detectChanges();
-        expect(button.innerText.toLowerCase().includes('hide')).toBe(true);
+        expect(button.textContent.trim().toLowerCase().includes('hide')).toBe(true);
       });
   }));
 });
