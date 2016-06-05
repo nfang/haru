@@ -1,7 +1,7 @@
 import {
+  async,
   it,
   inject,
-  injectAsync,
   describe,
   beforeEach,
   beforeEachProviders
@@ -13,20 +13,13 @@ import { By } from '@angular/platform-browser';
 import { MdCheckbox } from '@angular2-material/checkbox';
 
 import { Task } from '../shared/task.model';
-import { SubtaskComponent } from '../subtask/subtask.component';
+import { SubtaskComponent } from './subtask.component';
 
-describe('SubtaskComponent', () => {
+describe('A SubtaskComponent', () => {
   let builder, task;
-  let mockEvent = {
-    stopPropagation: () => {},
-    preventDefault: () => {},
-  }
 
   beforeEachProviders(() => [
-    HTTP_PROVIDERS,
-    MdCheckbox,
-    SubtaskComponent,
-    TestComponentBuilder
+    HTTP_PROVIDERS
   ]);
 
   beforeEach(inject([TestComponentBuilder], (tcb) => {
@@ -34,50 +27,60 @@ describe('SubtaskComponent', () => {
     task = new Task('Subtask');
   }));
 
-  it('should inject the component', inject([SubtaskComponent],
-    (component: SubtaskComponent) => {
-    expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(SubtaskComponentTestController)
+  it('can be used as a directive', async(() => {
+    builder.createAsync(SubtaskComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
         let query = fixture.debugElement.query(By.directive(SubtaskComponent));
+
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
   }));
 
-  it('renders a task', done => {
+  it('shows subtask title', async(() => {
     builder.createAsync(SubtaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.nativeElement;
+          element = fixture.nativeElement;
         component.task = task;
         fixture.detectChanges();
+
         expect(element.querySelector('.checkbox-label').innerText).toBe(task.title);
-        done();
-      })
-      .catch(e => done.fail(e));
-  })
+      });
+  }));
 
-  it('can mark a task complete', done => {
+  it('marks a subtask complete', async(() => {
     builder.createAsync(SubtaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.debugElement;
+          element = fixture.debugElement;
         component.task = task;
         fixture.detectChanges();
-
         let checkbox = fixture.debugElement.query(By.directive(MdCheckbox));
+
         expect(checkbox.componentInstance.checked).toBe(false);
+
         task.isCompleted = true;
         fixture.detectChanges();
+
         expect(checkbox.componentInstance.checked).toBe(true);
-        done();
-      })
-      .catch(e => done.fail(e));
-  });
+      });
+  }));
+
+  it('removes a subtask', async(() => {
+    builder.createAsync(SubtaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          buttonDelete = element.querySelector('.btn-delete-subtask');
+        component.task = task;
+        fixture.detectChanges();
+        component.onChange.subscribe(removedTask =>
+          expect(removedTask).toBe(task)
+        );
+        buttonDelete.click();
+      });
+  }));
 });
 
 @Component({

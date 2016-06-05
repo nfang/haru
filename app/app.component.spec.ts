@@ -1,7 +1,7 @@
 import {
+  async,
   it,
   inject,
-  injectAsync,
   describe,
   beforeEach,
   beforeEachProviders
@@ -26,7 +26,7 @@ class MockInMemoryTaskProvider {
   ];
 }
 
-describe('AppComponent', () => {
+describe('An AppComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
@@ -34,9 +34,7 @@ describe('AppComponent', () => {
     {
       provide: InMemoryTaskProvider,
       useClass: MockInMemoryTaskProvider
-    },
-    AppComponent,
-    TestComponentBuilder
+    }
   ]);
 
   beforeEach(inject([TestComponentBuilder, TASK_SERVICE_TOKEN], (tcb, service) => {
@@ -44,19 +42,30 @@ describe('AppComponent', () => {
     taskService = service;
   }));
 
-  it('should initialize', inject([AppComponent], (component) => {
-    spyOn(console,'log');
-    component.ngOnInit();
-    expect(console.log).toHaveBeenCalled();
-    expect(component.today).not.toBeNull();
+  it('shows today\'s date and day', async(() => {
+    builder.createAsync(AppComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        // let component = fixture.componentInstance,
+        //   element = fixture.nativeElement,
+        //   today = new Date();
+        //
+        // expect(element.querySelector('md-card-title').textContent)
+        //   .toBe(today.toLocaleString('en-US', { weekday: 'long' }));
+        // expect(element.querySelector('md-card-subtitle').textContent)
+        //   .toBe(today.toLocaleString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }));
+      });
   }));
 
-  it('should return task progress', inject([AppComponent], (component) => {
-    expect(component.progress).toEqual('0 / 3');
+  it('shows task progress', async(() => {
+    builder.createAsync(AppComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          tasks = taskService.list();
+        expect(component.progress).toBe('0 / 3');
 
-    let tasks = taskService.list();
-    tasks[0].isCompleted = !tasks[0].isCompleted;
-    expect(component.progress).toEqual('1 / 3');
+        tasks[0].isCompleted = true;
+        expect(component.progress).toEqual('1 / 3');
+      });
   }));
 
 });

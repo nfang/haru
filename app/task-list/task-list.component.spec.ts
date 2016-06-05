@@ -1,7 +1,7 @@
 import {
+  async,
   it,
   inject,
-  injectAsync,
   describe,
   beforeEach,
   beforeEachProviders
@@ -12,7 +12,7 @@ import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testin
 import { By } from '@angular/platform-browser';
 
 import { Task } from '../shared/task.model';
-import { TaskListComponent } from '../task-list/task-list.component';
+import { TaskListComponent } from './task-list.component';
 import {
   TASK_SERVICE_TOKEN,
   InMemoryTaskProvider,
@@ -33,7 +33,7 @@ class MockInMemoryTaskProvider {
   ];
 }
 
-describe('TaskListComponent', () => {
+describe('A TaskListComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
@@ -42,8 +42,6 @@ describe('TaskListComponent', () => {
       provide: InMemoryTaskProvider,
       useClass: MockInMemoryTaskProvider
     },
-    TaskListComponent,
-    TestComponentBuilder,
     HTTP_PROVIDERS
   ]);
 
@@ -52,100 +50,99 @@ describe('TaskListComponent', () => {
     taskService = service;
   }));
 
-  it('should inject the component', inject([TaskListComponent],
-    (component: TaskListComponent) => {
-    expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(TaskListComponentTestController)
+  it('can be used as a directive', async(() => {
+    builder.createAsync(TaskListComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
-        let query = fixture.debugElement.query(By.directive(TaskListComponent));
-        expect(query).toBeTruthy();
-        expect(query.componentInstance).toBeTruthy();
+        let component = fixture.debugElement.query(By.directive(TaskListComponent));
+
+        expect(component).toBeTruthy();
+        expect(component.componentInstance).toBeTruthy();
       });
   }));
 
-  it('should show a list of incompleted tasks', inject([ TaskListComponent ], (component) => {
-    let tasks = component.incompletedTasks;
-    expect(tasks.length).toBe(3);
-  }));
-
-  it('should return a filtered list of tasks according to query', inject([ TaskListComponent ],
-    (component) => {
-      component.updateQuery({ value: new Task('Task 3') });
-      let tasks = component.incompletedTasks;
-      expect(tasks.length).toBe(1);
-      expect(tasks[0].title).toEqual('Task 3');
-  }));
-
-  it('should return a ordered list of tasks according to order', inject([], () => {
-    return builder.createAsync(TaskListComponent)
+  it('shows a list of incompleted tasks', async(() => {
+    builder.createAsync(TaskListComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance;
-        let beforeOrderTasks = component.incompletedTasks;
 
-        expect(beforeOrderTasks[0].title).toEqual('Task 1');
+        expect(component.incompletedTasks.length).toBe(3);
+      });
+  }));
+
+  it('shows a list of completed tasks', async(() => {
+    builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance;
+        component.incompletedTasks[0].isCompleted = true;
+
+        expect(component.completedTasks.length).toBe(1);
+      });
+  }));
+
+  it('filters tasks according to a specific query', async(() => {
+    builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance;
+        component.updateQuery({ value: new Task('Task 3') });
+
+        expect(component.incompletedTasks.length).toBe(1);
+        expect(component.incompletedTasks[0].title).toBe('Task 3');
+      });
+  }));
+
+  it('arranges tasks according to the specified order', async(() => {
+    builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance;
+        expect(component.incompletedTasks[0].title).toBe('Task 1');
 
         component.queryCommand = new QueryCommand();
-        component.queryCommand.sortBy = new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC, SortOrder.DESC]);
+        component.queryCommand.sortBy = new SortSpec(['isPrioritised', 'createAt'], [SortOrder.DESC]);
         taskService.add(new Task('Task 4', 'Note 4'));
         fixture.detectChanges();
 
-        expect(component.incompletedTasks[0].title).toEqual('Task 4');
+        expect(component.incompletedTasks[0].title).toBe('Task 4');
       });
   }));
 
-  it('should group tasks into correct task list based on isCompleted field', inject([], () => {
-    return builder.createAsync(TaskListComponent)
-      .then((fixture: ComponentFixture<any>) => {
-        let component = fixture.componentInstance;
-        let incompletedTasks = component.incompletedTasks;
-        incompletedTasks[0].isCompleted = true;
-        fixture.detectChanges();
-
-        expect(component.incompletedTasks.length).toBe(2);
-        expect(component.completedTasks.length).toBe(1);
-      });
-  }));
-
-  it('should show or hide button based on there is completed task or is not', inject([], () => {
-    return builder.createAsync(TaskListComponent)
+  it('hides "SHOW COMPLETED TASKS" button when there is no completed task', async(() => {
+    builder.createAsync(TaskListComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.nativeElement,
-            button = element.querySelector('.mui-btn');
+            button = fixture.debugElement.query(By.css('.btn-container'));
 
-        let incompletedTasks = component.incompletedTasks;
-        fixture.detectChanges();
-        expect(button).toBeUndefined;
-
-        incompletedTasks[0].isCompleted = true;
-        fixture.detectChanges();
-        expect(component.completedTasks.length).toBe(1);
-        button = element.querySelector('.mui-btn');
-        expect(button).not.toBeUndefined;
+        expect(button.nativeElement.classList).not.toContain('reveal');
       });
   }));
 
-  it('should show correct button text based on showCompletedTasks field', inject([], () => {
-    return builder.createAsync(TaskListComponent)
+  it('shows "SHOW COMPLETED TASKS" button when there are completed tasks', async(() => {
+    builder.createAsync(TaskListComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.nativeElement;
-
-        let incompletedTasks = component.incompletedTasks;
-        incompletedTasks[0].isCompleted = true;
+            button = fixture.debugElement.query(By.css('.btn-container'));
+        component.incompletedTasks[0].isCompleted = true;
         fixture.detectChanges();
 
-        let button = element.querySelector('.mui-btn');
-        expect(component.completedTasks.length).toBe(1);
+        expect(button.nativeElement.classList).toContain('reveal');
+      });
+  }));
+
+  it('changes button text according to whether completed tasks are displayed', async(() => {
+    builder.createAsync(TaskListComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+            button = fixture.debugElement.query(By.css('.mui-btn')),
+            nativeButton = button.nativeElement;
+        component.incompletedTasks[0].isCompleted = true;
+        fixture.detectChanges();
+
         expect(component.showCompletedTasks).toBe(false);
-        expect(button.innerText.toLowerCase().includes('show')).toBe(true);
+        expect(nativeButton.textContent).toMatch(/show/i);
 
-        component.showCompletedTasks = true;
+        nativeButton.click();
         fixture.detectChanges();
-        expect(button.innerText.toLowerCase().includes('hide')).toBe(true);
+
+        expect(nativeButton.textContent).toMatch(/hide/i);
       });
   }));
 });

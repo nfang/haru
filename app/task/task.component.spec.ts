@@ -1,4 +1,5 @@
 import {
+  async,
   it,
   inject,
   injectAsync,
@@ -10,11 +11,9 @@ import { Component, ElementRef } from '@angular/core';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
-import { MdCheckbox } from '@angular2-material/checkbox';
 
 import { Task } from '../shared/task.model';
-import { TaskComponent } from '../task/task.component';
-import { SubtaskComponent } from '../subtask/subtask.component';
+import { TaskComponent } from './task.component';
 import {
   TASK_SERVICE_TOKEN,
   InMemoryTaskProvider,
@@ -28,11 +27,11 @@ class MockInMemoryTaskProvider {
   ];
 }
 
-describe('TaskComponent', () => {
+describe('A TaskComponent', () => {
   let builder, taskService;
-  let mockEvent = {
-    stopPropagation: () => {},
-    preventDefault: () => {},
+  let mockDOMEvent = {
+    stopPropagation: () => { },
+    preventDefault: () => { },
   }
 
   beforeEachProviders(() => [
@@ -45,11 +44,7 @@ describe('TaskComponent', () => {
       provide: ElementRef,
       useValue: { nativeElement: {} }
     },
-    HTTP_PROVIDERS,
-    MdCheckbox,
-    SubtaskComponent,
-    TaskComponent,
-    TestComponentBuilder
+    HTTP_PROVIDERS
   ]);
 
   beforeEach(inject([TestComponentBuilder, TASK_SERVICE_TOKEN], (tcb, service) => {
@@ -57,193 +52,195 @@ describe('TaskComponent', () => {
     taskService = service;
   }));
 
-  it('should inject the component', inject([TaskComponent],
-    (component: TaskComponent) => {
-    expect(component).toBeTruthy();
-  }));
-
-  it('should create the component', inject([], () => {
-    return builder.createAsync(TaskComponentTestController)
+  it('can be used as a directive', async(() => {
+    builder.createAsync(TaskComponentTestController)
       .then((fixture: ComponentFixture<any>) => {
         let query = fixture.debugElement.query(By.directive(TaskComponent));
+
         expect(query).toBeTruthy();
         expect(query.componentInstance).toBeTruthy();
       });
   }));
 
-  it('renders a task', done => {
+  it('shows task title', async(() => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.nativeElement,
-            task = taskService.list()[0];
+          element = fixture.nativeElement,
+          task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
-        expect(element.querySelector('.title').innerText).toBe(task.title);
-        done();
-      })
-      .catch(e => done.fail(e));
-  })
+        expect(element.querySelector('.title').textContent).toBe(task.title);
+      });
+  }));
 
-  it('can mark a task complete', done => {
+  it('marks a task complete', async(() => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.nativeElement,
-            task: Task = taskService.list()[0],
-            elBtnComplete = element.querySelector('.btn-mark-complete');
-
+          element = fixture.nativeElement,
+          task: Task = taskService.list()[0],
+          buttonComplete = element.querySelector('.btn-mark-complete');
         component.task = task;
         fixture.detectChanges();
+
         expect(element.classList.length).toBe(0);
-        expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
-        expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('radio_button_unchecked');
+        expect(buttonComplete.querySelector('md-icon').textContent)
+          .toBe('radio_button_unchecked');
 
-        component.toggleCompleted(mockEvent);
+        buttonComplete.click();
         fixture.detectChanges();
-        expect(component.task.isPrioritised).toBe(false);
+
         expect(element.classList.contains('completing')).toBe(true);
-        expect(elBtnComplete.querySelectorAll('md-icon').length).toBe(1);
-        expect(elBtnComplete.querySelector('md-icon').innerText).toEqual('lens');
-        done();
+        expect(buttonComplete.querySelector('md-icon').innerText)
+          .toBe('lens');
       })
-      .catch(e => done.fail(e));
-  });
+  }));
 
-  it('can remove a task', done => {
-    builder.createAsync(TaskComponent)
-     .then((fixture: ComponentFixture<any>) => {
-       let component = fixture.componentInstance,
-           element = fixture.nativeElement,
-           task = taskService.list()[0];
-
-       component.task = task;
-       fixture.detectChanges();
-       expect(component.task).not.toBeNull();
-       component.remove(mockEvent);
-
-       fixture.detectChanges();
-       expect(taskService.list().length).toBe(1);
-       done();
-     })
-     .catch(e => done.fail(e));
-  });
-
-  it('can prioritise a task', done => {
-    builder.createAsync(TaskComponent)
-     .then((fixture: ComponentFixture<any>) => {
-       let component = fixture.componentInstance,
-           element = fixture.nativeElement,
-           task = taskService.list()[1],
-           elBtnPrioritise = element.querySelector('.btn-prioritise');
-
-       component.task = task;
-       fixture.detectChanges();
-       expect(elBtnPrioritise.classList.contains('marked')).toBe(false);
-       expect(elBtnPrioritise.classList.contains('disabled')).toBe(false);
-
-       component.togglePrioritised(mockEvent);
-       fixture.detectChanges();
-       expect(task.isPrioritised).toBeTruthy();
-       expect(elBtnPrioritise.classList.contains('marked')).toBe(true);
-
-       component.toggleCompleted(mockEvent);
-       fixture.detectChanges();
-       expect(elBtnPrioritise.classList.contains('disabled')).toBe(true);
-       done();
-     })
-     .catch(e => done.fail(e));
-  });
-
-  it('can toggle a detail pane', done => {
+  it('removes priority when a task is marked complete', async(() => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.nativeElement;
+          task = taskService.list()[0],
+          buttonComplete = fixture.nativeElement.querySelector('.btn-mark-complete'),
+          buttonPrioritise = fixture.nativeElement.querySelector('.btn-prioritise');
+        task.isPrioritised = true;
+        component.task = task;
+        fixture.detectChanges();
 
+        expect(buttonPrioritise.classList).toContain('marked');
+
+        buttonComplete.click();
+        fixture.detectChanges();
+
+        expect(component.task.isPrioritised).toBe(false);
+        expect(buttonPrioritise.classList).not.toContain('marked');
+      });
+  }));
+
+  it('removes a task', async(() => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          buttonDelete = element.querySelector('.btn-delete'),
+          task = taskService.list()[0];
+        component.task = task;
+        fixture.detectChanges();
+
+        expect(component.task).not.toBeNull();
+
+        buttonDelete.click();
+        fixture.detectChanges();
+
+        expect(taskService.list().length).toBe(1);
+      });
+  }));
+
+  it('prioritises a task', async(() => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          buttonPrioritise = element.querySelector('.btn-prioritise'),
+          buttonComplete = element.querySelector('.btn-mark-complete'),
+          task = taskService.list()[1];
+        component.task = task;
+        fixture.detectChanges();
+
+        expect(buttonPrioritise.classList.contains('marked')).toBe(false);
+        expect(buttonPrioritise.classList.contains('disabled')).toBe(false);
+
+        buttonPrioritise.click();
+        fixture.detectChanges();
+
+        expect(task.isPrioritised).toBeTruthy();
+        expect(buttonPrioritise.classList.contains('marked')).toBe(true);
+
+        buttonComplete.click();
+        fixture.detectChanges();
+
+        expect(buttonPrioritise.classList.contains('disabled')).toBe(true);
+      });
+  }));
+
+  it('shows task details when expanded', async(() => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          header = element.querySelector('header');
         component.task = taskService.list()[0];
         fixture.detectChanges();
+
         expect(element.classList.contains('expanded')).toBe(false);
 
-        component.toggleDetailPane();
+        header.click();
         fixture.detectChanges();
+
         expect(element.classList.contains('expanded')).toBe(true);
-        done();
-      })
-      .catch(e => done.fail(e));
-  });
-
-  it('can add a subtask', done => {
-    builder.createAsync(TaskComponent)
-      .then((fixture: ComponentFixture<any>) => {
-        let component = fixture.componentInstance,
-            element = fixture.nativeElement;
-        component.task = new Task('');
-        fixture.detectChanges();
-        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(0);
-
-        // The following is commented out because of:
-        // TypeError: Attempting to configurable attribute of unconfigurable property.
-        // at webpack:///~/zone.js/dist/zone.js:1035:0
-        //
-        // component.task.addSubtask(new Task('subtask'));
-        // fixture.detectChanges();
-        // expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
-        // expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent.trim())
-        //   .toBe('subtask');
-        done();
-      })
-      .catch(e => {
-        console.log(e);
-        done.fail(e);
       });
-  });
+  }));
 
-  it('can remove a subtask', done => {
+  it('can add subtasks', async(() => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
-            element = fixture.nativeElement,
-            task = new Task(''),
-            subtask = new Task('subtask');
-            
-        // The following is commented out because of:
-        // TypeError: Attempting to configurable attribute of unconfigurable property.
-        // at webpack:///~/zone.js/dist/zone.js:1035:0
-        //
-        // task.addSubtask(subtask);
-        // component.task = task;
-        // fixture.detectChanges();
-        // expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
-        //
-        // component.task.removeSubtask(subtask);
-        // fixture.detectChanges();
-        // expect(element.querySelectorAll('.checklist md-list-item').length).toBe(0);
-        done();
-      })
-      .catch(e => done.fail(e));
-  });
-
-  it('can add task notes', done => {
-    builder.createAsync(TaskComponent)
-      .then((fixture: ComponentFixture<any>) => {
-        let component = fixture.componentInstance,
-            element = fixture.nativeElement,
-            task: Task = taskService.list()[0],
-            elNotes = element.querySelector('.textfield-notes > textarea');
-
+          element = fixture.nativeElement,
+          task = taskService.list()[0];
         component.task = task;
         fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(0);
+
+        component.task.addSubtask(new Task('subtask'));
+        fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
+        expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent)
+          .toMatch(/subtask/);
+      });
+  }));
+
+  it('can remove subtasks', async(() => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          task = taskService.list()[0],
+          subtask = new Task('subtask');
+        task.addSubtask(subtask);
+        component.task = task;
+        fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
+
+        component.task.removeSubtask(subtask);
+        fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(0);
+      });
+  }));
+
+  it('saves task notes', async(() => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          task: Task = taskService.list()[0],
+          elNotes = element.querySelector('.textfield-notes > textarea');
+        component.task = task;
+        fixture.detectChanges();
+
         expect(elNotes.value).toBe('Note1');
 
-        component.task.notes = 'Note Updated';
-        component.save();
+        elNotes.value = 'Note updated';
+        elNotes.blur();
         fixture.detectChanges();
-        expect(elNotes.value).toBe('Note Updated');
-        done();
-      })
-      .catch(e => done.fail(e));
-  });
+
+        expect(elNotes.value).toBe('Note updated');
+      });
+  }));
 });
 
 @Component({
