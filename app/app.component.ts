@@ -19,10 +19,7 @@ export class AppComponent {
 
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
-  ) { }
-
-  ngOnInit() {
-    console.log('Todo app is starting up...');
+  ) {
     this.today = new Date();
   }
 
