@@ -9,6 +9,10 @@
   .spacer {
     display: none;
   }
+
+  form {
+    flex-grow: 1;
+  }
 }
 
 .editable {
@@ -21,9 +25,9 @@
 
 .editable-editor {
   display: none;
-  flex: 1 auto;
   padding: 0;
   margin: 0;
+  width: 100%;
 
   &.mui-textfield > input {
     font-size: inherit;
