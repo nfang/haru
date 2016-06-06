@@ -6,8 +6,7 @@
     (click)="!task.isCompleted && togglePrioritised($event)">
     <md-icon>priority_high</md-icon>
   </div>
-  <editable style="flex: 1 auto;" [enabled]="isExpanded"
-    [model]="task.title" (submit)="task.title = $event">
+  <editable style="flex: 1 auto;" [(ngModel)]="task.title" [enabled]="isExpanded">
     <h2 class="title">{{task.title}}</h2>
   </editable>
   <div class="btn-mark-complete" (click)="toggleCompleted($event)">
