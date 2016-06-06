@@ -1,0 +1,7 @@
+<div #label class="editable-label">
+  <ng-content></ng-content>
+</div>
+<div class="spacer"></div>
+<div class="editable-editor mui-textfield" (click)="$event.stopPropagation()">
+  <input [(ngModel)]="model" (blur)="endEditing($event)">
+</div>

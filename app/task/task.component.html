@@ -6,11 +6,10 @@
     (click)="!task.isCompleted && togglePrioritised($event)">
     <md-icon>priority_high</md-icon>
   </div>
-  <h2 class="in-place-label title" (click)="startEditing($event)">{{task.title}}</h2>
-  <div class="spacer"></div>
-  <div class="in-place-editor mui-textfield">
-    <input [(ngModel)]="task.title" (blur)="endEditing($event)">
-  </div>
+  <editable style="flex: 1 auto;" [enabled]="isExpanded"
+    [model]="task.title" (submit)="task.title = $event">
+    <h2 class="title">{{task.title}}</h2>
+  </editable>
   <div class="btn-mark-complete" (click)="toggleCompleted($event)">
     <md-icon *ngIf="!task.isCompleted">radio_button_unchecked</md-icon>
     <md-icon *ngIf="task.isCompleted">lens</md-icon>
