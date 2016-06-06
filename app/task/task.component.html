@@ -1,12 +1,15 @@
 <div class="cue-selected"></div>
-<header class="row" (click)="toggleDetailPane()">
+<header class="row" (click)="toggleDetailPane()" [class.editing]="isEditing">
   <div class="btn-prioritise"
     [class.marked]="task.isPrioritised"
     [class.disabled]="task.isCompleted || isCompleting"
     (click)="!task.isCompleted && togglePrioritised($event)">
     <md-icon>priority_high</md-icon>
   </div>
-  <h2 class="title">{{task.title}}</h2>
+  <editable style="flex: 1 auto;" [(ngModel)]="task.title" [enabled]="isExpanded"
+    (change)="save()">
+    <h2 class="title">{{task.title}}</h2>
+  </editable>
   <div class="btn-mark-complete" (click)="toggleCompleted($event)">
     <md-icon *ngIf="!task.isCompleted && !isCompleting">radio_button_unchecked</md-icon>
     <md-icon *ngIf="task.isCompleted || isCompleting">lens</md-icon>

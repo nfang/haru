@@ -79,9 +79,12 @@ header {
 }
 
 .title {
-  flex: 1 auto;
+  max-width: 480px - (24px * 5);
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   margin: 0;
-  line-height: 1;
+  line-height: 1.2;
   font-size: inherit;
 }
 
