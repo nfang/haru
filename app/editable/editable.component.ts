@@ -12,6 +12,7 @@ import {
   ControlValueAccessor
 } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
+import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 
 const noop = () => {};
 
@@ -26,7 +27,11 @@ const EDITABLE_CONTROL_VALUE_ACCESSOR = new Provider(NG_VALUE_ACCESSOR, {
     require('./editable.component.scss')
   ],
   template: require('./editable.component.html'),
-  providers: [EDITABLE_CONTROL_VALUE_ACCESSOR],
+  directives: [MdIcon],
+  providers: [
+    EDITABLE_CONTROL_VALUE_ACCESSOR,
+    MdIconRegistry
+  ],
   host: {
     '[class.editing]': '_isEditing'
   }
@@ -50,6 +55,7 @@ export class EditableComponent implements ControlValueAccessor, AfterViewInit {
   }
 
   @ViewChild('label') label;
+  @ViewChild('input') input;
 
   constructor(private _renderer: Renderer) { }
 

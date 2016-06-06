@@ -3,7 +3,10 @@
 </div>
 <div class="spacer"></div>
 <form (submit)="endEditing($event)">
-  <div class="editable-editor mui-textfield" (click)="$event.stopPropagation()">
-    <input [(ngModel)]="value" (blur)="endEditing($event)">
+  <div class="editable-editor" (click)="$event.stopPropagation()">
+    <div class="mui-textfield">
+      <input #input [(ngModel)]="value" (blur)="endEditing($event)" autofocus>
+    </div>
+    <md-icon>mode_edit</md-icon>
   </div>
 </form>

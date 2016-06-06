@@ -9,6 +9,7 @@ import {
   tick
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
 
@@ -16,6 +17,8 @@ import { EditableComponent } from './editable.component';
 
 describe('A EditableComponent', () => {
   let builder;
+
+  beforeEachProviders(() => [HTTP_PROVIDERS]);
 
   beforeEach(inject([TestComponentBuilder], (tcb) => {
     builder = tcb;
@@ -83,7 +86,7 @@ describe('A EditableComponent', () => {
           stopPropagation: () => {}
         });
         fixture.detectChanges();
-        
+
         expect(component.nativeElement.classList).not.toContain('editing');
       });
   }));
