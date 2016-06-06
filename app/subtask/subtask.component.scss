@@ -4,6 +4,7 @@
   @extend .row;
   margin: .5rem 0;
   flex: 1 auto;
+  display: flex;
   justify-content: space-between;
 }
 
@@ -11,6 +12,10 @@
   height: 1rem;
   width: 1rem;
   margin: auto .65rem auto .25rem;
+}
+
+md-checkbox {
+  display: flex;
 }
 
 .checkbox-label {

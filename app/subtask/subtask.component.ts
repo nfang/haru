@@ -13,6 +13,7 @@ import { MdCheckbox } from '@angular2-material/checkbox';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 
 import { Task } from '../shared/task.model';
+import { EditableComponent } from '../editable/editable.component';
 
 @Component({
   selector: 'subtask',
@@ -21,7 +22,7 @@ import { Task } from '../shared/task.model';
     require('./subtask.component.scss')
   ],
   directives: [
-    MdCheckbox, MdIcon
+    MdCheckbox, MdIcon, EditableComponent
   ],
   providers: [MdIconRegistry],
   host: {
@@ -58,7 +59,11 @@ export class SubtaskComponent implements DoCheck {
     this._differ = _differs.find({}).create(null);
   }
 
-  remove() {
+  handleChange() {
+    this._changeEmitter.emit(this.task);
+  }
+
+  handleRemove() {
     this._removeEmitter.emit(this.task);
   }
 }

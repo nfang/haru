@@ -135,7 +135,6 @@ header {
   @include expand-when(':host.expanded');
   font-size: $details-font-size;
   opacity: 0;
-  overflow: hidden;
   transition: max-height .4s $fast-out-slow-in, opacity .2s .1s;
 
   :host.expanded & {

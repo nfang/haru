@@ -11,6 +11,7 @@ md-list-item task {
 
 .tasks-list {
   @include reveal(999px);
+  overflow: visible;
 }
 
 .btn-container {

@@ -45,7 +45,7 @@ describe('A SubtaskComponent', () => {
         component.task = task;
         fixture.detectChanges();
 
-        expect(element.querySelector('.checkbox-label').innerText).toBe(task.title);
+        expect(element.querySelector('.checkbox-label').textContent).toBe(task.title);
       });
   }));
 
