@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Rx';
 
 export class Momento {
   constructor(
-    public state: any,
+    public actionName: string,
     public rollback: () => void
   ) { }
 }
@@ -55,5 +55,12 @@ export class HistoryService {
 
   get size(): number {
     return this._history.length;
+  }
+
+  get latest(): Momento {
+    let len = this._history.length;
+    if (len > 0) {
+      return this._history[len - 1];
+    }
   }
 }

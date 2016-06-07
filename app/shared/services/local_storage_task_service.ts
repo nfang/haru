@@ -64,7 +64,7 @@ export class LocalStorageTaskService implements TaskService {
     let removed = this.taskCollection.tasks.splice(index, 1);
     this.save();
 
-    let momento = new Momento(removed[0], () => {
+    let momento = new Momento('Removed', () => {
       this.add(removed[0]);
     });
     this._history.push(momento);

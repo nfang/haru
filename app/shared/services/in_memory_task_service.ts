@@ -54,7 +54,7 @@ export class InMemoryTaskService implements TaskService {
 
     let removed = this._taskProvider.tasks.splice(index, 1);
 
-    let momento = new Momento(removed[0], () => {
+    let momento = new Momento('Removed', () => {
       this.add(removed[0]);
     });
     this._history.push(momento);

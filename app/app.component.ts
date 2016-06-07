@@ -44,4 +44,9 @@ export class AppComponent {
   get hasUndoItems(): boolean {
     return !this._historyService.isEmpty;
   }
+
+  get latestUndoableAction(): string {
+    let latest = this._historyService.latest;
+    return  latest ? latest.actionName : '';
+  }
 }
