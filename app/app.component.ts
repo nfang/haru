@@ -3,6 +3,7 @@ import { MdCard } from '@angular2-material/card';
 
 import { TaskListComponent } from './task-list/task-list.component';
 import { TaskService, TASK_SERVICE_TOKEN } from './shared/services';
+import { HistoryService } from './shared/history.service';
 
 @Component({
   selector: 'todo-app',
@@ -18,9 +19,14 @@ export class AppComponent {
   today: Date;
 
   constructor(
-    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
+    @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService,
+    private _historyService: HistoryService
   ) {
     this.today = new Date();
+  }
+
+  undo() {
+    this._historyService.restore();
   }
 
   get progress(): string {
@@ -30,5 +36,9 @@ export class AppComponent {
       return task.isCompleted;
     }).length;
     return `${completed} / ${total}`;
+  }
+
+  get hasUndoItems(): boolean {
+    return !this._historyService.isEmpty;
   }
 }

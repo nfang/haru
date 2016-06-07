@@ -17,6 +17,7 @@ import {
   InMemoryTaskProvider,
   IN_MEMORY_TASK_SERVICE_PROVIDERS
 } from './shared/services';
+import { HistoryService } from './shared/history.service';
 
 class MockInMemoryTaskProvider {
   public tasks: Task[] = [
@@ -34,7 +35,8 @@ describe('An AppComponent', () => {
     {
       provide: InMemoryTaskProvider,
       useClass: MockInMemoryTaskProvider
-    }
+    },
+    HistoryService
   ]);
 
   beforeEach(inject([TestComponentBuilder, TASK_SERVICE_TOKEN], (tcb, service) => {
