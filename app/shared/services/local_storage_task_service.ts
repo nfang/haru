@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 
 import {Task} from '../task.model';
 import {TaskService} from './interfaces';
-import {Momento, HistoryService} from '../history.service';
+import {Momento, HistoryService} from './history.service';
 
 class LocalStorageTaskCollection {
   constructor(

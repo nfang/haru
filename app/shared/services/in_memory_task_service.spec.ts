@@ -12,6 +12,7 @@ import {
   InMemoryTaskProvider,
   InMemoryTaskService
 } from './in_memory_task_service';
+import { HistoryService } from './history.service';
 
 class MockInMemoryTaskProvider {
   public tasks: Task[] = [
@@ -23,7 +24,8 @@ class MockInMemoryTaskProvider {
 describe('InMemoryTaskService', () => {
   beforeEachProviders(() => [
     provide(InMemoryTaskProvider, { useClass: MockInMemoryTaskProvider }),
-    InMemoryTaskService
+    InMemoryTaskService,
+    HistoryService
   ]);
 
   it('can list all tasks', inject([ InMemoryTaskService ], (service) => {

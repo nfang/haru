@@ -2,8 +2,11 @@ import { Inject, Component } from '@angular/core';
 import { MdCard } from '@angular2-material/card';
 
 import { TaskListComponent } from './task-list/task-list.component';
-import { TaskService, TASK_SERVICE_TOKEN } from './shared/services';
-import { HistoryService } from './shared/history.service';
+import {
+  HistoryService,
+  TaskService,
+  TASK_SERVICE_TOKEN
+} from './shared/services';
 
 @Component({
   selector: 'todo-app',

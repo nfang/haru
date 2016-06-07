@@ -14,6 +14,7 @@ import { By } from '@angular/platform-browser';
 import { Task } from '../shared/task.model';
 import { TaskFinderComponent, ValueChangeEvent } from './task-finder.component';
 import {
+  HistoryService,
   TASK_SERVICE_TOKEN,
   InMemoryTaskProvider,
   IN_MEMORY_TASK_SERVICE_PROVIDERS
@@ -31,6 +32,7 @@ describe('A TaskFinderComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
+    HistoryService,
     IN_MEMORY_TASK_SERVICE_PROVIDERS,
     {
       provide: InMemoryTaskProvider,

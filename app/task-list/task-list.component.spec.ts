@@ -14,6 +14,7 @@ import { By } from '@angular/platform-browser';
 import { Task } from '../shared/task.model';
 import { TaskListComponent } from './task-list.component';
 import {
+  HistoryService,
   TASK_SERVICE_TOKEN,
   InMemoryTaskProvider,
   IN_MEMORY_TASK_SERVICE_PROVIDERS
@@ -37,6 +38,7 @@ describe('A TaskListComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
+    HistoryService,
     IN_MEMORY_TASK_SERVICE_PROVIDERS,
     {
       provide: InMemoryTaskProvider,

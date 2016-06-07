@@ -9,7 +9,7 @@ import { provide } from '@angular/core';
 
 import { Task } from '../task.model';
 import { LocalStorageTaskService } from './local_storage_task_service';
-import { HistoryService } from '../history.service';
+import { HistoryService } from './history.service';
 
 let localStore: any = {
   "HARU_TASKS": JSON.stringify({

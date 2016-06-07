@@ -13,11 +13,11 @@ import { By } from '@angular/platform-browser';
 import { Task } from './shared/task.model';
 import { AppComponent } from './app.component'
 import {
+  HistoryService,
   TASK_SERVICE_TOKEN,
   InMemoryTaskProvider,
   IN_MEMORY_TASK_SERVICE_PROVIDERS
 } from './shared/services';
-import { HistoryService } from './shared/history.service';
 
 class MockInMemoryTaskProvider {
   public tasks: Task[] = [
