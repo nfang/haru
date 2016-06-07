@@ -1,0 +1,57 @@
+@import '../shared/global.scss';
+
+:host {
+  display: flex;
+}
+
+:host.editing {
+  .editable-label, .spacer {
+    display: none;
+  }
+
+  form {
+    flex-grow: 1;
+  }
+}
+
+.editable {
+  flex-basis: auto;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.editable-editor {
+  display: none;
+  width: 100%;
+
+  .mui-textfield {
+    display: inline-block;
+    flex: 1 auto;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mui-textfield > input {
+    font-size: inherit;
+    border-bottom: none;
+    height: 1.5rem;
+    margin-bottom: 0 !important;
+  }
+
+  md-icon {
+    display: block;
+    font-size: inherit;
+    text-align: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    flex-basis: 1.5rem;
+    opacity: .8;
+  }
+
+  :host.editing & {
+    display: flex;
+  }
+}

@@ -29,3 +29,5 @@ export const LOCAL_STORAGE_TASK_SERVICE_PROVIDERS: any[] = [{
   provide: TASK_SERVICE_TOKEN,
   useClass: LocalStorageTaskService
 }];
+
+export {HistoryService, Momento} from './history.service';

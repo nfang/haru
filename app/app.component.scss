@@ -1,3 +1,5 @@
+@import './shared/global.scss';
+
 :host {
   display: block;
   max-width: 480px;
@@ -9,6 +11,10 @@
   align-items: baseline;
 }
 
+md-card {
+  overflow: hidden;
+}
+
 md-card-title {
   flex: 1 auto;
 }
@@ -16,4 +22,29 @@ md-card-title {
 .progress {
   font-size: .8rem;
   color: rgba(0, 0, 0, 0.54);
+}
+
+.toast {
+  background: rgba(0, 0, 0, .54);
+  border-radius: 2px;
+  display: table;
+  color: #fff;
+  font-size: .8rem;
+  font-weight: 300;
+  margin: .5rem auto;
+  padding: .8rem;
+  text-align: center;
+  opacity: 0;
+  transition: opacity .2s;
+
+  &.reveal {
+    opacity: .8;
+  }
+
+  .action {
+    cursor: pointer;
+    font-weight: 600;
+    margin-left: .5rem;
+    text-decoration: none !important;
+  }
 }

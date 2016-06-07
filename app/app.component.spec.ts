@@ -13,6 +13,7 @@ import { By } from '@angular/platform-browser';
 import { Task } from './shared/task.model';
 import { AppComponent } from './app.component'
 import {
+  HistoryService,
   TASK_SERVICE_TOKEN,
   InMemoryTaskProvider,
   IN_MEMORY_TASK_SERVICE_PROVIDERS
@@ -34,7 +35,8 @@ describe('An AppComponent', () => {
     {
       provide: InMemoryTaskProvider,
       useClass: MockInMemoryTaskProvider
-    }
+    },
+    HistoryService
   ]);
 
   beforeEach(inject([TestComponentBuilder, TASK_SERVICE_TOKEN], (tcb, service) => {

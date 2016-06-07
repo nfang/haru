@@ -15,6 +15,7 @@ import { By } from '@angular/platform-browser';
 import { Task } from '../shared/task.model';
 import { TaskComponent } from './task.component';
 import {
+  HistoryService,
   TASK_SERVICE_TOKEN,
   InMemoryTaskProvider,
   IN_MEMORY_TASK_SERVICE_PROVIDERS
@@ -35,6 +36,7 @@ describe('A TaskComponent', () => {
   }
 
   beforeEachProviders(() => [
+    HistoryService,
     IN_MEMORY_TASK_SERVICE_PROVIDERS,
     {
       provide: InMemoryTaskProvider,
@@ -118,7 +120,7 @@ describe('A TaskComponent', () => {
       });
   }));
 
-  it('removes a task', async(() => {
+  it('removes a task', (done) => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
@@ -134,8 +136,10 @@ describe('A TaskComponent', () => {
         fixture.detectChanges();
 
         expect(taskService.list().length).toBe(1);
-      });
-  }));
+        done();
+      })
+      .catch(e => done.fail(e));
+  });
 
   it('prioritises a task', async(() => {
     builder.createAsync(TaskComponent)

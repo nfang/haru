@@ -1,6 +1,9 @@
 import {Injectable, provide} from '@angular/core';
 import {Task} from '../task.model';
 import {TaskService} from './interfaces';
+import {
+  HistoryService, Momento
+} from './history.service';
 
 @Injectable()
 export class InMemoryTaskProvider {
@@ -21,12 +24,10 @@ export class InMemoryTaskProvider {
 
 @Injectable()
 export class InMemoryTaskService implements TaskService {
-
-  private _taskProvider: InMemoryTaskProvider;
-
-  constructor(taskProvider: InMemoryTaskProvider) {
-    this._taskProvider = taskProvider;
-  }
+  constructor(
+    private _taskProvider: InMemoryTaskProvider,
+    private _history: HistoryService
+  ) { }
 
   list(): Task[] {
     return this._taskProvider.tasks;
@@ -51,7 +52,14 @@ export class InMemoryTaskService implements TaskService {
       throw new Error('error: task not found');
     }
 
-    return this._taskProvider.tasks.splice(index, 1);
+    let removed = this._taskProvider.tasks.splice(index, 1);
+
+    let momento = new Momento('Removed', () => {
+      this.add(removed[0]);
+    });
+    this._history.push(momento);
+
+    return removed;
   }
 
   /**

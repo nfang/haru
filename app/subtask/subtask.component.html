@@ -1,4 +1,6 @@
-<md-checkbox [(ngModel)]="task.isCompleted">
+<md-checkbox [(ngModel)]="task.isCompleted"></md-checkbox>
+<editable style="flex: 1 auto;" [(ngModel)]="task.title" [enabled]="true"
+  (change)="handleChange()">
   <span class="checkbox-label">{{task.title}}</span>
-</md-checkbox>
-<md-icon class="btn-delete-subtask" (click)="remove()">close</md-icon>
+</editable>
+<md-icon class="btn-delete-subtask" (click)="handleRemove()">close</md-icon>
