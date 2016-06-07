@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Rx';
 
 export class Momento {
   constructor(
@@ -8,12 +7,13 @@ export class Momento {
   ) { }
 }
 
-const DEFAULT_CAPACITY = 5;
+const DEFAULT_CAPACITY = 1;
 const DEFAULT_EXPIRY = 7000;
 
 @Injectable()
 export class HistoryService {
   private _history: Momento[];
+  private _timeout;
   public expiry: number;
   public capacity: number;
 
@@ -31,13 +31,15 @@ export class HistoryService {
         this._history.shift();
       }
     }
-    return Observable.create((subscriber) => {
-      subscriber.next(1);
-      subscriber.complete();
-    }).delay(this.expiry)
-      .subscribe(() => {
-        this._history = new Array<Momento>();
-    });
+
+    if (this._timeout) {
+      clearTimeout(this._timeout);
+      this._timeout = null;
+    }
+
+    this._timeout = setTimeout((() => {
+      this._history = new Array<Momento>();
+    }).bind(this), this.expiry);
   }
 
   restore(count: number = 1) {
@@ -57,7 +59,7 @@ export class HistoryService {
     return this._history.length;
   }
 
-  get latest(): Momento {
+  get last(): Momento {
     let len = this._history.length;
     if (len > 0) {
       return this._history[len - 1];

@@ -19,6 +19,8 @@ import {
   ]
 })
 export class AppComponent {
+  private _latestUndoableAction: string;
+
   today: Date;
 
   constructor(
@@ -42,11 +44,14 @@ export class AppComponent {
   }
 
   get hasUndoItems(): boolean {
-    return !this._historyService.isEmpty;
+    let hs = this._historyService;
+    if (!hs.isEmpty) {
+      this._latestUndoableAction = hs.last.actionName;
+    }
+    return !hs.isEmpty;
   }
 
-  get latestUndoableAction(): string {
-    let latest = this._historyService.latest;
-    return  latest ? latest.actionName : '';
+  get latestAction(): string {
+    return this._latestUndoableAction;
   }
 }

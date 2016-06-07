@@ -18,7 +18,7 @@ describe('HistoryService', () => {
 
   it('initiates with default parameters', inject([HistoryService], (service) => {
     expect(service.expiry).toBe(7000);
-    expect(service.capacity).toBe(5);
+    expect(service.capacity).toBe(1);
     expect(service.isEmpty).toBe(true);
   }));
 
@@ -38,6 +38,7 @@ describe('HistoryService', () => {
   }));
 
   it('restores momentoes', inject([HistoryService], (service) => {
+    service.capacity = 3;
     let momentoes = [
       new Momento('', () => {}),
       new Momento('', () => {}),
