@@ -65,6 +65,10 @@ $details-font-size: 1rem;
   width: 3px;
   background: $mui-accent-color;
   transition: max-height .4s $fast-out-slow-in;
+
+  @media (max-width: 600px) {
+    left: -16px;
+  }
 }
 
 // Header styles
@@ -134,11 +138,13 @@ header {
   @include icon-btn($icon-size, 1.2rem);
   @include expand-when(':host.expanded');
   font-size: $details-font-size;
+  overflow: hidden;
   opacity: 0;
   transition: max-height .4s $fast-out-slow-in, opacity .2s .1s;
 
   :host.expanded & {
     opacity: 1;
+    overflow: visible;
   }
 
   .icon-label {
