@@ -14,6 +14,7 @@ class LocalStorageTaskCollection {
 @Injectable()
 export class LocalStorageTaskService implements TaskService {
   private localStorageKey: string = 'HARU_TASKS';
+  private _snapshot: LocalStorageTaskCollection;
 
   taskCollection: LocalStorageTaskCollection;
 
@@ -64,10 +65,9 @@ export class LocalStorageTaskService implements TaskService {
     let removed = this.taskCollection.tasks.splice(index, 1);
     this.save();
 
-    let momento = new Momento('Removed', () => {
+    this._history.registerRemoval(() => {
       this.add(removed[0]);
     });
-    this._history.push(momento);
 
     return removed;
   }
@@ -76,16 +76,8 @@ export class LocalStorageTaskService implements TaskService {
     if (!task) {
       throw new Error('argument error: invalid task');
     }
-
-    let index = this.taskCollection.tasks.indexOf(task);
-    if (index < 0) {
-      throw new Error('error: task not found');
-    }
-
-    let updated = Object.assign(this.taskCollection.tasks[index], task);
     this.save();
-
-    return updated;
+    return task;
   }
 
   private save() {

@@ -24,7 +24,7 @@ describe('HistoryService', () => {
 
   it('allows appending momentos', inject([HistoryService], (service) => {
     let momento = new Momento('', () => {});
-    service.push(momento);
+    service.registerRemoval(momento);
     expect(service.isEmpty).toBe(false);
   }));
 
@@ -32,8 +32,8 @@ describe('HistoryService', () => {
     service.capacity = 1;
     let momento1 = new Momento('1', () => {});
     let momento2 = new Momento('2', () => {});
-    service.push(momento1);
-    service.push(momento2);
+    service.registerRemoval(momento1);
+    service.registerRemoval(momento2);
     expect(service.size).toBe(1);
   }));
 
@@ -46,7 +46,7 @@ describe('HistoryService', () => {
     ];
     momentoes.forEach(item => {
       spyOn(item, 'rollback');
-      service.push(item);
+      service.registerRemoval(item.rollback);
     });
     service.restore(3);
     momentoes.forEach(item => {
