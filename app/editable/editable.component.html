@@ -5,7 +5,7 @@
 <form (submit)="endEditing($event)">
   <div class="editable-editor" (click)="$event.stopPropagation()">
     <div class="mui-textfield">
-      <input #input [(ngModel)]="value" (blur)="endEditing($event)" autofocus>
+      <input #input type="text" [(ngModel)]="value" (blur)="endEditing($event)">
     </div>
     <md-icon>mode_edit</md-icon>
   </div>
