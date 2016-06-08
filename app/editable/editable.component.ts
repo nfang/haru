@@ -1,6 +1,7 @@
 import {
   forwardRef,
   Component,
+  ElementRef,
   ViewChild,
   Renderer,
   Input,
@@ -54,8 +55,8 @@ export class EditableComponent implements ControlValueAccessor, AfterViewInit {
     }
   }
 
-  @ViewChild('label') label;
-  @ViewChild('input') input;
+  @ViewChild('label') label: ElementRef;
+  @ViewChild('input') input: ElementRef;
 
   constructor(private _renderer: Renderer) { }
 
@@ -81,6 +82,9 @@ export class EditableComponent implements ControlValueAccessor, AfterViewInit {
     if (this.enabled) {
       this._isEditing = true;
       event.stopPropagation();
+      setTimeout(() => {
+        this.input.nativeElement.focus();
+      }, 0);
     }
   }
 
