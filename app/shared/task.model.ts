@@ -1,5 +1,5 @@
 export class Task {
-  isCompleted: boolean = false;
+  private _isCompleted: boolean = false;
   isPrioritised: boolean = false;
   checklist: Task[];
   private _createAt: Date;
@@ -22,6 +22,14 @@ export class Task {
 
   set notes(value: string) {
     this._notes = value.trim();
+  }
+
+  get isCompleted(): boolean {
+    return this._isCompleted;
+  }
+
+  set isCompleted(value: boolean) {
+    this._isCompleted = !!value;
   }
 
   constructor(
