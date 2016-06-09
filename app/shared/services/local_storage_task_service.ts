@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 
 import {Task} from '../task.model';
 import {TaskService} from './interfaces';
-import {Momento, HistoryService} from './history.service';
 
 class LocalStorageTaskCollection {
   constructor(
@@ -24,7 +23,7 @@ export class LocalStorageTaskService implements TaskService {
     return task;
   }
 
-  constructor(private _history: HistoryService) {
+  constructor() {
     let raw = JSON.parse(localStorage.getItem(this.localStorageKey));
     if (!raw) {
       this.taskCollection = new LocalStorageTaskCollection();
@@ -64,10 +63,6 @@ export class LocalStorageTaskService implements TaskService {
 
     let removed = this.taskCollection.tasks.splice(index, 1);
     this.save();
-
-    this._history.registerRemoval(() => {
-      this.add(removed[0]);
-    });
 
     return removed;
   }

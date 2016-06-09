@@ -12,7 +12,11 @@ import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
 import { MD_LIST_DIRECTIVES } from '@angular2-material/list';
 
 import { Task } from '../shared/task.model';
-import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
+import {
+  HistoryService,
+  TaskService,
+  TASK_SERVICE_TOKEN
+} from '../shared/services';
 import { SubtaskComponent } from '../subtask/subtask.component';
 import { EditableComponent } from '../editable/editable.component';
 
@@ -56,6 +60,7 @@ export class TaskComponent {
 
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService,
+    private _historyService: HistoryService,
     private _elementRef: ElementRef
   ) {
     this.isExpanded = false;
@@ -112,11 +117,18 @@ export class TaskComponent {
   }
 
   removeSubtask(subtask: Task) {
+    this._historyService.registerRemoval(() => {
+      this.task.addSubtask(subtask);
+      this.save();
+    });
     this.task.removeSubtask(subtask);
     this.save();
   }
 
   remove(event) {
+    this._historyService.registerRemoval(() => {
+      this._taskService.add(this.task);
+    });
     this._taskService.remove(this.task);
     event.stopPropagation();
   }
