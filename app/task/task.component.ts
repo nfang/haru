@@ -72,6 +72,9 @@ export class TaskComponent {
         this.isCompleting = false;
         if (!this.task.isCompleted) {
           this.task.isCompleted = true;
+          if (this.task.isPrioritised) {
+            this.task.isPrioritised = false;
+          }
           this.save();
         }
       });
@@ -80,9 +83,6 @@ export class TaskComponent {
   toggleCompleted(event) {
     if (!this.task.isCompleted) {
       this.isCompleting = true;
-      if (this.task.isPrioritised) {
-        this.task.isPrioritised = false;
-      }
     } else {
       this.task.isCompleted = false;
       this.save();
