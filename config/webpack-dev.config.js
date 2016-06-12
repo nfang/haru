@@ -9,6 +9,8 @@ module.exports = webpackMerge(commonConfig, {
     filename: '[name].bundle.js'
   },
 
+  debug: true,
+
   devtool: 'cheap-module-eval-source-map',
 
   devServer: {

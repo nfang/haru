@@ -8,6 +8,7 @@ var autoprefixer = require('autoprefixer');
  * Plugins
  */
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -47,6 +48,14 @@ module.exports = {
     new webpack.optimize.CommonsChunkPlugin({
       name: ['app', 'vendor', 'polyfills']
     }),
+
+    new CopyWebpackPlugin([{
+      from: 'app/assets',
+      to: 'assets'
+    }, {
+      from: 'app/favicon.ico',
+      to: 'favicon.ico'
+    }]),
 
     new HtmlWebpackPlugin({
       template: './app/index.html',
