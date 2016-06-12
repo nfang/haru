@@ -9,7 +9,6 @@ import { provide } from '@angular/core';
 
 import { Task } from '../task.model';
 import { LocalStorageTaskService } from './local_storage_task_service';
-import { HistoryService } from './history.service';
 
 let localStore: any = {
   "HARU_TASKS": JSON.stringify({
@@ -34,10 +33,7 @@ describe('LocalStorageTaskService', () => {
     });
   });
 
-  beforeEachProviders(() => [
-    LocalStorageTaskService,
-    HistoryService
-  ]);
+  beforeEachProviders(() => [LocalStorageTaskService]);
 
   it('can list all tasks', inject([LocalStorageTaskService], (service) => {
     let tasks = service.list();
