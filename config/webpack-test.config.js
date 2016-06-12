@@ -8,7 +8,7 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.ts$/,
-      loader: 'ts',
+      loader: 'ts'
     }, {
       test: /\.css$/,
       loader: 'null'
