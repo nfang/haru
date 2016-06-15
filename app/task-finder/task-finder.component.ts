@@ -10,7 +10,7 @@ import 'rxjs/add/operator/debounce';
 
 import { Task } from '../shared/task.model';
 import { TaskService, TASK_SERVICE_TOKEN } from '../shared/services';
-import { taskTitleValidator } from '../shared/taskTitleValidator';
+import { TaskValidators } from '../shared/task-validators';
 
 export class ValueChangeEvent {
   constructor(public value) {}
@@ -37,7 +37,7 @@ export class TaskFinderComponent {
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
   ) {
     const tasks = this._taskService.list();
-    this.query = new Control('', taskTitleValidator.checkTaskTitle(tasks));
+    this.query = new Control('', TaskValidators.validateTitle(tasks));
     this.query.valueChanges
       .debounce((value) => {
         return value && value.trim().length ?
