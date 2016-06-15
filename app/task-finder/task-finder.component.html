@@ -1,5 +1,8 @@
 <form (submit)="submit($event)">
   <div class="mui-textfield">
     <input placeholder="Search or add new task" [ngFormControl]="query" autofocus>
+    <div *ngIf="query.dirty && !query.valid">
+      <p *ngIf="query.errors.taskTitleTaken">Cannot use same title</p>
+    </div>
   </div>
 </form>
