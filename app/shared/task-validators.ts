@@ -1,4 +1,4 @@
-import { Control, AbstractControl } from '@angular/common';
+import { AbstractControl } from '@angular/common';
 import { Task } from '../shared/task.model';
 import { ValidatorFn } from '@angular/common/src/forms/directives/validators';
 

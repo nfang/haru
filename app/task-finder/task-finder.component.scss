@@ -1,1 +1,11 @@
 @import '../shared/global.scss';
+
+.ng-invalid:focus {
+    border-bottom: 1px solid rgb(244, 67, 54);
+
+    ~ label {
+    color: rgb(244, 67, 54);
+    }
+}
+
+

@@ -88,7 +88,22 @@ describe('A TaskFinderComponent', () => {
         done();
       })
       .catch(e => done.fail(e));
+  });
 
+  it('cannot create same task', done => {
+    builder.createAsync(TaskFinderComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement;
+        const NEW_TASK = 'Task 1';
+        component.query.updateValue(NEW_TASK);
+        component.submit({ preventDefault: () => {} });
+
+        let len = taskService.list().length;
+        expect(len).toBe(3);
+        done();
+      })
+      .catch(e => done.fail(e));
   });
 });
 
