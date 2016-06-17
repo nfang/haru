@@ -46,7 +46,7 @@ export class Task {
   }
 
   addSubtask(task: Task): number {
-    if (this.checklist.filter(t => t.title === task.title).length) {
+    if (this.checklist.filter(t => t.equals(task)).length) {
       console.error(`argument error: task with name ${task.title} already exists`);
       return;
     }
