@@ -2,7 +2,7 @@ import { Task } from './task.model';
 import { Control } from '@angular/common';
 import { TaskValidators } from './task-validators';
 
-describe('Task', () => {
+describe('TaskValidators', () => {
   let tasks: Task[];
   let query: Control;
 
@@ -14,12 +14,12 @@ describe('Task', () => {
     ];
   });
 
-  it('should rasie error when title is invalid', () => {
+  it('raise error when tasks with the same title already exists', () => {
     query = new Control('Task 1', TaskValidators.validateTitle(tasks));
     expect(query.errors['taskTitleTaken']).toBe(true);
   });
 
-  it('should has no error when title is valid', () => {
+  it('clear errors when the task title is unique', () => {
     query = new Control('Task 4', TaskValidators.validateTitle(tasks));
     expect(query.errors).toBe(null);
   });

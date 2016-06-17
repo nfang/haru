@@ -40,6 +40,11 @@ export class Task {
     this.checklist = new Array<Task>();
   }
 
+  equals(other: Task): boolean {
+    let rg = new RegExp('^' + this.title + '$', 'i');
+    return rg.test(other.title);
+  }
+
   addSubtask(task: Task): number {
     if (this.checklist.filter(t => t.title === task.title).length) {
       console.error(`argument error: task with name ${task.title} already exists`);
