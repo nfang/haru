@@ -39,8 +39,13 @@ module.exports = {
       test: /\.html$/,
       loader: 'raw'
     }, {
-      test: /\.(woff2?|ttf|eot|svg)$/,
-      loader: 'url?limit=10000'
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: 'url',
+      query: {
+        limit: 50000,
+        mimetype: 'application/font-woff',
+        name: './font/[name].[ext]'
+      }
     }]
   },
 

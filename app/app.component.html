@@ -1,5 +1,8 @@
 <md-card>
-  <md-card-subtitle>{{today | date:'yMMMd'}}</md-card-subtitle>
+  <div class="row">
+    <md-card-subtitle>{{today | date:'yMMMd'}}</md-card-subtitle>
+    <weather></weather>
+  </div>
   <div class="row">
     <md-card-title>{{today | date:'EEEE'}}</md-card-title>
     <span class="progress">{{progress}}</span>
