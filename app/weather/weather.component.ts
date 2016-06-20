@@ -6,7 +6,7 @@ import { Http, URLSearchParams, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'weathericons/css/weather-icons.css';
 
-const YQL_API = 'http://query.yahooapis.com/v1/public/yql';
+const YQL_API = 'https://query.yahooapis.com/v1/public/yql';
 const QUERY_INTERVAL = 15 * 60000;
 
 class WeatherCondition {
@@ -42,7 +42,7 @@ class WeatherCondition {
 })
 export class WeatherComponent implements OnInit {
   private _weatherCondition: WeatherCondition;
-  
+
   public isLoading: boolean;
 
   constructor(private _http: Http) {

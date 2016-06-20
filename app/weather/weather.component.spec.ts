@@ -22,7 +22,7 @@ import { WeatherComponent } from './weather.component';
 describe('A WeatherComponent', () => {
   let backend, builder, connection, http;
 
-  const YQL_API = 'http://query.yahooapis.com/v1/public/yql';
+  const YQL_API = 'https://query.yahooapis.com/v1/public/yql';
 
   beforeEachProviders(() => [
     BaseRequestOptions,
