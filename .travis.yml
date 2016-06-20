@@ -7,4 +7,4 @@ deploy:
   skip_cleanup: true
   provider: surge
   project: ./dist/
-  domain: haruapp.surge.sh
+  domain: https://haruapp.surge.sh
