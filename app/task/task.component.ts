@@ -4,8 +4,7 @@ import {
   Inject,
   Output,
   EventEmitter,
-  OnChanges,
-  SimpleChange,
+  OnInit,
   ElementRef
 } from '@angular/core';
 import { Control } from '@angular/common';
@@ -48,7 +47,7 @@ export class TaskExpandedEvent {
     '[class.completing]': 'isCompleting'
   }
 })
-export class TaskComponent implements OnChanges {
+export class TaskComponent implements OnInit {
   private _expandEmitter: EventEmitter<TaskExpandedEvent> = new EventEmitter<TaskExpandedEvent>();
 
   @Input() task: Task;
@@ -71,11 +70,11 @@ export class TaskComponent implements OnChanges {
     this.isExpanded = false;
     this.isCompleting = false;
     this.subtask = new Task('');
-    this.subtaskControl = new Control();    
+    this.subtaskControl = new Control('');
   }
 
-  ngOnChanges(changes: {[propName: string]: SimpleChange}) {
-    this.subtaskControl = new Control('', TaskValidators.validateTitle(this.task.checklist));    
+  ngOnInit() {
+    this.subtaskControl = new Control('', TaskValidators.validateTitle(this.task.checklist));
   }
 
   ngAfterViewInit() {
