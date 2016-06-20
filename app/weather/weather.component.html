@@ -1,3 +1,5 @@
-<i class="icon" [ngClass]="condition.iconClass"></i>
-<span class="temperature">{{condition.temp}}</span>
+<i class="icon"
+  [ngClass]="weatherCondition.iconClass"
+  [title]="weatherCondition.text"></i>
+<span class="temperature">{{weatherCondition.temp}}</span>
 <i class="wi wi-degrees"></i>

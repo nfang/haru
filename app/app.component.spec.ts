@@ -49,10 +49,10 @@ describe('An AppComponent', () => {
   it('shows today\'s date and day', async(() => {
     builder.createAsync(AppComponent)
       .then((fixture: ComponentFixture<any>) => {
-        // let component = fixture.componentInstance,
-        //   element = fixture.nativeElement,
-        //   today = new Date();
-        //
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          today = new Date();
+
         // expect(element.querySelector('md-card-title').textContent)
         //   .toBe(today.toLocaleString('en-US', { weekday: 'long' }));
         // expect(element.querySelector('md-card-subtitle').textContent)

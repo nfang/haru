@@ -22,6 +22,8 @@ import { WeatherComponent } from './weather.component';
 describe('A WeatherComponent', () => {
   let backend, builder, connection, http;
 
+  const YQL_API = 'http://query.yahooapis.com/v1/public/yql';
+
   beforeEachProviders(() => [
     BaseRequestOptions,
     MockBackend,
@@ -34,10 +36,9 @@ describe('A WeatherComponent', () => {
     }
   ]);
 
-  beforeEach(inject([TestComponentBuilder, MockBackend, Http], (tcb, mockBackend, httpService) => {
+  beforeEach(inject([TestComponentBuilder, MockBackend], (tcb, mockBackend) => {
     builder = tcb;
     backend = mockBackend;
-    http = httpService;
   }));
 
   it('can be used as a directive', async(() => {
@@ -51,8 +52,17 @@ describe('A WeatherComponent', () => {
   }));
 
   it('gets current weather condition from Yahoo Weather API', (done) => {
-    // TODO
-    done();
+    builder.createAsync(WeatherComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance;
+        backend.connections.subscribe(c => {
+          expect(c.request.url.startsWith(YQL_API)).toBe(true);
+          done();
+        });
+        component.getWeatherCondition({
+          coords: { longitude: 1, latitude: 1 }
+        });
+      });
   });
 
 });
