@@ -6,6 +6,7 @@ import {
   EventEmitter,
   ElementRef
 } from '@angular/core';
+import { Control } from '@angular/common';
 import { Observable } from 'rxjs/Rx';
 import { MdCheckbox } from '@angular2-material/checkbox';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
@@ -19,6 +20,7 @@ import {
 } from '../shared/services';
 import { SubtaskComponent } from '../subtask/subtask.component';
 import { EditableComponent } from '../editable/editable.component';
+import { TaskValidators } from '../shared/task-validators';
 
 export class TaskExpandedEvent {
   constructor(public taskComponent: TaskComponent) { }
@@ -57,6 +59,7 @@ export class TaskComponent {
   isExpanded: boolean;
   isCompleting: boolean;
   subtask: Task;
+  subtaskTitle: Control;
 
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService,
@@ -66,10 +69,13 @@ export class TaskComponent {
     this.isExpanded = false;
     this.isCompleting = false;
     this.subtask = new Task('');
+    this.subtaskTitle = new Control();    
   }
 
   ngAfterViewInit() {
-    let el = this._elementRef.nativeElement;
+    let el = this._elementRef.nativeElement;    
+    this.subtaskTitle = new Control('', TaskValidators.validateTitle(this.task.checklist));
+    console.log(this.task.checklist);    
     Observable.fromEvent(el, 'transitionend')
       .filter(e => el.classList.contains('completing'))
       .delay(1000)
@@ -109,7 +115,7 @@ export class TaskComponent {
   }
 
   addSubtask(subtask: Task) {
-    if (subtask.title) {
+    if (subtask.title && this.subtaskTitle.valid) {
       this.task.addSubtask(subtask);
       this.save();
       this.subtask = new Task('');

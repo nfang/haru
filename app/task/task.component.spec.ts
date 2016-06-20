@@ -206,6 +206,33 @@ describe('A TaskComponent', () => {
       });
   }));
 
+  it('cannot add subtask with same title', async(() => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          task = taskService.list()[0];
+        component.task = task;
+        fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(0);
+
+        component.task.addSubtask(new Task('subtask'));
+        fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
+        expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent)
+          .toMatch(/subtask/);
+
+        component.task.addSubtask(new Task('subtask'));
+        fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
+        expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent)
+          .toMatch(/subtask/);        
+      });
+  }));  
+
   it('can remove subtasks', async(() => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {
