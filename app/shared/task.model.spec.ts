@@ -39,4 +39,13 @@ describe('Task', () => {
     expect(removed[0].title).toBe('test');
   });
 
+  it('can differentiate tasks', () => {
+    let task = new Task('test');
+    let another = new Task('TEST');
+    let different = new Task('abc');
+    let partial = new Task('testabc');
+    expect(task.equals(another)).toBe(true);
+    expect(task.equals(different)).toBe(false);
+    expect(task.equals(partial)).toBe(false);
+  });
 });
