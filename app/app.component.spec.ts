@@ -7,6 +7,7 @@ import {
   beforeEachProviders
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
 
@@ -31,6 +32,7 @@ describe('An AppComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
+    HTTP_PROVIDERS,
     IN_MEMORY_TASK_SERVICE_PROVIDERS,
     {
       provide: InMemoryTaskProvider,
@@ -47,10 +49,10 @@ describe('An AppComponent', () => {
   it('shows today\'s date and day', async(() => {
     builder.createAsync(AppComponent)
       .then((fixture: ComponentFixture<any>) => {
-        // let component = fixture.componentInstance,
-        //   element = fixture.nativeElement,
-        //   today = new Date();
-        //
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          today = new Date();
+
         // expect(element.querySelector('md-card-title').textContent)
         //   .toBe(today.toLocaleString('en-US', { weekday: 'long' }));
         // expect(element.querySelector('md-card-subtitle').textContent)

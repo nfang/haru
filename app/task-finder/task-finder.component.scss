@@ -1,1 +1,8 @@
 @import '../shared/global.scss';
+
+.mui-textfield > .ng-invalid:focus {
+  border-color: $invalid-highlight;
+  ~ label {
+    color: $invalid-highlight;
+  }
+}

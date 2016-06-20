@@ -9,6 +9,11 @@
 .row {
   display: flex;
   align-items: baseline;
+
+  &:first-child {
+    align-items: flex-start;
+    justify-content: space-between;  
+  }
 }
 
 md-card {

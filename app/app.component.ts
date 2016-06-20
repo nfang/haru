@@ -2,6 +2,7 @@ import { Inject, Component } from '@angular/core';
 import { MdCard } from '@angular2-material/card';
 
 import { TaskListComponent } from './task-list/task-list.component';
+import { WeatherComponent } from './weather/weather.component';
 import {
   HistoryService,
   TaskService,
@@ -15,7 +16,7 @@ import {
     require('./app.component.scss')
   ],
   directives: [
-    MdCard, TaskListComponent
+    MdCard, TaskListComponent, WeatherComponent
   ]
 })
 export class AppComponent {

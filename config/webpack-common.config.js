@@ -39,8 +39,13 @@ module.exports = {
       test: /\.html$/,
       loader: 'raw'
     }, {
-      test: /\.(woff2?|ttf|eot|svg)$/,
-      loader: 'url?limit=10000'
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: 'url',
+      query: {
+        limit: 50000,
+        mimetype: 'application/font-woff',
+        name: './font/[name].[ext]'
+      }
     }]
   },
 
@@ -52,6 +57,9 @@ module.exports = {
     new CopyWebpackPlugin([{
       from: 'app/assets',
       to: 'assets'
+    }, {
+      from: 'app/humans.txt',
+      to: 'humans.txt'
     }, {
       from: 'app/favicon.ico',
       to: 'favicon.ico'

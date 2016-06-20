@@ -206,6 +206,26 @@ describe('A TaskComponent', () => {
       });
   }));
 
+  it('cannot add subtask with same title', async(() => {
+    builder.createAsync(TaskComponent)
+      .then((fixture: ComponentFixture<any>) => {
+        let component = fixture.componentInstance,
+          element = fixture.nativeElement,
+          task = taskService.list()[0];
+        task.addSubtask(new Task('subtask'));
+        component.task = task;
+        fixture.detectChanges();
+
+        expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
+
+        component.subtaskControl.updateValue('subtask');
+        fixture.detectChanges();
+
+        expect(element.querySelector('.textfield-subtask > input')
+          .classList.contains('ng-invalid')).toBe(true);
+      });
+  }));
+
   it('can remove subtasks', async(() => {
     builder.createAsync(TaskComponent)
       .then((fixture: ComponentFixture<any>) => {

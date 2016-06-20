@@ -170,3 +170,10 @@ header {
 .checklist {
   padding-top: 0;
 }
+
+.mui-textfield > .ng-invalid:focus {
+  border-color: $invalid-highlight;
+  ~ label {
+    color: $invalid-highlight;
+  }
+}

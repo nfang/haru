@@ -11,8 +11,14 @@ $mui-accent-color-light:  mui-color('purple', 'A400');
 
 @import '~muicss/lib/sass/mui';
 
+// Colors
+// -------------------------------
+//
 $scarlet: #e32300;
 $green-haze: #00b227;
+$pomegranate: #f44336;
+
+$invalid-highlight: $pomegranate;
 
 // Easing functions
 // -------------------------------
