@@ -30,8 +30,8 @@
   <form class="row" (submit)="addSubtask(subtask)">
     <md-icon class="icon-label">add</md-icon>
     <div class="textfield-subtask">
-      <input type="text" placeholder="Add a subtask" [(ngModel)]="subtask.title" [ngFormControl]="subtaskTitle">
-      <label *ngIf="subtaskTitle.dirty && !subtaskTitle.valid && subtaskTitle.errors.taskTitleTaken">
+      <input type="text" placeholder="Add a subtask" [(ngModel)]="subtask.title" [ngFormControl]="subtaskControl">
+      <label *ngIf="subtaskControl.dirty && !subtaskControl.valid && subtaskControl.errors.taskTitleTaken">
         Duplicate task exists
       </label>    
     </div>

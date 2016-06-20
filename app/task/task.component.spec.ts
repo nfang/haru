@@ -221,15 +221,12 @@ describe('A TaskComponent', () => {
         fixture.detectChanges();
 
         expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
-        expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent)
-          .toMatch(/subtask/);
 
         component.task.addSubtask(new Task('subtask'));
         fixture.detectChanges();
 
         expect(element.querySelectorAll('.checklist md-list-item').length).toBe(1);
-        expect(element.querySelector('.checklist md-list-item .checkbox-label').textContent)
-          .toMatch(/subtask/);        
+        expect(element.querySelectorAll('.textfield-subtask > input.ng-invalid')).not.toBe(null);      
       });
   }));  
 

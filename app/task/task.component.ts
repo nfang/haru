@@ -4,6 +4,8 @@ import {
   Inject,
   Output,
   EventEmitter,
+  OnChanges,
+  SimpleChange,
   ElementRef
 } from '@angular/core';
 import { Control } from '@angular/common';
@@ -46,7 +48,7 @@ export class TaskExpandedEvent {
     '[class.completing]': 'isCompleting'
   }
 })
-export class TaskComponent {
+export class TaskComponent implements OnChanges {
   private _expandEmitter: EventEmitter<TaskExpandedEvent> = new EventEmitter<TaskExpandedEvent>();
 
   @Input() task: Task;
@@ -59,7 +61,7 @@ export class TaskComponent {
   isExpanded: boolean;
   isCompleting: boolean;
   subtask: Task;
-  subtaskTitle: Control;
+  subtaskControl: Control;
 
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService,
@@ -69,13 +71,15 @@ export class TaskComponent {
     this.isExpanded = false;
     this.isCompleting = false;
     this.subtask = new Task('');
-    this.subtaskTitle = new Control();    
+    this.subtaskControl = new Control();    
+  }
+
+  ngOnChanges(changes: {[propName: string]: SimpleChange}) {
+    this.subtaskControl = new Control('', TaskValidators.validateTitle(this.task.checklist));    
   }
 
   ngAfterViewInit() {
-    let el = this._elementRef.nativeElement;    
-    this.subtaskTitle = new Control('', TaskValidators.validateTitle(this.task.checklist));
-    console.log(this.task.checklist);    
+    let el = this._elementRef.nativeElement;
     Observable.fromEvent(el, 'transitionend')
       .filter(e => el.classList.contains('completing'))
       .delay(1000)
@@ -115,7 +119,7 @@ export class TaskComponent {
   }
 
   addSubtask(subtask: Task) {
-    if (subtask.title && this.subtaskTitle.valid) {
+    if (subtask.title && this.subtaskControl.valid) {
       this.task.addSubtask(subtask);
       this.save();
       this.subtask = new Task('');
