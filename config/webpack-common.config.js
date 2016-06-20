@@ -58,6 +58,9 @@ module.exports = {
       from: 'app/assets',
       to: 'assets'
     }, {
+      from: 'app/humans.txt',
+      to: 'humans.txt'
+    }, {
       from: 'app/favicon.ico',
       to: 'favicon.ico'
     }]),

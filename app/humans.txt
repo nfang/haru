@@ -1,0 +1,13 @@
+/* TEAM */
+
+  Chef: Nathan Fang
+  Email: nathan.fang [at] icloud.com
+  Github: nfang
+
+  Developer: Peter Shi
+  Github: shilivenus
+
+/* SITE */
+
+  Standards: HTML5, CSS3, ES6
+  Components: Angular 2, Webpack, MUI
