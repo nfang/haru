@@ -14,7 +14,7 @@
     "serve:dist": "npm-run-all clean:dist build:dist launchserver:dist",
     "start": "npm run serve",
     "test": "karma start karma.config.js",
-    "postinstall": "typings install"
+    "postinstall": "typings install && ./node_modules/protractor/bin/webdriver-manager update"
   },
   "repository": {
     "type": "git",
@@ -46,6 +46,7 @@
     "null-loader": "^0.1.1",
     "phantomjs-prebuilt": "^2.1.7",
     "postcss-loader": "^0.9.1",
+    "protractor": "^3.3.0",
     "raw-loader": "^0.5.1",
     "rimraf": "^2.5.2",
     "sass-loader": "^3.2.0",
