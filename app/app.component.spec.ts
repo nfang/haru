@@ -1,6 +1,7 @@
 import {
   async,
   it,
+  xit,
   inject,
   describe,
   beforeEach,
@@ -46,17 +47,21 @@ describe('An AppComponent', () => {
     taskService = service;
   }));
 
-  it('shows today\'s date and day', async(() => {
+  // This test case is skipped due to:
+  // - https://github.com/angular/angular/issues/6405
+  // - https://github.com/ariya/phantomjs/issues/12581
+  xit('shows today\'s date and day', async(() => {
     builder.createAsync(AppComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
           element = fixture.nativeElement,
           today = new Date();
+        fixture.detectChanges();
 
-        // expect(element.querySelector('md-card-title').textContent)
-        //   .toBe(today.toLocaleString('en-US', { weekday: 'long' }));
-        // expect(element.querySelector('md-card-subtitle').textContent)
-        //   .toBe(today.toLocaleString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }));
+        expect(element.querySelector('md-card-title').textContent)
+          .toBe(today.toLocaleString('en-US', { weekday: 'long' }));
+        expect(element.querySelector('md-card-subtitle').textContent)
+          .toBe(today.toLocaleString('en-US', { day: 'numeric', month: 'short', year: 'numeric' }));
       });
   }));
 
