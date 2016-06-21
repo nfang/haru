@@ -30,16 +30,18 @@
   <form class="row" (submit)="addSubtask(subtask)">
     <md-icon class="icon-label">add</md-icon>
     <div class="textfield-subtask">
-      <input type="text" placeholder="Add a subtask" [(ngModel)]="subtask.title" [ngFormControl]="subtaskControl">
+      <input type="text" placeholder="Add a subtask" [tabindex]="isExpanded ? 0 : -1"
+        [(ngModel)]="subtask.title" [ngFormControl]="subtaskControl">
       <label *ngIf="subtaskControl.dirty && !subtaskControl.valid && subtaskControl.errors.taskTitleTaken">
         Duplicate task exists
-      </label>    
+      </label>
     </div>
   </form>
   <div class="row" style="align-items: baseline">
     <md-icon class="icon-label">content_paste</md-icon>
     <div class="textfield-notes">
-      <textarea placeholder="Add notes" rows="3" (blur)="save()" [(ngModel)]="task.notes"></textarea>
+      <textarea placeholder="Add notes" [tabindex]="isExpanded ? 0 : -1" rows="3"
+        (blur)="save()" [(ngModel)]="task.notes"></textarea>
     </div>
   </div>
 </section>
