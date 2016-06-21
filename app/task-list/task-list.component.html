@@ -6,7 +6,8 @@
 </md-list>
 <div class="btn-container" [class.reveal]="completedTasks.length">
   <button (click)="toggleCompletedTasks()"
-    class="mui-btn mui-btn--small mui-btn--primary">
+    class="mui-btn mui-btn--small mui-btn--primary"
+    [tabindex]="completedTasks.length ? 0 : -1">
     {{!showCompletedTasks ? 'Show' : 'Hide'}} completed tasks
   </button>
 </div>
