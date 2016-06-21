@@ -14,7 +14,7 @@
     "serve:dist": "npm-run-all clean:dist build:dist launchserver:dist",
     "start": "npm run serve",
     "test": "karma start karma.config.js",
-    "postinstall": "typings install"
+    "postinstall": "node_modules/typings/dist/bin.js install"
   },
   "repository": {
     "type": "git",
