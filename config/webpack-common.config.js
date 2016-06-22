@@ -63,6 +63,9 @@ module.exports = {
     }, {
       from: 'app/favicon.ico',
       to: 'favicon.ico'
+    }, {
+      from: 'app/manifest.json',
+      to: 'manifest.json'
     }]),
 
     new HtmlWebpackPlugin({
