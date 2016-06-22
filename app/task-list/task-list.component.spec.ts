@@ -7,6 +7,10 @@ import {
   beforeEachProviders
 } from '@angular/core/testing';
 import { Component } from '@angular/core';
+import {
+  disableDeprecatedForms,
+  provideForms
+} from '@angular/forms';
 import { HTTP_PROVIDERS } from '@angular/http';
 import { ComponentFixture, TestComponentBuilder } from '@angular/compiler/testing';
 import { By } from '@angular/platform-browser';
@@ -38,6 +42,8 @@ describe('A TaskListComponent', () => {
   let builder, taskService;
 
   beforeEachProviders(() => [
+    disableDeprecatedForms(),
+    provideForms(),
     HistoryService,
     IN_MEMORY_TASK_SERVICE_PROVIDERS,
     {

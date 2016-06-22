@@ -1,6 +1,6 @@
 <form (submit)="submit($event)">
   <div class="mui-textfield">
-    <input placeholder="Search or add new task" [ngFormControl]="query" autofocus>
+    <input placeholder="Search or add new task" [formControl]="query" autofocus>
     <label *ngIf="query.dirty && !query.valid && query.errors.taskTitleTaken">
       Duplicate task exists
     </label>

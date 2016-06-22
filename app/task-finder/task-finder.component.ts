@@ -4,7 +4,7 @@ import {
   Output,
   EventEmitter
 } from '@angular/core';
-import { Control } from '@angular/common';
+import { REACTIVE_FORM_DIRECTIVES, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/debounce';
 
@@ -21,7 +21,8 @@ export class ValueChangeEvent {
   template: require('./task-finder.component.html'),
   styles: [
     require('./task-finder.component.scss')
-  ]
+  ],
+  directives: [REACTIVE_FORM_DIRECTIVES]
 })
 export class TaskFinderComponent {
   private _changeEmitter: EventEmitter<ValueChangeEvent> = new EventEmitter<ValueChangeEvent>();
@@ -31,13 +32,13 @@ export class TaskFinderComponent {
     return this._changeEmitter.asObservable();
   }
 
-  query: Control;
+  query: FormControl;
 
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService
   ) {
     const tasks = this._taskService.list();
-    this.query = new Control('', TaskValidators.validateTitle(tasks));
+    this.query = new FormControl('', TaskValidators.validateTitle(tasks));
     this.query.valueChanges
       .debounce((value) => {
         return value && value.trim().length ?

@@ -1,6 +1,7 @@
 import {
   async,
   it,
+  xit,
   inject,
   describe,
   beforeEach,
@@ -37,7 +38,7 @@ describe('A SubtaskComponent', () => {
       });
   }));
 
-  it('shows subtask title', async(() => {
+  xit('shows subtask title', async(() => {
     builder.createAsync(SubtaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
@@ -49,7 +50,7 @@ describe('A SubtaskComponent', () => {
       });
   }));
 
-  it('marks a subtask complete', async(() => {
+  xit('marks a subtask complete', async(() => {
     builder.createAsync(SubtaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,
@@ -67,7 +68,7 @@ describe('A SubtaskComponent', () => {
       });
   }));
 
-  it('removes a subtask', async(() => {
+  xit('removes a subtask', async(() => {
     builder.createAsync(SubtaskComponent)
       .then((fixture: ComponentFixture<any>) => {
         let component = fixture.componentInstance,

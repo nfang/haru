@@ -7,7 +7,7 @@ import {
   OnInit,
   ElementRef
 } from '@angular/core';
-import { Control } from '@angular/common';
+import { REACTIVE_FORM_DIRECTIVES, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/Rx';
 import { MdCheckbox } from '@angular2-material/checkbox';
 import { MdIcon, MdIconRegistry } from '@angular2-material/icon';
@@ -37,6 +37,7 @@ export class TaskExpandedEvent {
     MdCheckbox,
     MdIcon,
     MD_LIST_DIRECTIVES,
+    REACTIVE_FORM_DIRECTIVES,
     EditableComponent,
     SubtaskComponent
   ],
@@ -60,7 +61,7 @@ export class TaskComponent implements OnInit {
   isExpanded: boolean;
   isCompleting: boolean;
   subtask: Task;
-  subtaskControl: Control;
+  subtaskControl: FormControl;
 
   constructor(
     @Inject(TASK_SERVICE_TOKEN) private _taskService: TaskService,
@@ -70,11 +71,11 @@ export class TaskComponent implements OnInit {
     this.isExpanded = false;
     this.isCompleting = false;
     this.subtask = new Task('');
-    this.subtaskControl = new Control('');
+    this.subtaskControl = new FormControl('');
   }
 
   ngOnInit() {
-    this.subtaskControl = new Control('', TaskValidators.validateTitle(this.task.checklist));
+    this.subtaskControl = new FormControl('', TaskValidators.validateTitle(this.task.checklist));
   }
 
   ngAfterViewInit() {

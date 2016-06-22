@@ -31,7 +31,7 @@
     <md-icon class="icon-label">add</md-icon>
     <div class="textfield-subtask">
       <input type="text" placeholder="Add a subtask" [tabindex]="isExpanded ? 0 : -1"
-        [(ngModel)]="subtask.title" [ngFormControl]="subtaskControl">
+        [(ngModel)]="subtask.title" [formControl]="subtaskControl">
       <label *ngIf="subtaskControl.dirty && !subtaskControl.valid && subtaskControl.errors.taskTitleTaken">
         Duplicate task exists
       </label>
