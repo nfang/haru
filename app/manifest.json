@@ -5,17 +5,17 @@
   "description": "The app that helps you to manage one day to do list",
   "icons": [
     {
-      "src": "assets/favicon-16.png",
+      "src": "assets/favicon-16x16.png",
       "sizes": "16x16",
       "type": "image/png",
       "density": 0.75
     },
     {
-      "src": "assets/favicon-32.png",
+      "src": "assets/favicon-32x32.png",
       "sizes": "32x32",
       "type": "image/png",
       "density": 1.0
-    }    
+    }
   ],
   "start_url": "index.html",
   "display": "standalone",
