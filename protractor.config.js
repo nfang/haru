@@ -23,11 +23,10 @@ exports.config = {
   // Spec patterns are relative to this config file
   specs: ['**/*e2e-spec.js' ],
 
-
   // For angular2 tests
   useAllAngular2AppRoots: true,
 
   // Base URL for application server
-  baseUrl: 'https://haruapp.surge.sh/'
+  baseUrl: 'https://haruapp.surge.sh/',   
 
 }

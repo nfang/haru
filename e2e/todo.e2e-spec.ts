@@ -1,10 +1,9 @@
-describe('haru app', function() {
+describe('haru app', ()=> {
 
   beforeEach(()=> {
     browser.get('');
   });
-  it('should have a title', function() {
-    //This is just for passing test, it should be removed eventually.
+  it('should have a title', ()=> {
     browser.ignoreSynchronization = true;
 
     expect(browser.getTitle()).toEqual('Haru');
