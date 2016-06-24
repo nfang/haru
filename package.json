@@ -8,13 +8,16 @@
     "clean:dist": "rimraf dist",
     "build": "webpack --config config/webpack-dev.config.js --progress --profile --colors --display-error-details --display-cached",
     "build:dist": "webpack --config config/webpack-prod.config.js --progress --profile --colors --display-error-details --display-cached",
+    "pree2e": "npm run webdriver:update",
+    "e2e": "\"protractor protractor.config.js\"",
     "launchserver": "webpack-dev-server --config config/webpack-dev.config.js",
     "launchserver:dist": "http-server dist",
     "serve": "npm-run-all clean build launchserver",
     "serve:dist": "npm-run-all clean:dist build:dist launchserver:dist",
     "start": "npm run serve",
     "test": "karma start karma.config.js",
-    "postinstall": "typings install && ./node_modules/protractor/bin/webdriver-manager update"
+    "postinstall": "typings install",
+    "webdriver:update": "webdriver-manager update"
   },
   "repository": {
     "type": "git",
@@ -33,6 +36,7 @@
     "file-loader": "^0.8.5",
     "html-loader": "^0.4.3",
     "html-webpack-plugin": "^2.15.0",
+    "http-server": "^0.9.0",
     "jasmine-core": "^2.4.1",
     "json-loader": "^0.5.4",
     "karma": "^0.13.22",
